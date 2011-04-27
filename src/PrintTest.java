@@ -32,13 +32,13 @@ public class PrintTest {
 	static final String EMPTY_MIDDLE_SPACE = ":    ";
 	static final String EMPTY_RIGHT_EDGE = ":    |\n";
 	
-	static final String PLAYER1_LEFT_EDGE = "| ⟶ ";
-	static final String PLAYER1_MIDDLE_SPACE = ": ⟶ ";
-	static final String PLAYER1_RIGHT_EDGE = ": ⟶ |\n";
+	static final String PLAYER1_LEFT_EDGE = "|  ⟶ ";
+	static final String PLAYER1_MIDDLE_SPACE = ":  ⟶ ";
+	static final String PLAYER1_RIGHT_EDGE = ":  ⟶ |\n";
 	
-	static final String PLAYER2_LEFT_EDGE = "| ⟵ ";
-	static final String PLAYER2_MIDDLE_SPACE = ": ⟵ ";
-	static final String PLAYER2_RIGHT_EDGE = ": ⟵ |\n";
+	static final String PLAYER2_LEFT_EDGE = "| ⟵  ";
+	static final String PLAYER2_MIDDLE_SPACE = ": ⟵  ";
+	static final String PLAYER2_RIGHT_EDGE = ": ⟵  |\n";
 	
 	static int [] [] boardArray = new int [9][9];
 	
