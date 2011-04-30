@@ -20,4 +20,12 @@ public class Space {
 	public int getY()  {
 		return y;
 	}	
+	
+	public boolean equals(Space other){
+		if(this.x == other.x && this.y == other.y) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

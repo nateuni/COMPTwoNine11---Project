@@ -2,25 +2,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Board {
-	static Player player1;
-	static Player player2;
-	LinkedList<Wall> wallList;
+	private Two<Player> players;
+	private List<Wall> wallList;
  	
-	Board() {
-		player1 = new Player("MINDY", 1, 5);
-		player2 = new Player("RALPH", 9, 5);
+	public Board(Two<Player> players) {
+		this.players = players;
 		wallList = new LinkedList<Wall>();
 	}
 	
-	public static void main(String[] args) {
-		Board board = new Board();
-		while(true) {
-			printBoard();
-			getMoves(player1);
-			getMoves(player2);
-		}	
+	public Two<Player> getPlayers (){
+		return this.players;
+	}
+	
+	public List<Wall> getList(){
+		return this.wallList;
 	}
 	
 	static void getMoves(Player player) {
@@ -90,69 +88,8 @@ public class Board {
 	}
 	
 
-	static void printBoard() {
-		int y1 = player1.getSpace().getY();
-		int y2 = player2.getSpace().getY();
-		Boolean player1Row = false;
-		Boolean player2Row = false;
-		for(int row =1; row<= 9; row++){
-			printEdge();
-			if( y1 == row) {
-				player1Row = true;
-			}
-			if( y2 == row) {
-				player2Row = true;
-			}
-			printFill(player1Row, player2Row);
-			printFill(player1Row, player2Row);
-			player1Row = false;
-			player2Row = false;
-			}
-		printEdge();
-	}
-	
-	static void printEdge() {
-		final String boxEdge = "......";
-		for(int i =1; i<=9; i++) {
-			System.out.print(boxEdge);
-		}
-		System.out.println(".");
-	}
-	
-	static void printFill(Boolean player1Row, Boolean player2Row) {
-		final String boxFill = ":     ";
-		int x1 = player1.getSpace().getX();
-		int x2 = player2.getSpace().getX();
-		for(int i =1; i<=9; i++) {
-			if( player1Row && x1 == i) {
-				String fill = (":  "+ player1.getToken() + "  ");
-				System.out.print( fill);
-			}
-			else if( player2Row && x2 == i) {
-				String fill = (":  "+ player2.getToken() + "  ");
-				System.out.print(fill);
-			}
-			else {
-				System.out.print(boxFill);	
-			}
-			}
-		System.out.println(":");
+	public void printBoard() {
+		PrintBoard pb = new PrintBoard(this);
+		pb.printBoard();
 	}
 }
-
-
-
-//private static boolean validMove(Player player, int newX, int newY) {
-//int x = player.getSpace().getX();
-//int y = player.getSpace().getY();
-//if( (newX-x == 1 || newX-x == -1)&&(newY == y)){
-//	return true;
-//}
-//else if((newY-y == 1 || newY-y == -1)&&(newX==x)) {
-//	return true;
-//}
-//else {
-//	return false;
-//}
-//}
-//
