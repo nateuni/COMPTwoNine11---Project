@@ -61,37 +61,42 @@ public class PrintBoard {
 	
 	// * Reminder make sure when in the if statement that prints a H.wall to increment the column by an extra 1.
 	private void printSquares() {
+		int y1 = this.PLAYERS._1.getSpace().getY();
+		int y2 = this.PLAYERS._2.getSpace().getY();
 		Space playersSpace = new Space(0,0);
 		Space wallSpace = new Space(0,0);
 		
 		System.out.print(this.TOP);
-		for(int row = 18; row >= 1; row--){
+		for(int row = 17; row >= 1; row--){
 			for (int column = 1; column <= 9; column++){
-				
-				if (row % 2 == 0) {
-					if (column == 1) {
-						
-					} else if (column ==)
-					//playersSpace.setCoords(column, row / 2);
-					//if(playersSpace.equals(PLAYERS._1.getSpace())) {
-					//	System.out.print(s);
-					//}
+				// if even is inbetween row (aka wall row) eg, 2,4,6,8,10,12,14,16.
 				// reminder append "  " to all divider rows	
+				if (row % 2 == 0) {
+					// if H.wall on current space, then print wall and increment by extra space, else print normal divider
+					if(this.WALL_LIST.contains(new Wall(new Space(column, row / 2), false, null))) {
+						if(column == 1) {
+							System.out.print(INBETWEEN_DIVIDER_LEFT_WALL);
+							column++;
+						} else {
+							System.out.print(INBETWEEN_DIVIDER_OTHER_WALL);
+							column++;
+						}
+					} else {
+						if(column == 1) {
+							System.out.print(INBETWEEN_DIVIDER_LEFT);
+						} else {
+							System.out.print(INBETWEEN_DIVIDER_OTHER);
+						}
+					}
+				// if odd is a actual row eg 1,3,5,7,9,11,13,14,17
+				// should divide row by 2 and round up with Math.round()
 				} else {
-					System.out.print(s);
+					
 				}
 			}
+			System.out.print("|\n");
 		}
 		System.out.print(this.BOTTOM);
-	}
-	
-	
-	private void printRows(){
-		
-	}
-	
-	private void printColumns(){
-		
 	}
 	
 	void printBoard() {
