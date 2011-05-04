@@ -1,3 +1,5 @@
+package quoridor;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,11 +19,11 @@ public class Board {
 		return this.players;
 	}
 	
-	public List<Wall> getList(){
+	public List<Wall> getWallList(){
 		return this.wallList;
 	}
 
-	static void getMoves(Player player) {
+	void getMoves(Player player) {
 		try {
 			while(true) {
 				System.out.println("Enter player " + player.getName() + " move: ");
@@ -39,7 +41,7 @@ public class Board {
 		}	
 	}
 	
-	private static boolean handleInput(Player player, String input) {
+	private boolean handleInput(Player player, String input) {
 		Boolean valid = true;
 		int newX = player.getSpace().getX();
 		int newY = player.getSpace().getY();
@@ -69,7 +71,7 @@ public class Board {
 		}
 		
 	}
-	public static boolean setCoord (Player player, int x, int y) {
+	public boolean setCoord (Player player, int x, int y) {
 		if(checkPointVals(x,y)) {
 			player.getSpace().setCoords(x, y);
 			return true;
@@ -79,18 +81,25 @@ public class Board {
 		}
 	}
 	
-	private static boolean checkPointVals (int x, int y) {
+	private boolean checkPointVals (int x, int y) {
 		return(checkPoint(x)&&checkPoint(y));
 	}
 	
-	private static boolean checkPoint(int i) {
+	private boolean checkPoint(int i) {
 		return( i>0 && i<= 9);
 	}
 	
-	// need to sync with Ed's Code.
-	public void print() {
-		
+	public void addWall(int x, int y, Boolean vertical) {
+		wallList.add(new Wall(x, y, vertical));
 	}
 	
+	public String toString() {
+		return BoardPrinter.printBoard(this);
+	}
+
+	public void print() {
+		System.out.println(this);
+	}
+
 }
 

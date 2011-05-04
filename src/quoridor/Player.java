@@ -1,13 +1,15 @@
+package quoridor;
+
 public class Player {
 
 	private final String name;
 	private final String token;
 	private Space space;
 	
-	Player(String name, int x, int y ) {
+	public Player(String name, int x, int y ) {
 		this.name = name;
 		space = new Space(x, y);
-		token = name.substring(0,1).toUpperCase();
+		token = name.substring(0,3).toUpperCase();
 	}
 	
 	public String getToken() {

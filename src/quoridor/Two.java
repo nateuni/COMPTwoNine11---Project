@@ -1,5 +1,4 @@
-
-
+package quoridor;
 
 public class Two <A> extends Pair <A, A>
 {

@@ -1,5 +1,4 @@
-
-
+package quoridor;
 
 public class Pair <A, B>
 {

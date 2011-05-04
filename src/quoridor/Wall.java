@@ -1,19 +1,17 @@
+package quoridor;
 
 public class Wall {
 	private Space space;
 	private Boolean vertical;
-	private Player owner;
 	
-	public Wall(Space space, Boolean vertical, Player owner) {
+	public Wall(Space space, Boolean vertical) {
 		this.space = space;
 		this.vertical = vertical;
-		this.owner = owner;
 	}
 	
-	public Wall(int x, int y, Boolean vertical, Player owner) {
+	public Wall(int x, int y, Boolean vertical) {
 		this.space = new Space(x, y);
 		this.vertical = vertical;
-		this.owner = owner;
 	}
 	
 	public Space getSpace() {
@@ -28,7 +26,9 @@ public class Wall {
 		return !vertical;
 	}
 	
-	public Player getOwner() {
-		return owner;
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Wall)) return false;
+		Wall otherWall = (Wall) obj;
+		return (this.getSpace().equals(otherWall.getSpace()) && this.isVertical() == otherWall.isVertical());
 	}
 }
