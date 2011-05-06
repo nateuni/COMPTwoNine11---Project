@@ -27,9 +27,9 @@ public class BoardPrinter {
 	}
 
 	public static String printBoard(Board board) {
-		StringBuilder boardString = new StringBuilder(" -----------------------------------\n");
+		StringBuilder boardString = new StringBuilder("  -----------------------------------\n");
 		Space thisSpace;
-		int row, col;
+		int row, col, rowNum = 1;
 
 		String hDivider = getHDivider();
 		String corner = getCorner();
@@ -52,10 +52,11 @@ public class BoardPrinter {
 
 		for (row = 0; row < 9; row++) {
 			// Print row of spaces
-			boardString.append("|");
+			boardString.append(rowNum+"|");
+			rowNum++;
 			for (col = 0; col < 9; col++) {
 				thisSpace = new Space(col+1, row+1);
-
+				
 				if      (board.getPlayers()._1().getSpace().equals(thisSpace)) boardString.append(board.getPlayers()._1().getToken());
 				else if (board.getPlayers()._2().getSpace().equals(thisSpace)) boardString.append(board.getPlayers()._2().getToken());
 				else boardString.append("   ");
@@ -69,7 +70,7 @@ public class BoardPrinter {
 			
 			// Print divider between rows
 			if (row != 8) {
-				boardString.append("|");
+				boardString.append(" |");
 				for (col = 0; col < 9; col++) {
 					if (wallArray[row][col] == 2 || col != 0 && wallArray[row][col-1] == 2) boardString.append(H_WALL + H_WALL + H_WALL);
 					else boardString.append(hDivider);
@@ -83,7 +84,8 @@ public class BoardPrinter {
 				boardString.append("|\n");
 			}
 		}
-		boardString.append(" -----------------------------------");
+		
+		boardString.append("  -----------------------------------\n   a   b   c   d   e   f   g   h   i\n");
 		
 		return boardString.toString();
 	}
