@@ -8,19 +8,14 @@ public class Wall {
 	private Space space;
 	private Boolean vertical;
 	
-	public Wall(Space space, Boolean vertical) {
-		this.space = space;
-		this.vertical = vertical;
-	}
-	
 	/**
 	 * Sets the type and coordinates of the wall. 
 	 * @param x The x coordinate as an int. 
 	 * @param y The y coordinate as an int. 
 	 * @param vertical If the wall is vertical or horizontal as defined by a boolean.
 	 */
-	public Wall(int x, int y, Boolean vertical) {
-		this.space = new Space(x, y);
+	public Wall(Space space, Boolean vertical) {
+		this.space = space;
 		this.vertical = vertical;
 	}
 	

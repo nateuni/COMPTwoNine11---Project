@@ -9,11 +9,12 @@ public class Player {
 	private final String name;
 	private final String token;
 	private Space space;
+	int wallsLeft = 10;
 	
-	public Player(String name, int x, int y ) {
+	Player(String name, Space space, String token ) {
 		this.name = name;
-		space = new Space(x, y);
-		token = name.substring(0,3).toUpperCase();
+		this.space = space;
+		this.token = token;
 	}
 	
 	/**
@@ -21,6 +22,10 @@ public class Player {
 	 */
 	public String getToken() {
 		return token;
+	}
+	
+	public Boolean hasWallsLeft() {
+		return (wallsLeft > 0); 
 	}
 	
 	/**

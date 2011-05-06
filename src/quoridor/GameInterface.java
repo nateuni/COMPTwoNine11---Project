@@ -27,7 +27,7 @@ public class GameInterface {
 		System.out.print("Enter name of player 2: ");
 		String player2Name = getFromUser();
 		board = new Board(player1Name, player2Name);
-		currentPlayer = Board.player1;\
+		currentPlayer = board.getPlayers()._1();
 	}
 	
 	String getFromUser() {
