@@ -5,12 +5,12 @@ import quoridor.*;
 public class BoardPrinterTest {
 
 	public static void main(String[] args) {
-		 Two<Player> players = Two.two(new Player("Alice", 5, 9), new Player("Bob", 5, 1));
-		 Board board = new Board(players);
+		Two<Player> players = Two.two(new Player("Alice", 5, 9), new Player("Bob", 5, 1));
+		Board board = new Board(players);
 		
-		//I am changing the add wall class to take an actual wall. And being lazy about editing below.  
-		/* 
-		board.addWall(0, 0, true);
+		board.addWall(new Wall (new Space (1,1), false));
+		board.addWall(new Wall (new Space (3,0), false));
+		/*
 		board.addWall(1, 0, false);
 		board.addWall(3, 0, false);
 		board.addWall(0, 3, true);

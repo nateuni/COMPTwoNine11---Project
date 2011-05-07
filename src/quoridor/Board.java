@@ -112,7 +112,7 @@ public class Board {
 	 * @return The result.
 	 */
 	public boolean addWall(Wall wall) {
-		if(wallList.size() < 20) {
+		if(wallList.size() < 20 && checkBounds(wall.getSpace())){
 			wallList.add(wall);
 			return true;
 		}

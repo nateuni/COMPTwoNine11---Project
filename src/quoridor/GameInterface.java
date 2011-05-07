@@ -31,6 +31,9 @@ public class GameInterface {
 			System.out.println("Please enter a different token and name" +
 					" for each player");
 			return false;
+		}else if(player1Name.length() < 3 || player2Name.length() < 3) {
+			System.out.println("Names must be a minimum of 3 characters in length");
+			return false;
 		}
 		board = new Board(player1Name, player2Name);
 		currentPlayer = board.getPlayers()._1();
@@ -69,7 +72,7 @@ public class GameInterface {
 	//returns true if player has completed a valid turn.
     private Boolean handleTurn(String command) {
     	// if it is a wall move
-		if(command.contains("w")){
+		if(command.contains("V") || command.contains("H")){
 			return placeWall(command);
 		}
 		return movePlayer(command);
@@ -84,12 +87,20 @@ public class GameInterface {
 		return false;
 	}
 	
-	// How are we doing walls?
-	private boolean placeWall(String coords) {
-		// coords need to be translated into a wall.
-		//Wall newWall = new Wall();
-		if(currentPlayer.decrementWallTally()){
-			//return board.addWall(newWall);
+	// need to check string is in the right order as H12ab works, but incorrect input of Hab12 throws an error. 
+	public boolean placeWall(String coords) {
+		if(coords.length() < 5 && !(coords.substring(0,1).equals("H") || coords.substring(0,1).equals("V"))){
+			return false;
+		}else if(currentPlayer.decrementWallTally()){
+			boolean isVertical;
+			if(coords.substring(0,1).equals("H")){
+				isVertical = false;
+			}else {
+				isVertical = true;
+			}
+			int row = Integer.parseInt(coords.substring(1,2));
+			String col = coords.substring(3,4);
+			return board.addWall(new Wall(new Space(col,row), isVertical));
 		}
 		return false;
 	}

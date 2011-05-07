@@ -5,7 +5,7 @@ public class Space {
 	public final int col;
 	public final int row;
 	
-	Space(String coords) {
+	public Space(String coords) {
 		assert(coords.length() == 2);
 		String alpha = coords.substring(0,1);
 		this.col = alphaToInt(alpha);
@@ -13,23 +13,15 @@ public class Space {
 		this.row = Integer.parseInt(numeric);
 	}
 	
-	Space(String alpha, int numeric) {
+	public Space(String alpha, int numeric) {
 		this.col = alphaToInt(alpha);
 		this.row = numeric;
 	}
 	
-	Space(int col, int row) {
+	public Space(int col, int row) {
 		this.col = col;
 		this.row = row;
 	}
-	
-//	public int getX() {
-//		return x;
-//	}
-//	
-//	public int getY() {
-//		return y;
-//	}
 	
 	public String getAlpha() {
 		return intToAlpha(col);
