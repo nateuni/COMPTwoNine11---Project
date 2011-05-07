@@ -57,57 +57,7 @@ public class Board {
 	public LinkedList<Wall> getWallList(){
 		return this.wallList;
 	}
-//
-//	// What are we doing with these? Are they going to the GameInterface?
-//	void getMoves(Player player) {
-//		try {
-//			while(true) {
-//				System.out.println("Enter player " + player.getName() + " move: ");
-//				BufferedReader userReader =
-//					new BufferedReader(new InputStreamReader(System.in));
-//				String fromUser = userReader.readLine();
-//				if (handleInput(player, fromUser.toUpperCase())) {
-//					return;
-//				}
-//			}
-//				
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}	
-//	}
-//	
-//	// What are we doing with these? Isn't this redundant? 
-//	private boolean handleInput(Player player, String input) {
-//		Boolean valid = true;
-//		int newX = player.getSpace().getX();
-//		int newY = player.getSpace().getY();
-//		
-//		if( input.equals("UP")) {
-//			newY--;
-//		}	
-//		else if( input.equals("DOWN")) {
-//			newY++;
-//		}
-//		else if( input.equals("LEFT")) {
-//			newX--;
-//		}
-//		else if( input.equals("RIGHT")) {
-//			newX++;
-//		}
-//		else {
-//			valid = false;
-//		}
-//		if(valid&&checkPointVals(newX,newY)) {
-//			setCoord (player, newX, newY);
-//			return true;
-//		}
-//		else {
-//			System.out.println("invalid move");
-//			return false;
-//		}
-//		
-//	}
+
 	/**
 	 * Sets an individual player's coordinates on the board after checking that in coordinates are valid. 
 	 * @param player - The players who's coordinates are to be set.
@@ -115,15 +65,6 @@ public class Board {
 	 * @param y y-coordinate as an int.
 	 * @return The result of the call as a boolean.
 	 */
-//	public boolean setCoord (Player player, int x, int y) {
-//		if(checkPointVals(x,y)) {
-//			player.getSpace().setCoords(x, y);
-//			return true;
-//		}
-//		else {
-//			return false;
-//		}
-//	}
 	
 	/**
 	 * Checks that both the x and y coordinates are with in the confides of the 9 x 9 board, by calling checkPointsVals.
@@ -131,18 +72,47 @@ public class Board {
 	 * @param y The y-coordinate as an int.
 	 * @return The result.
 	 */
-//	private boolean checkPointVals (int x, int y) {
-//		return(checkPoint(x)&&checkPoint(y));
-//	}
+	protected boolean checkMove (Space space, Player player) {
+		return(checkBounds(space) && checkSpaceForOtherPlayer(space, player) && checkSpaceIsAdjacent(space, player) && checkIsNotSameSpace(space, player));
+	}
 	
 	/**
-	 * Checks the individual passed value to see if it is valid input.
-	 * @param i the individual coordinate that is passed as an int.
+	 * Checks the space is within the bounds of the board
 	 * @return The result. 
 	 */
-//	private boolean checkPoint(int i) {
-//		return( i>0 && i<= 9);
-//	}
+	private boolean checkBounds(Space space) {
+		return(space.row>0 && space.row<=9 && space.col>0 && space.col<=9);
+	}
+	
+	/**
+	 * Checks if the players move is occupied by another player.
+	 * @param space the space that the player wishes to move to.
+	 * @param player the player that is doing the moving.
+	 * @return The result. 
+	 */
+	private boolean checkSpaceForOtherPlayer(Space space, Player player) {
+		return(!players.other(player).getSpace().equals(space));
+	}
+	
+	/**
+	 * Checks that the space that the player wished to move to is is adjacent
+	 * @param space the space that the player wishes to move to.
+	 * @param player the player that is doing the moving.
+	 * @return The result.
+	 */
+	private boolean checkSpaceIsAdjacent(Space space, Player player){
+		return ((player.getSpace().col == space.col +1 || player.getSpace().col == space.col -1) || (player.getSpace().row == space.row +1 || player.getSpace().row == space.row -1));
+	}
+	
+	/**
+	 * Check that the player is actually making a move, not remaining stationary. 
+	 * @param space the space that the player wishes to move to.
+	 * @param player the player that is doing the moving.
+	 * @return The result.
+	 */
+	private boolean checkIsNotSameSpace(Space space, Player player){
+		return !player.getSpace().equals(space);
+	}
 	
 	/**
 	 * Adds an individual wall to the boards list, by constructing a new wall and appending it to the list. 

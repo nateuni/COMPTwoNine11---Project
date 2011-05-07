@@ -69,13 +69,18 @@ public class GameInterface {
 	//returns true if player has completed a valid turn.
     private Boolean handleTurn(String command) {
 		//check if they are asking for move or wall
-		movePlayer(command);
-		return true;
+		return movePlayer(command);
 	}
 	
-	private void movePlayer(String coords) {
+	private boolean movePlayer(String coords) {
 		Space newSpace = new Space(coords);
-		currentPlayer.setSpace(newSpace);
+		if(board.checkMove(newSpace, currentPlayer)) {
+			currentPlayer.setSpace(newSpace);
+			return true;
+		}
+		
+		return false;
+		
 	}
  	
 	private void endTurn() {
