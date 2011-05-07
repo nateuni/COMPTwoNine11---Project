@@ -1,10 +1,6 @@
 package quoridor;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.LinkedList;
-import java.util.List;
 
 
 /**
@@ -12,7 +8,7 @@ import java.util.List;
  */
 public class Board {
 	private Two<Player> players;
-	private List<Wall> wallList;
+	private LinkedList<Wall> wallList;
 	static final Space player1Start = new Space("e1");
 	static final Space player2Start = new Space("e9");
 
@@ -21,9 +17,15 @@ public class Board {
 	 * @param players
 	 * 			The Two players for the this board instance.
 	 */
+	public Board(Two<Player> players) {
+		this.players = players;
+		wallList = new LinkedList<Wall>();
+	}
+	
+	
 	public Board(String player1Name, String player2Name) {
-		Player player1 = new Player(player1Name, player1Start, "X");
-		Player player2 = new Player(player2Name, player2Start, "O");
+		Player player1 = new Player(player1Name, player1Start);
+		Player player2 = new Player(player2Name, player2Start);
 		this.players = new Two<Player>(player1,player2);
 		wallList = new LinkedList<Wall>();
 	}
@@ -36,11 +38,23 @@ public class Board {
 		return this.players;
 	}
 	
+	public Player getPlayer(int refNumber) {
+		if(refNumber == 1) {
+			return players._1();
+		}
+		if(refNumber == 2) {
+			return players._2();
+		}
+		else {
+			return null;
+		}
+	}
+	
 	/**
 	 * Returns a pointer to the wall list. 
 	 * @return The list of all walls at time of calling
 	 */
-	public List<Wall> getWallList(){
+	public LinkedList<Wall> getWallList(){
 		return this.wallList;
 	}
 //
@@ -141,7 +155,7 @@ public class Board {
 	}
 	
 	public String toString() {
-		return BoardPrinter.printBoard(this);
+		return BoardPrinter.buildBoardString(this);
 	}
 
 	public void print() {

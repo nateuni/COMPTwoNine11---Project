@@ -26,7 +26,7 @@ public class BoardPrinter {
 		return CORNER_0;
 	}
 
-	public static String printBoard(Board board) {
+	public static String buildBoardString(Board board) {
 		StringBuilder boardString = new StringBuilder("  -----------------------------------\n");
 		Space thisSpace;
 		int row, col, rowNum = 1;
@@ -44,8 +44,8 @@ public class BoardPrinter {
 
 		// Fill array with wall locations
 		for (Wall wall : board.getWallList()) {
-			row = wall.getSpace().getNumeric();
-			col = wall.getSpace().alphaToInt();
+			row = wall.getSpace().row;
+			col = wall.getSpace().col;
 			if (wall.isVertical()) wallArray[row][col] = 1;
 			else wallArray[row][col] = 2;
 		}

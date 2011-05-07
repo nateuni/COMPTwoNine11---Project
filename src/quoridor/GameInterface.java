@@ -1,36 +1,43 @@
-package 	quoridor;
+package quoridor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-
 public class GameInterface {
 	Board board = null;				
 	Player currentPlayer;
+	Boolean gameOver = false;
 	
-	public void play() {
-		setupGame();
-		
-		while(true) {
-			board.toString();
-			getMoves();
+	public void playGame() {
+		boolean ready = false;
+		while(!ready) {
+		ready = setupGame();
+		}
+		while(!gameOver) {
+			System.out.println(board);
+			playTurn();
 		}	
-		
 	}
 	
-	void setupGame() {
+	private boolean setupGame() {
 		System.out.println("WELCOME TO QUORIDOR");
 		System.out.print("Enter name of Player 1: ");
 		String player1Name = getFromUser();
 		System.out.print("Enter name of player 2: ");
 		String player2Name = getFromUser();
+		if(player1Name.equals(player2Name)) {
+			System.out.println("Please enter a different token and name" +
+					" for each player");
+			return false;
+		}
 		board = new Board(player1Name, player2Name);
 		currentPlayer = board.getPlayers()._1();
+		return true;
 	}
 	
-	String getFromUser() {
+	private String getFromUser() {
 		try {
 			while(true) {
 				BufferedReader userReader =
@@ -44,34 +51,38 @@ public class GameInterface {
 		}	
 	}
 	
-	private void getMoves() {
+	private boolean playTurn() {
 		System.out.println("Current Player: "+ currentPlayer);
-		System.out.print("enter moves: ");
+		System.out.print("enter move: ");
 		String movesString = getFromUser();
 		ArrayList<String> movesList = tokenizeString(movesString);
-		for(int i=0; i<movesList.size();i++) {
-			playTurn(movesList.get(i));
-			updateCurrentPlayer();
+			Boolean wasPlayed = handleTurn(movesList.get(0));
+			if(!wasPlayed) {
+				System.out.println("incorrect input. Try again");
+			}
+			else {
+				endTurn();
 		}
+		return wasPlayed;
 	}
 	
-	void playTurn(String command) {
+	//returns true if player has completed a valid turn.
+    private Boolean handleTurn(String command) {
 		//check if they are asking for move or wall
-		makeMove(command);
+		movePlayer(command);
+		return true;
 	}
 	
-	void makeMove(String coords) {
+	private void movePlayer(String coords) {
 		Space newSpace = new Space(coords);
 		currentPlayer.setSpace(newSpace);
 	}
  	
-	void updateCurrentPlayer() {
-		if( currentPlayer == board.getPlayer1()) {
-			currentPlayer = board.getPlayer2();
-		}
-		else{
-			currentPlayer = board.getPlayer1();
-		}
+	private void endTurn() {
+		//switch current player
+		currentPlayer = board.getPlayers().other(currentPlayer);
+		
+		//check for win
 	}
 	
 	private ArrayList<String> tokenizeString (String string) {

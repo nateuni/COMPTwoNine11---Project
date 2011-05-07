@@ -11,10 +11,16 @@ public class Player {
 	private Space space;
 	int wallsLeft = 10;
 	
-	Player(String name, Space space, String token ) {
+	public Player(String name, Space space) {
 		this.name = name;
 		this.space = space;
-		this.token = token;
+		this.token = name.substring(0,3).toUpperCase();
+	}
+	
+	public Player(String name, int x, int y) {
+		this.name = name;
+		this.space = new Space(x,y);
+		this.token = name.substring(0,3).toUpperCase();
 	}
 	
 	/**
@@ -40,6 +46,14 @@ public class Player {
 	 */
 	public Space getSpace() {
 		return space;
+	}
+	
+	public void setSpace(Space newSpace) {
+		space = newSpace;
+	}
+	
+	public String toString() {
+		return name;
 	}
 }
 		
