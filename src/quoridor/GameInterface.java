@@ -56,7 +56,7 @@ public class GameInterface {
 		System.out.print("enter move: ");
 		String movesString = getFromUser();
 		ArrayList<String> movesList = tokenizeString(movesString);
-			Boolean wasPlayed = handleTurn(movesList.get(0));
+		Boolean wasPlayed = handleTurn(movesList.get(0));
 			if(!wasPlayed) {
 				System.out.println("incorrect input. Try again");
 			}
@@ -68,7 +68,10 @@ public class GameInterface {
 	
 	//returns true if player has completed a valid turn.
     private Boolean handleTurn(String command) {
-		//check if they are asking for move or wall
+    	// if it is a wall move
+		if(command.contains("w")){
+			return placeWall(command);
+		}
 		return movePlayer(command);
 	}
 	
@@ -78,9 +81,16 @@ public class GameInterface {
 			currentPlayer.setSpace(newSpace);
 			return true;
 		}
-		
 		return false;
-		
+	}
+	
+	// How are we doing walls?
+	private boolean placeWall(String coords) {
+		Space newSpace = new Space(coords);
+		if(currentPlayer.hasWallsLeft()){
+			// Is it bottom right now Ed?
+		}
+		return false;
 	}
  	
 	private void endTurn() {

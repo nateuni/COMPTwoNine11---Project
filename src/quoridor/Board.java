@@ -57,14 +57,6 @@ public class Board {
 	public LinkedList<Wall> getWallList(){
 		return this.wallList;
 	}
-
-	/**
-	 * Sets an individual player's coordinates on the board after checking that in coordinates are valid. 
-	 * @param player - The players who's coordinates are to be set.
-	 * @param x The x-coordinate as an int.
-	 * @param y y-coordinate as an int.
-	 * @return The result of the call as a boolean.
-	 */
 	
 	/**
 	 * Checks that both the x and y coordinates are with in the confides of the 9 x 9 board, by calling checkPointsVals.
