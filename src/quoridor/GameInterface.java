@@ -86,9 +86,10 @@ public class GameInterface {
 	
 	// How are we doing walls?
 	private boolean placeWall(String coords) {
-		Space newSpace = new Space(coords);
-		if(currentPlayer.hasWallsLeft()){
-			// Is it bottom right now Ed?
+		// coords need to be translated into a wall.
+		//Wall newWall = new Wall();
+		if(currentPlayer.decrementWallTally()){
+			//return board.addWall(newWall);
 		}
 		return false;
 	}

@@ -34,6 +34,23 @@ public class Player {
 		return (wallsLeft > 0); 
 	}
 	
+	public Boolean decrementWallTally() {
+		if(this.hasWallsLeft()){
+			this.wallsLeft--;
+			return true;
+		}
+		return false;
+	}
+	
+	//used for undo'ing
+	public boolean incrementWallTally(){
+		if(this.wallsLeft < 20){
+			wallsLeft++;
+			return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * @return The player's name as a String 
 	 */

@@ -107,13 +107,16 @@ public class Board {
 	}
 	
 	/**
-	 * Adds an individual wall to the boards list, by constructing a new wall and appending it to the list. 
-	 * @param x the walls x coordinate as an int.
-	 * @param y the walls y coordinate as an int.
-	 * @param vertical if the wall is vertical or not, as a boolean. 
+	 * If less then 20 walls, it adds the individual wall to the boards list, and returns the result.
+	 * @param wall the wall that is to be added to the list
+	 * @return The result.
 	 */
-	public void addWall(int x, int y, Boolean vertical) {
-		wallList.add(new Wall(new Space(x,y), vertical));
+	public boolean addWall(Wall wall) {
+		if(wallList.size() < 20) {
+			wallList.add(wall);
+			return true;
+		}
+		return false;
 	}
 	
 	public String toString() {
