@@ -85,44 +85,11 @@ public class Board {
 		return currentPlayer;
 	}
 	
-	/**
-	 * Checks the space is within the bounds of the board
-	 * @return The result. 
-	 */
-	private boolean checkBounds(Space space) {
-		return(space.row>0 && space.row<=9 && space.col>0 && space.col<=9);
-	}
 	
-	/**
-	 * Checks if the players move is occupied by another player.
-	 * @param space the space that the player wishes to move to.
-	 * @param player the player that is doing the moving.
-	 * @return The result. 
-	 */
-	private boolean checkSpaceForOtherPlayer(Space space, Player player) {
-		return(!players.other(player).getSpace().equals(space));
-	}
 	
-	/**
-	 * Checks that the space that the player wished to move to is is adjacent
-	 * @param space the space that the player wishes to move to.
-	 * @param player the player that is doing the moving.
-	 * @return The result.
-	 */
-	private boolean checkSpaceIsAdjacent(Space space, Player player){
-		return ((player.getSpace().col == space.col +1 || player.getSpace().col == space.col -1) || (player.getSpace().row == space.row +1 || player.getSpace().row == space.row -1));
-	}
 	
-	/**
-	 * Check that the player is actually making a move, not remaining stationary. 
-	 * @param space the space that the player wishes to move to.
-	 * @param player the player that is doing the moving.
-	 * @return The result.
-	 */
-	private boolean checkIsNotSameSpace(Space space, Player player){
-		return !player.getSpace().equals(space);
-	}
 	
+
 	/**
 	 * If less then 20 walls, it adds the individual wall to the boards list, and returns the result.
 	 * @param wall the wall that is to be added to the list
@@ -146,18 +113,6 @@ public class Board {
 		
 		
 		return validMoves;
-	}
-	
-	//checks the validity of a space -> returns false if space does not exist on board
-	//-> returns false if space is occupied by player.
-	private boolean checkSpaceValidity(Space space) {
-		if(!checkBounds(space)) {
-			return false;
-		}
-		if((space.equals(players._1()))||(space.equals(players._2()))) {
-		return false;
-		}
-		return true;
 	}
 	
 	public String toString() {

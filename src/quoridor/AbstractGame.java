@@ -38,11 +38,7 @@ public abstract class AbstractGame {
 			while(true) {
 				BufferedReader userReader =
 					new BufferedReader(new InputStreamReader(System.in));
-		
-				
-				
-				
-				String fromUser = userReader.readLine();
+					String fromUser = userReader.readLine();
 				if(!fromUser.isEmpty()) {	//never returns an empty string
 					return fromUser;	
 				}
@@ -76,25 +72,54 @@ public abstract class AbstractGame {
 		return false;
 	}
 	
-	public boolean checkValidWall(String coords) {
-		if(coords.length() < 5 ){
+	public boolean checkValidWall(Wall wall) {
+		if((wall.getSpace().col == 9)||(wall.getSpace().row == 9)) {
 			return false;
 		}
-		int row = Integer.parseInt(coords.substring(1,2));
-		String col = coords.substring(3,4);
-		Space requestedSpace = new Space(col, row);
-		if(!board.currentPlayer().hasWallsLeft()) {
-			return false;
+		Space requestedWallSpace = wall.getSpace();
+		LinkedList<Wall> wallList = board.getWallList();
+		for(int i =0; i <wallList.size(); i++) {
+			Space existingWallSpace = wallList.get(i).getSpace();
+			if(existingWallSpace.equals(requestedWallSpace)) {
+				return false;
+			}
 		}
-		
-		
-		if(board.getWallsList().contains(requestedSpace)) {
-			return false;
-		}
-		
+		// AND CHECK BOTH PLAYERS CAN STILL REACH GOAL 
 		return true;
 	}
- 	
+	
+	public boolean checkValidMove(Space requestedSpace) {
+		if(!spaceIsAdjacent) {
+			return(checkJumpIsValid(requestedSpace));
+		}
+	    return (checkForWalls(space));
+	}
+	
+	
+	private boolean checkForWalls(Space space) {
+		//TO DO
+	}
+	
+	private boolean checkJumpIsValid(requestedSpace){
+		//TO DO
+		return false;
+	}
+	
+	
+	/**
+	 * Checks that the space that the player wished to move to is is adjacent
+	 * @param space the space that the player wishes to move to.
+	 * @param player the player that is doing the moving.
+	 * @return The result.
+	 */
+	private boolean spaceIsAdjacent(Space requestedSpace){
+		Space currentSpace = board.currentPlayer().getSpace();
+		if((Math.abs(currentSpace.col - requestedSpace.col) + (Math.abs(currentSpace.row - requestedSpace.row)) == 1)) {
+			return true;
+		}
+		return false;
+	}
+	
 	protected void onTurnOver() {
 		//switch current player
 		board.nextPlayer();
