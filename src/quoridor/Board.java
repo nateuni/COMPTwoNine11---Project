@@ -4,13 +4,15 @@ import java.util.LinkedList;
 
 
 /**
- * A board has Two Players and up two 20 walls (10 per player) and tracks each of their coordinates.
+ * A board has Two Players and up to 20 walls (10 per player) and tracks each of their coordinates.
  */
 public class Board {
 	private Two<Player> players;
+	private Player currentPlayer;
 	private LinkedList<Wall> wallList;
 	static final Space player1Start = new Space("e1");
 	static final Space player2Start = new Space("e9");
+	Player winner = null;
 
 	/**
 	 * A board takes Two players as a pair as defined by the Two Class.
@@ -20,6 +22,7 @@ public class Board {
 	public Board(Two<Player> players) {
 		this.players = players;
 		wallList = new LinkedList<Wall>();
+		currentPlayer = players._1();
 	}
 	
 	
@@ -28,6 +31,7 @@ public class Board {
 		Player player2 = new Player(player2Name, player2Start);
 		this.players = new Two<Player>(player1,player2);
 		wallList = new LinkedList<Wall>();
+		currentPlayer = players._1();
 	}
 	
 	/**
@@ -38,17 +42,6 @@ public class Board {
 		return this.players;
 	}
 	
-	public Player getPlayer(int refNumber) {
-		if(refNumber == 1) {
-			return players._1();
-		}
-		if(refNumber == 2) {
-			return players._2();
-		}
-		else {
-			return null;
-		}
-	}
 	
 	/**
 	 * Returns a pointer to the wall list. 
@@ -66,6 +59,30 @@ public class Board {
 	 */
 	protected boolean checkMove (Space space, Player player) {
 		return(checkBounds(space) && checkSpaceForOtherPlayer(space, player) && checkSpaceIsAdjacent(space, player) && checkIsNotSameSpace(space, player));
+	}
+	
+	//switch the current player (next player's turn)
+	public void nextPlayer() {
+		currentPlayer = players.other(currentPlayer);
+	}
+	
+	public boolean checkWin() {
+		Player player1 = players._1();
+		Player player2 = players._2();
+		if(player1.getSpace().equals(player2Start)) {
+			winner = player1;
+			return true;
+		}
+		else if(player2.getSpace().equals(player1Start)) {
+			winner = player2;
+			return true;
+		}
+		return false;
+	}
+	
+	//accessor for currentplayer
+	public Player currentPlayer() {
+		return currentPlayer;
 	}
 	
 	/**
@@ -117,6 +134,30 @@ public class Board {
 			return true;
 		}
 		return false;
+	}
+	
+	public LinkedList<Space> getValidMoves(Player player) {
+		LinkedList<Space> validMoves = null;
+		Space current = player.getSpace();
+		Space up = new Space(current.col, current.row+1);
+		Space down = new Space(current.col, current.row-1);
+		Space left = new Space(current.col-1, current.row);
+		Space right = new Space(current.col+1, current.row);
+		
+		
+		return validMoves;
+	}
+	
+	//checks the validity of a space -> returns false if space does not exist on board
+	//-> returns false if space is occupied by player.
+	private boolean checkSpaceValidity(Space space) {
+		if(!checkBounds(space)) {
+			return false;
+		}
+		if((space.equals(players._1()))||(space.equals(players._2()))) {
+		return false;
+		}
+		return true;
 	}
 	
 	public String toString() {

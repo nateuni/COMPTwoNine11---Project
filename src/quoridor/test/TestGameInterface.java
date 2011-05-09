@@ -4,7 +4,7 @@ import quoridor.*;
 public class TestGameInterface {
 		
 		public static void main(String[] args) {
-			GameInterface gameInt = new GameInterface();
+			AbstractGame gameInt = new AbstractGame();
 			gameInt.playGame();
 		}
 	}

@@ -1,0 +1,72 @@
+ELYSE WISE z3308940						   		PROJECT DIARY								COMP2911
+----------------------------------------------------------------------------------------------------------------
+Tut/Lab 07										Mon 18/04/11
+
+Overview:
+Project was released
+Formed a Project group with Nathan and Eddie
+Discussed basic rules of gameplay in tutorial
+Drew up a list of roles for project 
+Sketched a rough timetable for project work
+Continued discussion of design ideas
+
+Points of Discussion:
+Today was our first introduction to the project. After organizing roles within the group and sketching a rough timetable, we used the remainding lab time to discuss our initial design approaches and ideas. The following points were decided upon:
+The program definitely needs a player class, a board class, a wall class and a space class (a space being a coordinate on a board)
+The board should be printed by interatively concatenating strings. And should look something like this:
+	.........................................
+	:...:...:...:...:...:...:...:...:...:...:  etc.
+
+We can model a wall object's position by relating it to a space. By convention, we chose to relate each wall to the space whose top-left-hand corner holds the beginning of the wall.
+We are going to set up an online repository using Github in order to provide access to project for all group members, and allow them to add/modify code and share the changes instantly.
+
+To Do List:
+Implement a board printing function
+Set up eGit and Github, and create group repo
+Work on class structure for preliminary design
+Practise playing Quoridor
+
+Next Meeting: (during break) Friday 22/04/11 12pm 
+
+---------------------------------------------------------------------------------------------------------------
+
+Mid-Semester Break Meeting 1						Fri 29/04/11
+
+Overview:
+Merged and Critiqued our board printing code
+Finalised preliminary design work
+Finalised preliminary class structure 
+
+Points of Discussion:
+We held a lengthy discussion on generating valid board moves, and eventually finalised our submission of 'what constitutes a valid move' for the preliminary design. We also took a look at Nathan's code for printing a board and compared it with my own. We decided on the final 'look' that we wanted the board to have (down to the very last ascii character) and Nathan took it upon himself to modify the code to produce this. We then spent the rest of the meeting generating a class structure for our preliminary design, and produced a simple game simulation program which takes two players, prints their coordinates and allows them to move left, right,up and down on the board.
+I then distributed the final documentation work for the preliminary design submission amongst the team.
+
+To Do List:
+(Nathan) Modify board printing code to print our decided aesthetic design, and print walls
+(Eddie) Write UML diagram for preliminary design
+(Elyse) Write CRC cards for preliminary design, and submit final design
+
+Next Meeting: Lab 8 
+
+---------------------------------------------------------------------------------------------------------------
+
+Lab 8												Mon 02/05/11
+
+Overview:
+Completed Lab 8 work
+Submitted Preliminary Design
+Changed wall class representation
+Decided on user imput syntax 
+
+Points of Discussion:
+Over the course of the week, we had (using guthub to store our project) collaboratively worked on our code and had achieved a working project which allowed players to enter their names, tokens and play a two-player game using the console to enter moves.
+In order to stick with the traditional game rules, we modified our program so that a player enters a move by typing the coordinates of the space they wish to move to (e.g. “e6”), rather than entering the direction (left, right etc.). This allowed us to finish lab 8 very quickly – we simply added a string tokenizer to separate moves and then called the playturn() for each move. We modified the board class to keep track of a current player, and to alternate the current player after each turn is completed.
+Eddie fixed a huge problem we had with our wall representation – we were finding it impossible to neatly print our board with our walls being represented to the space whose left had corner holds the start of the wall. Eddie modified the class to represent a wall by keeping track of the space whose bottom right hand corner relates to the center of the wall – and our print function was greatly simplified.
+
+To Do List:
+(Everyone) Merge any unpushed code on Github so we have one copy of our project.
+(Eddie) Research and work on path searching algorithms
+(Elyse) Work on 'cleaning up' class implementations and continue to implement code
+(Nate) work on simple validation functions for user input (particularly valid moves)
+
+Next Meeting: Lab 9 

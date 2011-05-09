@@ -14,7 +14,7 @@ public class Player {
 	public Player(String name, Space space) {
 		this.name = name;
 		this.space = space;
-		this.token = name.substring(0,3).toUpperCase();
+		this.token = (name+"   ").substring(0,3).toUpperCase();
 	}
 	
 	public Player(String name, int x, int y) {
@@ -72,5 +72,7 @@ public class Player {
 	public String toString() {
 		return name;
 	}
+
+	
 }
 		

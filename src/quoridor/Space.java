@@ -6,7 +6,7 @@ public class Space {
 	public final int row;
 	
 	public Space(String coords) {
-		assert(coords.length() == 2);
+		assert(coords.length() == 2); 
 		String alpha = coords.substring(0,1);
 		this.col = alphaToInt(alpha);
 		String numeric = coords.substring(1);
@@ -21,6 +21,14 @@ public class Space {
 	public Space(int col, int row) {
 		this.col = col;
 		this.row = row;
+	}
+	
+	public int col() {
+		return col;
+	}
+	
+	public int row() {
+		return row;
 	}
 	
 	public String getAlpha() {
