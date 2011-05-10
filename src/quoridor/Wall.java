@@ -18,7 +18,19 @@ public class Wall {
 		this.space = space;
 		this.vertical = vertical;
 	}
-	
+
+        public Wall(String command) {
+                String wallType = command.substring(0,1).toUpperCase();
+                if(wallType.equals("H")) {
+                    this.vertical = false;
+                }
+                if(wallType.equals("V")) {
+                    this.vertical = true;
+                }
+                String spaceCoords = command.substring(1);
+                this.space = new Space(spaceCoords);
+        }
+
 	/**
 	 * @return The space from which the wall is located.
 	 */

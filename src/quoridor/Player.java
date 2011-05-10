@@ -5,24 +5,28 @@ package quoridor;
  * Contains all the information that is relevant to a player. 
  * Thus being - Their name, their token as to be displayed on the board and their current space. 
  */
-public class Player {
-	private final String name;
-	private final String token;
-	private Space space;
+public abstract class Player {
+	protected String name;
+	protected String token;
+	protected Space space;
 	int wallsLeft = 10;
 	
-	public Player(String name, Space space) {
-		this.name = name;
-		this.space = space;
-		this.token = (name+"   ").substring(0,3).toUpperCase();
+	 public Player(int playerNumber) {
+		if (playerNumber == 1) {
+                    name = " X ";
+                    this.space = new Space("e1");
+                }
+                else {
+                    name = " O ";
+                    this.space = new Space("e9");
+                }
+                setToken(name);
 	}
-	
-	public Player(String name, int x, int y) {
-		this.name = name;
-		this.space = new Space(x,y);
-		this.token = name.substring(0,3).toUpperCase();
-	}
-	
+
+        protected void setToken(String t) {
+            this.token = t;
+        }
+
 	/**
 	 * @return The player's token as a String
 	 */
@@ -68,7 +72,9 @@ public class Player {
 	public void setSpace(Space newSpace) {
 		space = newSpace;
 	}
-	
+
+        public abstract Move getMove();
+
 	public String toString() {
 		return name;
 	}

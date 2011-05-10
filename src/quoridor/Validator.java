@@ -4,15 +4,14 @@ import java.util.LinkedList;
 
 public class Validator {
 
-	AIGame sampleGame;
+	Game sampleGame;
 	// TODO complete this class using your project code
 	// you must implement the no-arg constructor and the check method
-	
 	// you may add extra fields and methods to this class
 	// but the ProvidedTests code will only call the specified methods
 	
 	public Validator() {
-		sampleGame = new AIGame();
+		sampleGame = new Game();
 	}
 
 	/**
@@ -24,14 +23,6 @@ public class Validator {
 	 * @param moves a list of successive moves
 	 * @return validity of the list of moves
 	 */
-	public boolean check(String moves) {
-		LinkedList<String> movesList = sampleGame.tokenizeString(moves);
-		for(int i=0; i<movesList.size(); i++) {
-			if(sampleGame.checkInput(movesList.get(i)) == false) {
-				return false;
-			}
-		}
-		return false;
-	}
+	
 
 }
