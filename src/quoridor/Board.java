@@ -57,9 +57,9 @@ public class Board {
 	 * @param y The y-coordinate as an int.
 	 * @return The result.
 	 */
-	protected boolean checkMove (Space space, Player player) {
-		return(checkBounds(space) && checkSpaceForOtherPlayer(space, player) && checkSpaceIsAdjacent(space, player) && checkIsNotSameSpace(space, player));
-	}
+	//protected boolean checkMove (Space space, Player player) {
+	//	return(checkBounds(space) && checkSpaceForOtherPlayer(space, player) && checkSpaceIsAdjacent(space, player) && checkIsNotSameSpace(space, player));
+	//}
 	
 	//switch the current player (next player's turn)
 	public void nextPlayer() {
@@ -96,7 +96,7 @@ public class Board {
 	 * @return The result.
 	 */
 	public boolean addWall(Wall wall) {
-		if(wallList.size() < 20 && checkBounds(wall.getSpace())){
+		if(wallList.size() < 20){
 			wallList.add(wall);
 			return true;
 		}

@@ -25,14 +25,7 @@ public abstract class AbstractGame {
 	protected abstract boolean setupGame();
 	
 	protected abstract void playNextTurn();
-//	
-//	public boolean genericSetup() {
-//		board = new Board(" X ", " O ");
-//		return true;
-//	}
-//	
-//	
-//	
+
 	protected String getFromUser() {
 		try {
 			while(true) {
@@ -49,14 +42,18 @@ public abstract class AbstractGame {
 		}	
 	}
 	
-	private void movePlayer(String coords) {
+	protected void movePlayer(String coords) {
 		Space newSpace = new Space(coords);
 			board.currentPlayer().setSpace(newSpace);
 		}
 	
+	protected void movePlayer(Space newSpace){
+		board.currentPlayer().setSpace(newSpace);
+	}
+	
 	// need to check string is in the right order as H12ab works, but incorrect input of Hab12 throws an error. 
-	public boolean placeWall(String coords) {
-		if(coords.length() < 5 && !(coords.substring(0,1).equals("H") || coords.substring(0,1).equals("V"))){
+	public boolean checkThenPlaceWall(String coords) {
+		if(coords.length() < 5 && !(coords.substring(0,1).equals("H") || !coords.substring(0,1).equals("V"))){
 			return false;
 		}else if(board.currentPlayer().decrementWallTally()){
 			boolean isVertical;
@@ -88,19 +85,20 @@ public abstract class AbstractGame {
 		return true;
 	}
 	
-	public boolean checkValidMove(Space requestedSpace) {
-		if(!spaceIsAdjacent) {
+	public boolean validMove(Space requestedSpace) {
+		if(!spaceIsAdjacent(requestedSpace)) {
 			return(checkJumpIsValid(requestedSpace));
 		}
-	    return (checkForWalls(space));
+	    return noWallsBlockPath(requestedSpace);
 	}
 	
 	
-	private boolean checkForWalls(Space space) {
+	private boolean noWallsBlockPath(Space space) {
 		//TO DO
+		return true;
 	}
 	
-	private boolean checkJumpIsValid(requestedSpace){
+	private boolean checkJumpIsValid(Space requestedSpace){
 		//TO DO
 		return false;
 	}

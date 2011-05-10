@@ -3,6 +3,10 @@ package quoridor;
 import java.util.LinkedList;
 
 public class Human_Human_Game extends AbstractGame{
+	
+	private final int PLACE_WALL = 1;
+	private final int MOVE_PLAYER = 0;
+	private final int INVALID_INPUT = -1;
 
 	@Override
 	protected boolean setupGame() {
@@ -42,54 +46,34 @@ public class Human_Human_Game extends AbstractGame{
 	
 	//returns true if player has completed a valid turn.
     private Boolean handleTurn(String command) {
-    	// if it is a wall move
     	try {
-    	int inputType = checkInput(command);
-    	if(inputType <0) {
-    		return false;
-    	}
-    	if(inputType == 0) {
-    		Space newSpace = new Space(command);
-    		
-    		///////fix up names of these checkers
-    		if(!checkBounds(newSpace)||!isNotOccupied(newSpace)) {
+    		if(checkInput(command) == INVALID_INPUT) {
     			return false;
+    		} else if(checkInput(command)== MOVE_PLAYER) {
+    			Space newSpace = new Space(command);
+
+    			if(!withinBounds(newSpace) || isOccupied(newSpace) || !validMove(newSpace)) {
+    				return false;
+    			} else {
+    				movePlayer(newSpace);
+    			}
+
+    		} else if(checkInput(command) == PLACE_WALL) {
+    				return checkThenPlaceWall(command);
     		}
-    		checkValidMove(newSpace);
-    		movePlayer(newSpace);
-    	}
-    	if(inputType == 1) {
-    		if(!board.currentPlayer().hasWallsLeft()) {
-				return false;
-			}
-    		if(command.length() < 5 ){
-    			return false;
-    		}
-    		String wallType = command.substring(0,1);
-    		Boolean isVertical;
-    		if( wallType.equals("V")) {
-    			isVertical = true;
-    		}
-    		else isVertical = false;
-    		
-    		int row = Integer.parseInt(command.substring(1,2));
-    		String col = command.substring(3,4);
-    		Space requestedSpace = new Space(col, row);
-    		Wall newWall = new Wall(requestedSpace, isVertical);	
-    		checkValidWall(newWall);
-    	}
     	}
     	catch( Exception e) {
     		//all exceptions would be from trying to read incorrect formatting on user input
     		return false;
     	}
-	}
-    
+    	return true;
+    }
+        
     /**
 	 * Checks the space is within the bounds of the board
 	 * @return The result. 
 	 */
-    private boolean checkBounds(Space space){
+    private boolean withinBounds(Space space){
 	if(space.row>0 && space.row<=9 && space.col>0 && space.col<=9) {
 		return true;
 	}
@@ -102,9 +86,9 @@ public class Human_Human_Game extends AbstractGame{
 	 * @param player the player that is doing the moving.
 	 * @return The result. 
 	 */
-	private boolean isNotOccupied(Space space) {
+	private boolean isOccupied(Space space) {
 		Player otherPlayer = board.getPlayers().other(board.currentPlayer());
-		return(!otherPlayer.getSpace().equals(space));
+		return(otherPlayer.getSpace().equals(space));
 	}
     
     
@@ -114,13 +98,13 @@ public class Human_Human_Game extends AbstractGame{
     private int checkInput(String command) {
     	if(command.substring(0,1).equals("V") || command.substring(0,1).equals("H")){
     		///
-    		return 1;
+    		return PLACE_WALL;
 		}
     	else if(command.length() == 2) {
     		////
-    		return 0;
+    		return MOVE_PLAYER;
     	}
-    	return -1;
+    	return INVALID_INPUT;
     }
     
 }

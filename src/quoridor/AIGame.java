@@ -14,8 +14,8 @@ public class AIGame extends AbstractGame{
 	}
 
 	@Override
-	protected boolean playNextTurn() {
+	protected void playNextTurn() {
 		// TODO Auto-generated method stub
-		return false;
+		//return false;
 	}
 }
