@@ -8,8 +8,8 @@ public class BoardPrinterTest {
 		Two<Player> players = Two.two(new Player("Alice", 5, 9), new Player("Bob", 5, 1));
 		Board board = new Board(players);
 		
-		board.addWall(new Wall (new Space (1,1), false));
-		board.addWall(new Wall (new Space (3,0), false));
+		board.addWall(new Wall (new Space (2,2), false));
+		board.addWall(new Wall (new Space (4,1), false));
 		/*
 		board.addWall(1, 0, false);
 		board.addWall(3, 0, false);

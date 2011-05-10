@@ -31,19 +31,6 @@ public class Space {
         return row;
     }
 
-//    public String getAlpha() {
-//        return intToAlpha(col);
-//    }
-//
-//    public int getNumeric() {
-//        return row;
-//    }
-//
-//    private String intToAlpha(int number) {
-//        number = 'a' - 1;  //convert int to its ascii decimal representation
-//        return Integer.toString(number);
-//    }
-
     public int alphaToInt(String alpha) {
         char alphaChar = alpha.charAt(0);
         int alphaAsInt = alphaChar - 'a' + 1;
@@ -93,4 +80,8 @@ public class Space {
         Space otherSpace = (Space) obj;
         return (this.col == otherSpace.col && this.row == otherSpace.row);
     }
+    
+	public String toString() {
+		return "[" + col + ", " + row + "]";
+	}
 }

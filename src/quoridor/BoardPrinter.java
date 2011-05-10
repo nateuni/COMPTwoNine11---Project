@@ -44,15 +44,15 @@ public class BoardPrinter {
 
 		// Fill array with wall locations
 		for (Wall wall : board.getWallList()) {
-			row = wall.getSpace().row;
-			col = wall.getSpace().col;
+			row = wall.getSpace().row - 1;
+			col = wall.getSpace().col - 1;
 			if (wall.isVertical()) wallArray[row][col] = 1;
 			else wallArray[row][col] = 2;
 		}
 
 		for (row = 0; row < 9; row++) {
 			// Print row of spaces
-			boardString.append(rowNum+"|");
+			boardString.append(rowNum+" |");
 			rowNum++;
 			for (col = 0; col < 9; col++) {
 				thisSpace = new Space(col+1, row+1);
@@ -70,7 +70,7 @@ public class BoardPrinter {
 			
 			// Print divider between rows
 			if (row != 8) {
-				boardString.append(" |");
+				boardString.append("  |");
 				for (col = 0; col < 9; col++) {
 					if (wallArray[row][col] == 2 || col != 0 && wallArray[row][col-1] == 2) boardString.append(H_WALL + H_WALL + H_WALL);
 					else boardString.append(hDivider);
@@ -85,7 +85,7 @@ public class BoardPrinter {
 			}
 		}
 		
-		boardString.append("  -----------------------------------\n   a   b   c   d   e   f   g   h   i\n");
+		boardString.append("   -----------------------------------\n    a   b   c   d   e   f   g   h   i");
 		
 		return boardString.toString();
 	}
