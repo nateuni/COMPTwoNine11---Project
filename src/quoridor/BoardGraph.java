@@ -3,9 +3,16 @@ package quoridor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A graph structure representing the spaces on the board.
+ * Used for finding shortest paths.
+ */
 public class BoardGraph {
 	private BoardNode [][] node;
 	
+	/**
+	 * Constructs a BoardGraph for a new board with no walls.
+	 */
 	public BoardGraph() {
 		int row, col;
 		node = new BoardNode [9][9];
@@ -28,6 +35,10 @@ public class BoardGraph {
 		}
 	}
 	
+	/**
+	 * Removes edges between nodes that have been separated by a wall.
+	 * @param wall The wall that has been added.
+	 */
 	public void addWall(Wall wall) {
 		int row = wall.getSpace().row() - 1;
 		int col = wall.getSpace().col() - 1;
@@ -46,6 +57,10 @@ public class BoardGraph {
 		}
 	}
 	
+	/**
+	 * Restores edges between nodes when a wall is removed (with undo).
+	 * @param wall The removed wall.
+	 */
 	public void removeWall(Wall wall) {
 		int row = wall.getSpace().row() - 1;
 		int col = wall.getSpace().col() - 1;
@@ -64,6 +79,13 @@ public class BoardGraph {
 		}
 	}
 	
+	/**
+	 * Performs a breadth first search to find the shortest path
+	 * from a start square to one of several finish squares.
+	 * @param start The start square
+	 * @param finish A list of possible finish squares
+	 * @return A list of spaces representing the path
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Space> findShortestPath(Space start, List<Space> finish) {
 		ArrayList<BoardNode> currentNodes = new ArrayList<BoardNode>();
@@ -107,6 +129,12 @@ public class BoardGraph {
 		return shortestPath;
 	}
 
+	/**
+	 * Check if a node should be added to the next step of search
+	 * @param thisNode The node to be checked.
+	 * @param pathSoFar The path taken to that node.
+	 * @return The node or null.
+	 */
 	@SuppressWarnings("unchecked")
 	private BoardNode tryNode(BoardNode thisNode, ArrayList<BoardNode> pathSoFar) {
 		if (thisNode == null) return null;

@@ -5,8 +5,8 @@ import quoridor.*;
 public class BoardPrinterTest {
 
 	public static void main(String[] args) {
-		Two<Player> players = Two.two(new Player("Alice", 5, 9), new Player("Bob", 5, 1));
-		Board board = new Board(players);
+		//Two<Player> players = Two.two(new Player("Alice", 5, 9), new Player("Bob", 5, 1));
+		Board board = new Board();
 		
 		board.addWall(new Wall (new Space (2,2), false));
 		board.addWall(new Wall (new Space (4,1), false));

@@ -1,7 +1,6 @@
 package quoridor;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BoardNode {
 	public Space space;

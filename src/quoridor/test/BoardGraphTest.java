@@ -16,22 +16,9 @@ public class BoardGraphTest {
 		board.addWall(new Wall (new Space (4,1), false));
 		board.print();
 		
-		BoardGraph bg = new BoardGraph();
-		bg.addWall(new Wall (new Space (2,2), false));
-		bg.addWall(new Wall (new Space (5,8), false));
-		bg.addWall(new Wall (new Space (7,8), false));
-		bg.addWall(new Wall (new Space (4,1), false));
 		ArrayList<Space> fin = new ArrayList<Space>();
-		fin.add(new Space (1,1));
-		fin.add(new Space (2,1));
-		fin.add(new Space (3,1));
-		fin.add(new Space (4,1));
-		fin.add(new Space (5,1));
-		fin.add(new Space (6,1));
-		fin.add(new Space (7,1));
-		fin.add(new Space (8,1));
-		fin.add(new Space (9,1));
-		System.out.println(bg.findShortestPath(new Space(5, 9), fin));
+		for (int i=1; i<=9; i++) fin.add(new Space (i,1));
+		System.out.println(board.graph.findShortestPath(new Space(5, 9), fin));
 	}
 
 }

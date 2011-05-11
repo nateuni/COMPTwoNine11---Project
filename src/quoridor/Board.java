@@ -13,6 +13,7 @@ public class Board {
     static final Space player1Start = new Space("e1");
     static final Space player2Start = new Space("e9");
     Player winner = null;
+    public BoardGraph graph = new BoardGraph();
 
     /**
      * A board takes Two players as a pair as defined by the Two Class.
@@ -166,6 +167,7 @@ public class Board {
     public boolean addWall(Wall wall) {
         if (wallList.size() < 20) {
             wallList.add(wall);
+            graph.addWall(wall);
             return true;
         }
         return false;
