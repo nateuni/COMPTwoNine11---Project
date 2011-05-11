@@ -61,7 +61,7 @@ public class Wall {
 	}
 	
 	private boolean validWall(Space space) {
-		return !(space.col == LAST_ROW_OR_COL || space.row == LAST_ROW_OR_COL);
+		return !(space.col() == LAST_ROW_OR_COL || space.row() == LAST_ROW_OR_COL);
 	}
 	
 	/**

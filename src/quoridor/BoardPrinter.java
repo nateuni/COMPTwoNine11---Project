@@ -44,8 +44,8 @@ public class BoardPrinter {
 
 		// Fill array with wall locations
 		for (Wall wall : board.getWallList()) {
-			row = wall.getSpace().row - 1;
-			col = wall.getSpace().col - 1;
+			row = wall.getSpace().row() - 1;
+			col = wall.getSpace().col() - 1;
 			if (wall.isVertical()) wallArray[row][col] = 1;
 			else wallArray[row][col] = 2;
 		}

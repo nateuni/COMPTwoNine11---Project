@@ -108,7 +108,7 @@ public class Board {
 			return false;
 		}
 		// swap them if necessary
-		if ((b.col < a.col) || (b.row < a.row)) {
+		if ((b.col() < a.col()) || (b.row() < a.row())) {
 			Space temp = a;
 			a = b;
 			b = temp;
@@ -144,7 +144,7 @@ public class Board {
 	// returns true if two spaces are adjacent to each other.
 	public boolean adjacentSpaces(Space a, Space b) {
 		// adjacent spaces will differ by at most 1 coordinate from each other
-		if ((Math.abs(a.col - b.col) + (Math.abs(a.row - b.row)) == 1)) {
+		if ((Math.abs(a.col() - b.col()) + (Math.abs(a.row() - b.row())) == 1)) {
 			return true;
 		}
 		return false;
@@ -155,13 +155,44 @@ public class Board {
 	 * @param wall the wall that is to be added to the list
 	 * @return The result.
 	 */
-	private boolean addWall(Wall wall) {
-		if (wallList.size() < 20) {
+	
+	/// Guys we will need to have this respond if the wall is not added, otherwise it will just skip over it.
+	public boolean addWall(Wall wall) {
+		if (wallList.size() < 20 && !existingWall(wall) && !wallOverLap(wall)) {
 			wallList.add(wall);
 			graph.addWall(wall);
 			return true;
+		} else {
+			return false;
+			//throw new RuntimeException("Invalid Wall");
 		}
-		return false;
+		
+	}
+	
+	private boolean existingWall(Wall wall){
+		return wallList.contains(wall);
+	}
+	
+	private boolean wallOverLap(Wall wall){
+		Wall tempWall;
+		if(wallList.size() == 0) {
+			return false;	
+		} else if(wallList.contains(rotateWallOrientation(wall))){
+			return true;
+		} else if((wall.getSpace().col() == 1 && wall.isHorizontal()) || (wall.getSpace().row() == 1 && wall.isVertical())) {
+			return false;
+		} else if(wall.isVertical()){
+				tempWall = new Wall(new Space(wall.getSpace().col(), wall.getSpace().row() - 1), wall.isVertical());
+		} else {
+				tempWall = new Wall(new Space(wall.getSpace().col() - 1, wall.getSpace().row()), wall.isVertical());
+		}
+		return (wallList.contains(tempWall));
+	}
+	
+	private Wall rotateWallOrientation(Wall wall){
+		Wall tempWall = new Wall(new Space(wall.getSpace().col(), wall.getSpace().row()), !wall.isVertical());
+		assert(!wall.equals(tempWall));
+		return tempWall;
 	}
 
 	private void removeWall(Wall wall) {

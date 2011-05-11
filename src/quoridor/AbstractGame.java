@@ -6,5 +6,8 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public abstract class AbstractGame {
-	
+	protected Board board;
+	public abstract void playGame();
+	protected abstract boolean setupGame();
+	protected abstract void playNextTurn();
 }

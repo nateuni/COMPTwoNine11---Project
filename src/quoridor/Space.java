@@ -2,8 +2,8 @@ package quoridor;
 
 public class Space {
 
-    public final int col;
-    public final int row;
+    private final int col;
+    private final int row;
 
     /**
      * @param coords

@@ -9,7 +9,7 @@ public class AIGame extends AbstractGame{
 
 	@Override
 	protected boolean setupGame() {
-		board = new Board(" X ", " O ");
+		board = new Board(new Two<Player>(new AIPlayer(1), new AIPlayer(2)));
 		return true;
 	}
 
