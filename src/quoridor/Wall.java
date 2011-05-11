@@ -8,34 +8,60 @@ public class Wall {
 	private Space space;
 	private Boolean vertical;
 	
+	private final int FIRST_CHAR = 0;
+	private final int SECOND_CHAR = 1;
+	private final int LAST_ROW_OR_COL = 9;
+	private final int WALL_TYPE = 2;
+	private final int VALID_INPUT = 3;
+	
 	/**
 	 * Sets the type and coordinates of the wall. 
-	 * @param x The x coordinate as an int. 
-	 * @param y The y coordinate as an int. 
+	 * @param space  
 	 * @param vertical If the wall is vertical or horizontal as defined by a boolean.
+	 * @exception 
 	 */
 	public Wall(Space space, Boolean vertical) {
-		this.space = space;
-		this.vertical = vertical;
+		if(!validWall(space)){
+			throw new RuntimeException("Not a valid Wall");
+		} else {
+			this.space = space;
+			this.vertical = vertical;
+		}
 	}
 
-        public Wall(String command) {
-                String wallType = command.substring(0,1).toUpperCase();
-                if(wallType.equals("H")) {
-                    this.vertical = false;
-                }
-                if(wallType.equals("V")) {
-                    this.vertical = true;
-                }
-                String spaceCoords = command.substring(1);
-                this.space = new Space(spaceCoords);
-        }
+	/**
+	 * Sets the type and coordinates of the wall. 
+	 * @param command  
+	 * @exception 
+	 */
+	public Wall(String command) {
+		assert(command.length() == VALID_INPUT);
+		String wallType = command.toLowerCase().substring(WALL_TYPE);
+		if(wallType.equals("h")) {
+			this.vertical = false;
+		} else if (wallType.equals("v")) {
+			this.vertical = true;
+		} else {
+			throw new RuntimeException("Invalid Wall");
+		}
+		
+		Space space = new Space(command.substring(FIRST_CHAR,SECOND_CHAR));
+		if(!validWall(space)){
+			throw new RuntimeException("Not a valid Wall");
+		} else {
+			this.space = space;
+		}		
+	}
 
 	/**
 	 * @return The space from which the wall is located.
 	 */
 	public Space getSpace() {
 		return space;
+	}
+	
+	private boolean validWall(Space space) {
+		return !(space.col == LAST_ROW_OR_COL || space.row == LAST_ROW_OR_COL);
 	}
 	
 	/**

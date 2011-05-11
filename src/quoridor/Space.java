@@ -13,8 +13,7 @@ public class Space {
         assert (coords.length() == 2);
         String alpha = coords.substring(0, 1);
         String numeric = coords.substring(1);
-        Space newSpace = new Space (alphaToInt(alpha), Integer.parseInt(numeric));
-        if(!withinBounds(newSpace)){
+        if(!withinBounds(alphaToInt(alpha),Integer.parseInt(numeric))){
         	throw new RuntimeException("Space is not within bounds of the board");
         } else {
         	this.col = alphaToInt(alpha);
@@ -29,8 +28,7 @@ public class Space {
      * @exception throws a RuntimeException if the space is out of bounds
      */
     public Space(String alpha, int numeric) {
-    	Space newSpace = new Space (alphaToInt(alpha), numeric);
-        if(!withinBounds(newSpace)){
+        if(!withinBounds(alphaToInt(alpha), numeric)){
         	throw new RuntimeException("Space is not within bounds of the board");
         } else {
         	this.col = alphaToInt(alpha);
@@ -44,8 +42,7 @@ public class Space {
      * @exception throws a RuntimeException if the space is out of bounds
      */
     public Space(int col, int row) {
-    	Space newSpace = new Space (col, row);
-        if(!withinBounds(newSpace)){
+        if(!withinBounds(col, row)){
         	throw new RuntimeException("Space is not within bounds of the board");
         } else {
         	this.col = col;
@@ -119,8 +116,8 @@ public class Space {
      * Checks the space is within the bounds of the board
      * @return The result.
      */
-    private boolean withinBounds(Space space) {
-        if (space.row > 0 && space.row <= 9 && space.col > 0 && space.col <= 9) {
+    private boolean withinBounds(int col, int row) {
+        if (row > 0 && row <= 9 && col > 0 && col <= 9) {
             return true;
         }
         return false;
