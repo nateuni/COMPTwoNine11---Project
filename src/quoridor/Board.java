@@ -83,17 +83,6 @@ public class Board {
     }
 
     /**
-     * Checks the space is within the bounds of the board
-     * @return The result.
-     */
-    private boolean withinBounds(Space space) {
-        if (space.row > 0 && space.row <= 9 && space.col > 0 && space.col <= 9) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Checks if the players move is occupied by another player.
      * @param space the space that the player wishes to move to.
      * @param player the player that is doing the moving.

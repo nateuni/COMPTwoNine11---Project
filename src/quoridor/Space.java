@@ -5,22 +5,52 @@ public class Space {
     public final int col;
     public final int row;
 
+    /**
+     * @param coords
+     * @exception throws a RuntimeException if the space is out of bounds
+     */
     public Space(String coords) {
         assert (coords.length() == 2);
         String alpha = coords.substring(0, 1);
-        this.col = alphaToInt(alpha);
         String numeric = coords.substring(1);
-        this.row = Integer.parseInt(numeric);
+        Space newSpace = new Space (alphaToInt(alpha), Integer.parseInt(numeric));
+        if(!withinBounds(newSpace)){
+        	throw new RuntimeException("Space is not within bounds of the board");
+        } else {
+        	this.col = alphaToInt(alpha);
+            this.row = Integer.parseInt(numeric);
+        }
     }
 
+    
+    /**
+     * @param alpha
+     * @param numeric
+     * @exception throws a RuntimeException if the space is out of bounds
+     */
     public Space(String alpha, int numeric) {
-        this.col = alphaToInt(alpha);
-        this.row = numeric;
+    	Space newSpace = new Space (alphaToInt(alpha), numeric);
+        if(!withinBounds(newSpace)){
+        	throw new RuntimeException("Space is not within bounds of the board");
+        } else {
+        	this.col = alphaToInt(alpha);
+            this.row = numeric;
+        }
     }
 
+    /**
+     * @param col
+     * @param row
+     * @exception throws a RuntimeException if the space is out of bounds
+     */
     public Space(int col, int row) {
-        this.col = col;
-        this.row = row;
+    	Space newSpace = new Space (col, row);
+        if(!withinBounds(newSpace)){
+        	throw new RuntimeException("Space is not within bounds of the board");
+        } else {
+        	this.col = col;
+            this.row = row;
+        }
     }
 
     public int col() {
@@ -84,4 +114,15 @@ public class Space {
 	public String toString() {
 		return "[" + col + ", " + row + "]";
 	}
+	
+	 /**
+     * Checks the space is within the bounds of the board
+     * @return The result.
+     */
+    private boolean withinBounds(Space space) {
+        if (space.row > 0 && space.row <= 9 && space.col > 0 && space.col <= 9) {
+            return true;
+        }
+        return false;
+    }
 }
