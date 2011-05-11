@@ -29,8 +29,8 @@ public class BoardGraph {
 	}
 	
 	public void addWall(Wall wall) {
-		int row = wall.getSpace().row();
-		int col = wall.getSpace().col();
+		int row = wall.getSpace().row() - 1;
+		int col = wall.getSpace().col() - 1;
 		assert(row>=0 && row<9 && col>=0 && col<9);
 		if (wall.isVertical()) {
 			node[row][col].right = null;
@@ -47,8 +47,8 @@ public class BoardGraph {
 	}
 	
 	public void removeWall(Wall wall) {
-		int row = wall.getSpace().row();
-		int col = wall.getSpace().col();
+		int row = wall.getSpace().row() - 1;
+		int col = wall.getSpace().col() - 1;
 		assert(row>=0 && row<9 && col>=0 && col<9);
 		if (wall.isVertical()) {
 			node[row][col].right = node[row][col+1];
