@@ -1,7 +1,5 @@
 package quoridor;
 
-import java.util.LinkedList;
-
 public class Validator {
 
 	Game sampleGame;
