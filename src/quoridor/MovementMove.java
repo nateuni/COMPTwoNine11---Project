@@ -11,6 +11,11 @@ public class MovementMove extends Move {
 	private Space to;
 	private boolean isJump;
 	
+	/**
+	 * Constructor
+	 * @param from the Space to be moved from
+	 * @param to the Space to be moved to
+	 */
 	public MovementMove(Space from, Space to) {
 		if (!this.validate(from, to)) {
         	throw new RuntimeException("Not a valid quoridor move");
@@ -45,6 +50,7 @@ public class MovementMove extends Move {
 		return false;
 	}
 	
+
 	public Space from() {
 		return from;
 	}

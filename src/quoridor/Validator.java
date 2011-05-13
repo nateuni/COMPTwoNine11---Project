@@ -9,10 +9,6 @@ public class Validator {
 	private static Queue<String> q = null;
 	
 	Game sampleGame;
-	// TODO complete this class using your project code
-	// you must implement the no-arg constructor and the check method
-	// you may add extra fields and methods to this class
-	// but the ProvidedTests code will only call the specified methods
 	
 	public Validator() {
 		sampleGame = new Game();

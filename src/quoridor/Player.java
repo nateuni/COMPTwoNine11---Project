@@ -11,6 +11,10 @@ public abstract class Player {
 	protected Space space;
 	int wallsLeft = 10;
 
+	/**
+	 * Constructor for a default player
+	 * @param playerNumber can be of value 1 or 2 - for default filling of fields: name, token. 
+	 */
 	public Player(int playerNumber) {
 		if (playerNumber == 1) {
 			name = " X ";
@@ -34,6 +38,10 @@ public abstract class Player {
 		return token;
 	}
 
+	/**
+	 * Checks if this player has reached their quota of walls
+	 * @return boolean true is player can still place walls
+	 */
 	public Boolean hasWallsLeft() {
 		return (wallsLeft > 0); 
 	}
@@ -73,6 +81,11 @@ public abstract class Player {
 		space = newSpace;
 	}
 
+	/**
+	 * Obtain the next moved to be played by this player.
+	 * Implementation will differ depending on instance of player object
+	 * @return move to be played
+	 */
 	public abstract Move getMove();
 
 	public String toString() {

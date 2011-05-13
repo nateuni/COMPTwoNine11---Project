@@ -23,6 +23,9 @@ public class HumanPlayer extends Player {
         setUpUser();
     }
 
+    /**
+     *Prompt user for player's name and set the name and token fields 
+     */
     public void setUpUser() {
         System.out.print("Enter player name: ");
         this.name = getFromUser();
@@ -30,6 +33,10 @@ public class HumanPlayer extends Player {
         setToken(getFromUser());
     }
 
+    /**
+     *Prompt user for a move. Prompt again if the entered move could not be interpreted.
+     *Return Move object representing the player's requested move
+     */
     @Override
     public Move getMove() {
         Move move = null;
@@ -43,6 +50,10 @@ public class HumanPlayer extends Player {
         return move;
     }
 
+    /**
+     *Interpret a String (user command) into a Move object
+     *@return interpreted move object or null if string could not be interpreted
+     */
     private Move handleInput(String command) {
         try {
             if (checkInput(command) == MOVE_PLAYER) {
@@ -67,7 +78,10 @@ public class HumanPlayer extends Player {
         return INVALID_INPUT;
     }
     
-    
+    /**
+	 * Read one line from user input
+	 * @return the read line as a String
+	 */
     protected String getFromUser() {
         try {
             while (true) {

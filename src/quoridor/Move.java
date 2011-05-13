@@ -7,11 +7,19 @@ package quoridor;
  */
 public abstract class Move {
 	public Player owner;
-	
+
+	/**
+	 * Sets the owner for this move object
+	 * @param player
+	 */
 	public void setOwner(Player player) {
 		this.owner = player;
 	}
 	
+	/**
+	 * Accessor for the owner of this move object
+	 * @return player owner
+	 */
 	public Player getOwner() {
 		return owner;
 	}

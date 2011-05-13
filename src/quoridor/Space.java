@@ -64,7 +64,11 @@ public class Space {
         return alphaAsInt;
     }
 
-    //obtain the space above
+    
+    /**
+     * obtain the space above
+     * @return space above this object
+     */
     public Space getUp() {
         if (row == 9) {
             return null;
@@ -72,7 +76,10 @@ public class Space {
         return new Space(col, row + 1);
     }
 
-    //obtain the space below
+    /**
+     * obtain the space below
+     * @return space below this object
+     */
     public Space getDown() {
         if (row == 1) {
             return null;
@@ -80,7 +87,10 @@ public class Space {
         return new Space(col, row - 1);
     }
 
-    //obtain the space to the left
+    /**
+     * obtain the space to the left
+     * @return space to left of this object
+     */
     public Space getLeft() {
         if (col == 1) {
             return null;
@@ -88,7 +98,10 @@ public class Space {
         return new Space(col - 1, row);
     }
 
-    //obtain the space to the right
+    /**
+     * obtain the space to the right
+     * @return space to right of this object
+     */
     public Space getRight() {
         if (col == 9) {
             return null;
