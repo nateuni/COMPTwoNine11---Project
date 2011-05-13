@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import quoridor.*;
 
-public class BoardGraphTest {
+public class BoardGraphTest { 
 
 	public static void main(String[] args) {
 		//Two<Player> players = Two.two(new Player("Alice", 5, 9), new Player("Bob", 5, 1));
