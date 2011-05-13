@@ -70,10 +70,10 @@ public class Board {
 	public boolean checkWin() {
 		Player player1 = players._1();
 		Player player2 = players._2();
-		if (player1.getSpace().equals(player2Start)) {
+		if (player1.getSpace().row() == player2Start.row()) {
 			winner = player1;
 			return true;
-		} else if (player2.getSpace().equals(player1Start)) {
+		} else if (player2.getSpace().row() == player1Start.row()) {
 			winner = player2;
 			return true;
 		}
