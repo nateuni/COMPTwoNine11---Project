@@ -241,7 +241,7 @@ public class Board {
 		if (move instanceof MovementMove) {
 			MovementMove mMove = (MovementMove) move;
 			if (!mMove.from().equals(currentPlayer.getSpace())) return false;
-			if (mMove.to().equals(players.other(currentPlayer).getSpace())) return false;
+			if (isOccupied(mMove.to())) return false;
 			if (mMove.isJump()) {
 				// TODO
 			}

@@ -30,7 +30,7 @@ public class MovementMove extends Move {
 	 * @return True if move is valid.
 	 */
 	private boolean validate(Space from, Space to) {
-		if (!from.equals(to)) return false;
+		if (from.equals(to)) return false;
 		if (Math.abs(from.row()-to.row()) <= 1 && Math.abs(from.col()-to.col()) <= 1) {
 			if (from.row()==to.row() || from.col()==to.col()) isJump = false;
 			else isJump = true;
