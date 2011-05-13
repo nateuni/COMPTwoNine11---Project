@@ -3,11 +3,13 @@ package quoridor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Game {
 
-	Board board = null;
-	Boolean gameOver = false;
+	private Board board = null;
+	private Boolean gameOver = false;
 
 	public Game() {
 		while (!setUp());
@@ -42,7 +44,7 @@ public class Game {
 	}
 
 	protected void playNextTurn() {
-
+		
 	}
 
 	protected void onTurnOver() {
