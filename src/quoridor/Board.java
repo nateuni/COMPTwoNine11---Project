@@ -70,10 +70,10 @@ public class Board {
 	public boolean checkWin() {
 		Player player1 = players._1();
 		Player player2 = players._2();
-		if (player1.getSpace().equals(player2Start)) {
+		if (player1.getSpace().row() == player2Start.row()) {
 			winner = player1;
 			return true;
-		} else if (player2.getSpace().equals(player1Start)) {
+		} else if (player2.getSpace().row() == player1Start.row()) {
 			winner = player2;
 			return true;
 		}
@@ -166,16 +166,29 @@ public class Board {
 	 * @param wall the wall that is to be added to the list
 	 * @return The result.
 	 */
-	
-	/// Guys we will need to have this respond if the wall is not added, otherwise it will just skip over it.
+	// Eddie: The checking is now in validMove()
 	public void addWall(Wall wall) {
-			wallList.add(wall);
-			graph.addWall(wall);
+		wallList.add(wall);
+		graph.addWall(wall);
+		currentPlayer.decrementWallTally();
 	}
-	
+
+
+
+	/**
+	 * Checks whether a placed wall will cut off the path.
+	 * @param wall
+	 * @return
+	 * TODO: Implementation
+	 */
+	private boolean cutsOffPath(Wall wall) {
+		return false;
+	}	
+
 	private void removeWall(Wall wall) {
 		wallList.remove(wall);
 		graph.removeWall(wall);
+		currentPlayer.incrementWallTally();
 	}
 
 	public String toString() {
@@ -207,7 +220,7 @@ public class Board {
 	 * Check that a move is valid with respect to the current board state.
 	 * @param move
 	 * @return True if the move is valid.
-	 * TODO: Implementation.
+	 * TODO: Make it throw exceptions for invalid moves.
 	 */
 	private boolean moveValid(Move move) {
 		if (move instanceof MovementMove) {
@@ -224,20 +237,20 @@ public class Board {
 				return false;
 			}
 			WallMove wMove = (WallMove) move;
-			Wall proposedWall = wMove.getWall();
+			Wall proposedWall = wMove.wall();
 				if(proposedWall.isHorizontal()
 				   &&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getDown())) {
 					return true;
 				}
 				else if(!proposedWall.isHorizontal() 
 						&&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getRight())) {
+					if (cutsOffPath(wMove.wall())) return false;
 					return true;
 				}
-			return false;				
-		}
+			}
 		return false;
 	}
-
+					
 	/**
 	 * Updates the board state with the move.
 	 * Assumes that the move is valid.
@@ -249,7 +262,7 @@ public class Board {
 			move.owner.setSpace(((MovementMove) move).to());
 		}
 		if (move instanceof WallMove) {
-			this.addWall(((WallMove) move).wall);
+			this.addWall(((WallMove) move).wall());
 		}
 	}
 
@@ -263,9 +276,8 @@ public class Board {
 			move.owner.setSpace(((MovementMove) move).from());
 		}
 		if (move instanceof WallMove) {
-			this.removeWall(((WallMove) move).wall);
+			this.removeWall(((WallMove) move).wall());
 		}
-
 		moveListIndex--;
 	}
 
