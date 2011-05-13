@@ -5,9 +5,9 @@ import java.util.Queue;
 import java.util.regex.Pattern;
 
 public class Validator {
-	
-	private Queue<String> q;
 
+	private static Queue<String> q = null;
+	
 	Game sampleGame;
 	// TODO complete this class using your project code
 	// you must implement the no-arg constructor and the check method
@@ -16,7 +16,6 @@ public class Validator {
 	
 	public Validator() {
 		sampleGame = new Game();
-		q = new LinkedList<String>();
 	}
 
 	/**
@@ -29,14 +28,18 @@ public class Validator {
 	 * @return validity of the list of moves
 	 */
 	
-	public static boolean check(String moveString){
+	public static boolean check(String moves){
+		breakUpMoves(moves);
+		//Pass queue to game and play game.
+		return false;
+	}
+	
+	private static void breakUpMoves(String string){
+		q = new LinkedList<String>();
 		Pattern p = Pattern.compile("[\\s]");
-		String[] result = p.split(moveString);
+		String[] result = p.split(string);
 		for(int i = 0; i < result.length; i++){
 			q.add(result[i]);
-			System.out.println(result[i]);
 		}
-		
-		return false;
 	}
 }

@@ -8,8 +8,8 @@ import java.util.Queue;
 
 public class Game {
 
-	Board board = null;
-	Boolean gameOver = false;
+	private Board board = null;
+	private Boolean gameOver = false;
 
 	public Game() {
 		while (!setUp());
@@ -44,7 +44,7 @@ public class Game {
 	}
 
 	protected void playNextTurn() {
-		//Queue<String> q = new LinkedList<String>();
+		
 	}
 
 	protected void onTurnOver() {
