@@ -234,6 +234,13 @@ public class Board {
 	 * TODO: Implementation.
 	 */
 	private boolean moveValid(Move move) {
+		if (move instanceof MovementMove) {
+			MovementMove mMove = (MovementMove) move;
+			if (wallIsHere(mMove.from(), mMove.to()) && mMove.from().equals(currentPlayer.getSpace()) && !mMove.to().equals(players.other(currentPlayer).getSpace()))
+		}
+		if (move instanceof WallMove) {
+			
+		}
 		return true;
 	}
 
@@ -245,7 +252,7 @@ public class Board {
 	 */
 	private void applyMove(Move move) {
 		if (move instanceof MovementMove) {
-			move.owner.setSpace(((MovementMove) move).to);
+			move.owner.setSpace(((MovementMove) move).to());
 		}
 		if (move instanceof WallMove) {
 			this.addWall(((WallMove) move).wall);
@@ -259,7 +266,7 @@ public class Board {
 		Move move = moveList.get(moveListIndex);
 
 		if (move instanceof MovementMove) {
-			move.owner.setSpace(((MovementMove) move).from);
+			move.owner.setSpace(((MovementMove) move).from());
 		}
 		if (move instanceof WallMove) {
 			this.removeWall(((WallMove) move).wall);
