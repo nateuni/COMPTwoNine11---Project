@@ -4,18 +4,22 @@ import java.util.ArrayList;
 
 import quoridor.*;
 
-public class BoardGraphTest {
+public class BoardGraphTest { 
 
 	public static void main(String[] args) {
 		//Two<Player> players = Two.two(new Player("Alice", 5, 9), new Player("Bob", 5, 1));
 		Board board = new Board();
 
-		System.out.println(board.addWall(new Wall(new Space(1,1), false)));
-		System.out.println(board.addWall(new Wall(new Space(2,1), false)));
-		System.out.println(board.addWall(new Wall(new Space(2,1), true)));
-		System.out.println(board.addWall(new Wall(new Space(1,1), true)));
-		System.out.println(board.addWall(new Wall(new Space(1,2), true)));
-		System.out.println(board.addWall(new Wall(new Space(1,7), false)));
+		board.addWall(new Wall(new Space(1,1), false));
+	//	System.out.println(board);
+		board.addWall(new Wall(new Space(2,1), false));
+//		System.out.println(board);
+		board.addWall(new Wall(new Space(2,1), true));
+	//	System.out.println(board);
+		board.addWall(new Wall(new Space(1,1), true));
+		//System.out.println(board);
+		board.addWall(new Wall(new Space(1,2), true));
+//		System.out.println(board);
 
 		BoardPrinter.setStyle(1);
 		board.print();

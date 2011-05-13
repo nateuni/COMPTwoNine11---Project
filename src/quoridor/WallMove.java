@@ -1,3 +1,4 @@
+
 package quoridor;
 
 /**
@@ -5,6 +6,7 @@ package quoridor;
  * @author Team Stump
  */
 public class WallMove extends Move {
+
 	private Wall wall;
 	
 	public WallMove(Wall wall) {

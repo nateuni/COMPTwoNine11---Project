@@ -143,4 +143,6 @@ public class BoardGraph {
 		thisNode.path.add(thisNode);
 		return thisNode;
 	}
+	
+	
 }
