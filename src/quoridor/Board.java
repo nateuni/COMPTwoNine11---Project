@@ -28,7 +28,7 @@ public class Board {
 		currentPlayer = players._1();
 	}
 
-	//AI scenario
+	//TEST scenario
 	public Board() {
 		Player player1 = new AIPlayer(1);
 		Player player2 = new AIPlayer(2);
@@ -98,22 +98,21 @@ public class Board {
 	}
 
 	/**
-	 * Checks if the players move is occupied by another player.
-	 * @param space
-	 *            the space that is being queried
-	 * @return true is space is occupied by player
+	 * Checks if a wall exists between two given spaces.
+	 * @param space a, b the spaces that represent the junction being queried
+	 * @return true if a wall exists between these two walls.
 	 */
 	public boolean wallIsHere(Space a, Space b) {
 		if (!(adjacentSpaces(a, b))) {
 			return false;
 		}
-		// swap them if necessary
+		// swap them if out of order (a should always be above B /left of B)
 		if ((b.col() < a.col()) || (b.row() < a.row())) {
 			Space temp = a;
 			a = b;
 			b = temp;
 		}
-		LinkedList<Wall> toConsider = null;
+		LinkedList<Wall> toConsider = new LinkedList<Wall>();
 		// obtain the walls that we need to consider in order for
 		// a->b to be blocked by a wall.
 
@@ -150,6 +149,18 @@ public class Board {
 		return false;
 	}
 
+	public boolean wallOverlaps(Wall wall) {
+		Space sideA = wall.getSpace();	//the top left space for this wall
+		Space sideB = null;//the space on opposite side of wall to sideA
+		if(wall.isHorizontal()) {
+			sideB = sideA.getDown();
+		}
+		else {
+			sideB = sideA.getRight();
+		}
+		return wallIsHere(sideA, sideB);
+	}
+	
 	/**
 	 * If less then 20 walls, it adds the individual wall to the boards list, and returns the result.
 	 * @param wall the wall that is to be added to the list
@@ -157,49 +168,15 @@ public class Board {
 	 */
 	
 	/// Guys we will need to have this respond if the wall is not added, otherwise it will just skip over it.
-	public boolean addWall(Wall wall) {
-		if (wallList.size() < 20 && !existingWall(wall) && !wallOverLap(wall)) {
+	public void addWall(Wall wall) {
 			wallList.add(wall);
 			graph.addWall(wall);
-			return true;
-		} else {
-			return false;
-			//throw new RuntimeException("Invalid Wall");
-		}
-		
 	}
 	
-	private boolean existingWall(Wall wall){
-		return wallList.contains(wall);
-	}
-	
-	private boolean wallOverLap(Wall wall){
-		Wall tempWall;
-		if(wallList.size() == 0) {
-			return false;	
-		} else if(wallList.contains(rotateWallOrientation(wall))){
-			return true;
-		} else if((wall.getSpace().col() == 1 && wall.isHorizontal()) || (wall.getSpace().row() == 1 && wall.isVertical())) {
-			return false;
-		} else if(wall.isVertical()){
-				tempWall = new Wall(new Space(wall.getSpace().col(), wall.getSpace().row() - 1), wall.isVertical());
-		} else {
-				tempWall = new Wall(new Space(wall.getSpace().col() - 1, wall.getSpace().row()), wall.isVertical());
-		}
-		return (wallList.contains(tempWall));
-	}
-	
-	private Wall rotateWallOrientation(Wall wall){
-		Wall tempWall = new Wall(new Space(wall.getSpace().col(), wall.getSpace().row()), !wall.isVertical());
-		assert(!wall.equals(tempWall));
-		return tempWall;
-	}
-
 	private void removeWall(Wall wall) {
 		wallList.remove(wall);
 		graph.removeWall(wall);
 	}
-
 
 	public String toString() {
 		return BoardPrinter.buildBoardString(this);
@@ -218,7 +195,6 @@ public class Board {
 	public boolean makeMove(Move move) {
 		if (!moveValid(move)) return false; // Maybe this should throw an exception instead?
 		if (moveList.size() > 0) {
-			assert (moveListIndex >= 0);
 			while (moveListIndex < moveList.size()-1)
 				moveList.removeLast();
 		}
@@ -234,7 +210,32 @@ public class Board {
 	 * TODO: Implementation.
 	 */
 	private boolean moveValid(Move move) {
-		return true;
+		if (move instanceof MovementMove) {
+			MovementMove mMove = (MovementMove) move;
+			if (!wallIsHere(mMove.from(), mMove.to()) 
+				&& mMove.from().equals(currentPlayer.getSpace()) 
+				&& !isOccupied(mMove.to())){
+			return true;
+			}
+			return false;
+		}	
+		if (move instanceof WallMove) {
+			if(!currentPlayer.hasWallsLeft()) {
+				return false;
+			}
+			WallMove wMove = (WallMove) move;
+			Wall proposedWall = wMove.getWall();
+				if(proposedWall.isHorizontal()
+				   &&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getDown())) {
+					return true;
+				}
+				else if(!proposedWall.isHorizontal() 
+						&&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getRight())) {
+					return true;
+				}
+			return false;				
+		}
+		return false;
 	}
 
 	/**
@@ -245,7 +246,7 @@ public class Board {
 	 */
 	private void applyMove(Move move) {
 		if (move instanceof MovementMove) {
-			move.owner.setSpace(((MovementMove) move).to);
+			move.owner.setSpace(((MovementMove) move).to());
 		}
 		if (move instanceof WallMove) {
 			this.addWall(((WallMove) move).wall);
@@ -259,7 +260,7 @@ public class Board {
 		Move move = moveList.get(moveListIndex);
 
 		if (move instanceof MovementMove) {
-			move.owner.setSpace(((MovementMove) move).from);
+			move.owner.setSpace(((MovementMove) move).from());
 		}
 		if (move instanceof WallMove) {
 			this.removeWall(((WallMove) move).wall);

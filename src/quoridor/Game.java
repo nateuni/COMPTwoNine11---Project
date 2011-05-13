@@ -7,11 +7,8 @@ import java.io.Serializable;
 
 public class Game implements Serializable {
 
-	/**
-	 * 
-	 */
-	Board board = null;
-	Boolean gameOver = false;
+	private Board board = null;
+	private Boolean gameOver = false;
 
 	public Game() {
 		while (!setUp());
@@ -46,7 +43,7 @@ public class Game implements Serializable {
 	}
 
 	protected void playNextTurn() {
-
+		
 	}
 
 	protected void onTurnOver() {
