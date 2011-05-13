@@ -3,7 +3,8 @@ package quoridor;
 import java.util.LinkedList;
 
 /**
- * A board has Two Players and up to 20 walls (10 per player) and tracks each of their coordinates.
+ * A board has Two Players and up to 20 placed walls (10 per player) and tracks each of their coordinates.
+ * @author Team Stump
  */
 public class Board {
 
@@ -28,7 +29,9 @@ public class Board {
 		currentPlayer = players._1();
 	}
 
-	//TEST scenario
+	/**
+	 * A constructor with no args - used for testing purposes
+	 */
 	public Board() {
 		Player player1 = new AIPlayer(1);
 		Player player2 = new AIPlayer(2);
@@ -53,20 +56,18 @@ public class Board {
 		return this.wallList;
 	}
 
+
 	/**
-	 * Checks that both the x and y coordinates are with in the confides of the 9 x 9 board, by calling checkPointsVals.
-	 * @param x The x-coordinate as an int.
-	 * @param y The y-coordinate as an int.
-	 * @return The result.
+	 *Switch the currentPlayer (for next player's turn) 
 	 */
-	//protected boolean checkMove (Space space, Player player) {
-	//	return(checkBounds(space) && checkSpaceForOtherPlayer(space, player) && checkSpaceIsAdjacent(space, player) && checkIsNotSameSpace(space, player));
-	//}
-	//switch the current player (next player's turn)
 	public void nextPlayer() {
 		currentPlayer = players.other(currentPlayer);
 	}
 
+	/**
+	 * Tests if game has been won.
+	 * @return true is game is over, false otherwise
+	 */
 	public boolean checkWin() {
 		Player player1 = players._1();
 		Player player2 = players._2();
@@ -80,7 +81,11 @@ public class Board {
 		return false;
 	}
 
-	//accessor for currentplayer
+	
+	/**
+	 * accessor for current player
+	 * @return currentPlayer
+	 */
 	public Player currentPlayer() {
 		return currentPlayer;
 	}
@@ -140,7 +145,14 @@ public class Board {
 		return false;
 	}
 
-	// returns true if two spaces are adjacent to each other.
+
+	
+	/**
+	 * Tests if space a is adjacent to space b on the board
+	 * @param a
+	 * @param b
+	 * @return true if a and b are adjacent
+	 */
 	public boolean adjacentSpaces(Space a, Space b) {
 		// adjacent spaces will differ by at most 1 coordinate from each other
 		if ((Math.abs(a.col() - b.col()) + (Math.abs(a.row() - b.row())) == 1)) {
@@ -162,11 +174,9 @@ public class Board {
 	}
 	
 	/**
-	 * If less then 20 walls, it adds the individual wall to the boards list, and returns the result.
+	 * Adds a given wall to the board (assumes valid)
 	 * @param wall the wall that is to be added to the list
-	 * @return The result.
-	 */
-	// Eddie: The checking is now in validMove()
+	 */ 
 	public void addWall(Wall wall) {
 		wallList.add(wall);
 		graph.addWall(wall);
@@ -185,16 +195,27 @@ public class Board {
 		return false;
 	}	
 
+	/**
+	 * Remove a previously played wall from the board
+	 * @param wall
+	 */
 	private void removeWall(Wall wall) {
 		wallList.remove(wall);
 		graph.removeWall(wall);
 		currentPlayer.incrementWallTally();
 	}
 
+	/**
+	 * Returns a String representation of the board's current state
+	 * for printing purposes
+	 */
 	public String toString() {
 		return BoardPrinter.buildBoardString(this);
 	}
 
+	/**
+	 * Print the board layout to console
+	 */
 	public void print() {
 		System.out.println(this);
 	}
@@ -254,8 +275,8 @@ public class Board {
 	/**
 	 * Updates the board state with the move.
 	 * Assumes that the move is valid.
-	 * Used for new (checked) moves or redo.
-	 * @param move
+	 * Used for new (validated) moves or redo.
+	 * @param move to be played
 	 */
 	private void applyMove(Move move) {
 		if (move instanceof MovementMove) {
