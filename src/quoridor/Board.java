@@ -7,10 +7,10 @@ import java.util.LinkedList;
  */
 public class Board {
 
-	private Two<Player> players;
+	public Two<Player> players;
 	private Player currentPlayer;
-	private LinkedList<Wall> wallList;
-	private LinkedList<Move> moveList;
+	private LinkedList<Wall> wallList = new LinkedList<Wall>();
+	private LinkedList<Move> moveList = new LinkedList<Move>();
 	private int moveListIndex = -1;
 	static final Space player1Start = new Space("e1");
 	static final Space player2Start = new Space("e9");
@@ -24,7 +24,6 @@ public class Board {
 	 */
 	public Board(Two<Player> players) {
 		this.players = players;
-		wallList = new LinkedList<Wall>();
 		currentPlayer = players._1();
 	}
 
@@ -33,7 +32,6 @@ public class Board {
 		Player player1 = new AIPlayer(1);
 		Player player2 = new AIPlayer(2);
 		this.players = new Two<Player>(player1, player2);
-		wallList = new LinkedList<Wall>();
 		currentPlayer = players._1();
 	}
 
@@ -223,10 +221,11 @@ public class Board {
 		if (!moveValid(move)) return false; // Maybe this should throw an exception instead?
 		if (moveList.size() > 0) {
 			assert (moveListIndex >= 0);
-			while (moveListIndex < moveList.size()-1)
+			while (moveList.size() > moveListIndex + 1)
 				moveList.removeLast();
 		}
 		moveList.add(move);
+		moveListIndex++;
 		applyMove(move);
 		return true;
 	}
