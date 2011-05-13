@@ -155,24 +155,18 @@ public class Board {
 	 * @param wall the wall that is to be added to the list
 	 * @return The result.
 	 */
-	
+
 	/// Guys we will need to have this respond if the wall is not added, otherwise it will just skip over it.
-	public boolean addWall(Wall wall) {
-		if (wallList.size() < 20 && !existingWall(wall) && !wallOverLap(wall)) {
-			wallList.add(wall);
-			graph.addWall(wall);
-			return true;
-		} else {
-			return false;
-			//throw new RuntimeException("Invalid Wall");
-		}
-		
+	// Eddie: The checking is now in validMove()
+	public void addWall(Wall wall) {
+		wallList.add(wall);
+		graph.addWall(wall);
 	}
-	
+
 	private boolean existingWall(Wall wall){
 		return wallList.contains(wall);
 	}
-	
+
 	private boolean wallOverLap(Wall wall){
 		Wall tempWall;
 		if(wallList.size() == 0) {
@@ -182,13 +176,23 @@ public class Board {
 		} else if((wall.getSpace().col() == 1 && wall.isHorizontal()) || (wall.getSpace().row() == 1 && wall.isVertical())) {
 			return false;
 		} else if(wall.isVertical()){
-				tempWall = new Wall(new Space(wall.getSpace().col(), wall.getSpace().row() - 1), wall.isVertical());
+			tempWall = new Wall(new Space(wall.getSpace().col(), wall.getSpace().row() - 1), wall.isVertical());
 		} else {
-				tempWall = new Wall(new Space(wall.getSpace().col() - 1, wall.getSpace().row()), wall.isVertical());
+			tempWall = new Wall(new Space(wall.getSpace().col() - 1, wall.getSpace().row()), wall.isVertical());
 		}
 		return (wallList.contains(tempWall));
 	}
-	
+
+	/**
+	 * Checks whether a placed wall will cut off the path.
+	 * @param wall
+	 * @return
+	 * TODO: Implementation
+	 */
+	private boolean cutsOffPath(Wall wall) {
+		return false;
+	}	
+
 	private Wall rotateWallOrientation(Wall wall){
 		Wall tempWall = new Wall(new Space(wall.getSpace().col(), wall.getSpace().row()), !wall.isVertical());
 		assert(!wall.equals(tempWall));
@@ -231,15 +235,28 @@ public class Board {
 	 * Check that a move is valid with respect to the current board state.
 	 * @param move
 	 * @return True if the move is valid.
-	 * TODO: Implementation.
+	 * TODO: Make it throw exceptions for invalid moves.
 	 */
 	private boolean moveValid(Move move) {
 		if (move instanceof MovementMove) {
 			MovementMove mMove = (MovementMove) move;
-			if (wallIsHere(mMove.from(), mMove.to()) && mMove.from().equals(currentPlayer.getSpace()) && !mMove.to().equals(players.other(currentPlayer).getSpace()))
+			if (!mMove.from().equals(currentPlayer.getSpace())) return false;
+			if (mMove.to().equals(players.other(currentPlayer).getSpace())) return false;
+			if (mMove.isJump()) {
+				// TODO
+			}
+			else {
+				if (wallIsHere(mMove.from(), mMove.to())) return false;
+				return true;
+			}
 		}
 		if (move instanceof WallMove) {
-			
+			WallMove wMove = (WallMove) move;
+			if (existingWall(wMove.wall())) return false;
+			if (wallOverLap(wMove.wall())) return false;
+			if (cutsOffPath(wMove.wall())) return false;
+			if (wallList.size() >= 20) return false;
+			return true;
 		}
 		return true;
 	}
@@ -255,7 +272,7 @@ public class Board {
 			move.owner.setSpace(((MovementMove) move).to());
 		}
 		if (move instanceof WallMove) {
-			this.addWall(((WallMove) move).wall);
+			this.addWall(((WallMove) move).wall());
 		}
 	}
 
@@ -269,7 +286,7 @@ public class Board {
 			move.owner.setSpace(((MovementMove) move).from());
 		}
 		if (move instanceof WallMove) {
-			this.removeWall(((WallMove) move).wall);
+			this.removeWall(((WallMove) move).wall());
 		}
 
 		moveListIndex--;

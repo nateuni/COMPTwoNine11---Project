@@ -5,9 +5,13 @@ package quoridor;
  * @author Team Stump
  */
 public class WallMove extends Move {
-	public Wall wall;
+	private Wall wall;
 	
 	public WallMove(Wall wall) {
 		this.wall = wall;
+	}
+	
+	public Wall wall() {
+		return wall;
 	}
 }
