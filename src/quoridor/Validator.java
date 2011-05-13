@@ -1,6 +1,12 @@
 package quoridor;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.regex.Pattern;
+
 public class Validator {
+	
+	private Queue<String> q;
 
 	Game sampleGame;
 	// TODO complete this class using your project code
@@ -10,6 +16,7 @@ public class Validator {
 	
 	public Validator() {
 		sampleGame = new Game();
+		q = new LinkedList<String>();
 	}
 
 	/**
@@ -22,5 +29,14 @@ public class Validator {
 	 * @return validity of the list of moves
 	 */
 	
-
+	public static boolean check(String moveString){
+		Pattern p = Pattern.compile("[\\s]");
+		String[] result = p.split(moveString);
+		for(int i = 0; i < result.length; i++){
+			q.add(result[i]);
+			System.out.println(result[i]);
+		}
+		
+		return false;
+	}
 }
