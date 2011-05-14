@@ -6,10 +6,10 @@ package quoridor;
  * Thus being - Their name, their token as to be displayed on the board and their current space. 
  */
 public abstract class Player {
-	protected String name;
-	protected String token;
-	protected Space space;
-	int wallsLeft = 10;
+	private String name;
+	private String token;
+	private Space space;
+	private int wallsLeft = 10;
 
 	/**
 	 * Constructor for a default player
@@ -69,6 +69,10 @@ public abstract class Player {
 	public String getName() {
 		return name;
 	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
 
 	/**
 	 * @return The players current Space as a pointer to a Space object. 
@@ -80,7 +84,7 @@ public abstract class Player {
 	public void setSpace(Space newSpace) {
 		space = newSpace;
 	}
-
+	
 	/**
 	 * Obtain the next moved to be played by this player.
 	 * Implementation will differ depending on instance of player object

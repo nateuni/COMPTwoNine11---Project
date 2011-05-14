@@ -4,11 +4,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.regex.Pattern;
 
 public class Game implements Serializable {
 
 	private Board board = null;
 	private Boolean gameOver = false;
+	private Queue<String> q = null;
+	private boolean validatorGame = false; 
+	private final boolean INVALID_INPUT = false;
 
 	/**
 	 *Constructor
@@ -16,6 +22,15 @@ public class Game implements Serializable {
 	 */
 	public Game() {
 		while (!setUp());
+	}
+	
+	public Game(String string) {
+		if(string == null){
+			throw new RuntimeException("String cannot be null");
+		}
+		this.breakUpStringIntoQueue(string);
+		this.validatorGame = true;
+		board = new Board(new Two<Player>(new AIPlayer(1), new AIPlayer(2)));
 	}
 
 	
@@ -47,11 +62,15 @@ public class Game implements Serializable {
 	/**
 	 * this function controls the flow of game play.
 	 */
-	public void playGame() {
+	public boolean playGame() {
 		while (!gameOver) {
 			System.out.println(board);
-			playNextTurn();
+			if(playNextTurn() == INVALID_INPUT){
+				return false;
+			}
 		}
+		// need to make a way to check if game is over, eg check if queue is empty for the validator. 
+		return gameOver;
 	}
 
 	/**
@@ -60,8 +79,16 @@ public class Game implements Serializable {
 	 * attempt to play the move on the board
 	 * prompt user again if the move is invalid
 	 */
-	protected void playNextTurn() {
-		
+	protected boolean playNextTurn() {
+		if(validatorGame){
+			if(q.size() > 0){
+				return board.makeMoveFromInput(q.remove());
+			}
+		} else {
+			System.out.println(board.whosTurn()+"'s Turn:");
+			return board.makeMoveFromInput(this.getFromUser());
+		}
+		return false;
 	}
 
 	/**
@@ -92,6 +119,15 @@ public class Game implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	private void breakUpStringIntoQueue(String string){
+		q = new LinkedList<String>();
+		Pattern p = Pattern.compile("[\\s]");
+		String[] result = p.split(string);
+		for(int i = 0; i < result.length; i++){
+			q.add(result[i]);
 		}
 	}
 }

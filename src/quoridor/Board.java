@@ -17,6 +17,8 @@ public class Board {
 	static final Space player2Start = new Space("e9");
 	Player winner = null;
 	public BoardGraph graph = new BoardGraph();
+	private final int MOVEMENT_MOVE = 2;
+	private final int WALL_MOVE = 3;
 
 	/**
 	 * A board takes Two players as a pair as defined by the Two Class.
@@ -310,5 +312,33 @@ public class Board {
 
 		moveListIndex++;
 		applyMove(moveList.get(moveListIndex));
+	}
+	
+	public String whosTurn(){
+		return this.currentPlayer.toString();
+	}
+	
+	public boolean makeMoveFromInput(String moveInput){
+		Move move;
+		if(moveInput.length() == MOVEMENT_MOVE){
+			try {
+				move = new MovementMove(this.currentPlayer.getSpace(), new Space(moveInput));
+				move.owner = currentPlayer;
+			} catch(Exception e) {
+				return false;
+			}
+		} else if(moveInput.length() == WALL_MOVE && moveInput.substring(2).toLowerCase() == "v" && moveInput.substring(2).toLowerCase() == "h") {
+			try {
+				move = new WallMove(new Wall(moveInput));
+				move.owner = currentPlayer;
+			} catch(Exception e) {
+				return false;
+			}
+			
+		} else {
+			return false;
+		}
+		
+		return this.makeMove(move);
 	}
 }
