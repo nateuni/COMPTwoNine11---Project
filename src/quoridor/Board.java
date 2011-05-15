@@ -249,9 +249,10 @@ public class Board {
 		if (move instanceof MovementMove) {
 			MovementMove mMove = (MovementMove) move;
 			if (!wallIsHere(mMove.from(), mMove.to()) 
-				&& mMove.from().equals(currentPlayer.getSpace()) 
-				&& !isOccupied(mMove.to())){
-			return true;
+					&& mMove.from().equals(currentPlayer.getSpace()) 
+					&& !isOccupied(mMove.to()) 
+					&& adjacentSpaces(mMove.from(), mMove.to())){
+				return true;
 			}
 			return false;
 		}	
@@ -261,16 +262,16 @@ public class Board {
 			}
 			WallMove wMove = (WallMove) move;
 			Wall proposedWall = wMove.wall();
-				if(proposedWall.isHorizontal()
-				   &&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getDown())) {
-					return true;
-				}
-				else if(!proposedWall.isHorizontal() 
-						&&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getRight())) {
-					if (cutsOffPath(wMove.wall())) return false;
-					return true;
-				}
+			if(proposedWall.isHorizontal()
+					&&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getDown())) {
+				return true;
 			}
+			else if(!proposedWall.isHorizontal() 
+					&&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getRight())) {
+				if (cutsOffPath(wMove.wall())) return false;
+				return true;
+			}
+		}
 		return false;
 	}
 					
@@ -322,21 +323,22 @@ public class Board {
 	
 	public void makeMoveFromInput(String moveInput){
 		Move move;
-		
-		if (moveInput.equalsIgnoreCase("undo")) undo();
-		else if (moveInput.equalsIgnoreCase("redo")) redo();
-		else if (moveInput.length() == 7 && moveInput.substring(0, 6).equalsIgnoreCase("style ")) BoardPrinter.setStyle(moveInput.substring(6, 7));
-		else {	// Regular move
+		if (moveInput.equalsIgnoreCase("undo")) {
+			undo();
+		} else if(moveInput.equalsIgnoreCase("redo")) {
+			redo();
+		} else if (moveInput.length() == 7 && moveInput.substring(0, 6).equalsIgnoreCase("style ")) {
+			BoardPrinter.setStyle(moveInput.substring(6, 7));
+		} else {	// Regular move
 			if (moveInput.length() == MOVEMENT_MOVE) {
 				move = new MovementMove(this.currentPlayer.getSpace(), new Space(moveInput));
 				move.owner = currentPlayer;
-			}
-			else if (moveInput.length() == WALL_MOVE) {
+			} else if (moveInput.length() == WALL_MOVE) {
 				move = new WallMove(new Wall(moveInput));
 				move.owner = currentPlayer;
+			} else {
+				throw new RuntimeException("Invalid input");
 			}
-			else throw new RuntimeException("Invalid input");
-
 			makeMove(move);
 		}
 	}
