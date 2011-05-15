@@ -17,18 +17,24 @@ public abstract class Player {
 	 */
 	public Player(int playerNumber) {
 		if (playerNumber == 1) {
-			name = " X ";
+			name = "Player 1";
+			token = " X ";
 			this.space = new Space("e1");
 		}
-		else {
-			name = " O ";
+		else if (playerNumber == 2) {
+			token = " O ";
+			name = "Player 2";
 			this.space = new Space("e9");
 		}
-		setToken(name);
+		else throw new RuntimeException("Invalid player number");
 	}
 
 	protected void setToken(String t) {
-		this.token = t;
+		if (t.length() == 0) return;
+		else if (t.length() == 1) token = " " + t + " ";
+		else if (t.length() == 2) token = t + " ";
+		else if (t.length() == 3) token = t;
+		else token = t.substring(0, 3);
 	}
 
 	/**

@@ -16,6 +16,12 @@ public class Game implements Serializable {
 	private boolean validatorGame = false; 
 	private final boolean INVALID_INPUT = false;
 
+	public static void main(String[] args) {
+		Game game = new Game();
+		game.playGame();
+
+	}
+
 	/**
 	 *Constructor
 	 *Will only return once game has been set up and is ready to play 
@@ -60,16 +66,17 @@ public class Game implements Serializable {
 	}
 
 	/**
-	 * this function controls the flow of game play.
+	 * This function controls the flow of game play.
 	 */
 	public boolean playGame() {
 		while (!gameOver) {
 			System.out.println(board);
 			if(playNextTurn() == INVALID_INPUT){
-				return false;
+				if (validatorGame) return false;
+				else System.out.println("Invalid move");
 			}
 		}
-		// need to make a way to check if game is over, eg check if queue is empty for the validator. 
+		// need to make a way to check if game is over, eg check if queue is empty for the validator.
 		return gameOver;
 	}
 

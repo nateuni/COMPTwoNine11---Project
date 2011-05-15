@@ -70,10 +70,10 @@ public class Space {
      * @return space above this object
      */
     public Space getUp() {
-        if (row == 9) {
+        if (row == 1) {
             return null;
         }
-        return new Space(col, row + 1);
+        return new Space(col, row - 1);
     }
 
     /**
@@ -81,10 +81,10 @@ public class Space {
      * @return space below this object
      */
     public Space getDown() {
-        if (row == 1) {
+        if (row == 9) {
             return null;
         }
-        return new Space(col, row - 1);
+        return new Space(col, row + 1);
     }
 
     /**

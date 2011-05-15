@@ -27,7 +27,7 @@ public class BoardPrinter {
 	}
 
 	public static String buildBoardString(Board board) {
-		StringBuilder boardString = new StringBuilder("  -----------------------------------\n");
+		StringBuilder boardString = new StringBuilder("   -----------------------------------\n");
 		Space thisSpace;
 		int row, col, rowNum = 1;
 

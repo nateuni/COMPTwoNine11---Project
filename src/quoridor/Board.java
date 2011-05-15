@@ -123,21 +123,21 @@ public class Board {
 
 		// for a,b to in same row
 		if (b.equals(a.getRight())) {
-			toConsider.add(new Wall(a, true));
-			if (a.getUp() != null) {
+			if (a.getDown() != null)
+				toConsider.add(new Wall(a, true));
+			if (a.getUp() != null)
 				toConsider.add(new Wall(a.getUp(), true));
-			}
 		}
 
 		// for a,b in same column
 		if (b.equals(a.getDown())) {
-			toConsider.add(new Wall(a, false));
-			if (a.getLeft() != null) {
+			if (a.getRight() != null)
+				toConsider.add(new Wall(a, false));
+			if (a.getLeft() != null)
 				toConsider.add(new Wall(a.getLeft(), false));
-			}
 		}
 		// see if any of these walls actually exist
-		while (toConsider != null) {
+		while (toConsider.size() > 0) {
 			if (wallList.contains(toConsider.remove())) {
 				return true;
 			}
@@ -287,6 +287,7 @@ public class Board {
 		if (move instanceof WallMove) {
 			this.addWall(((WallMove) move).wall());
 		}
+		currentPlayer = players.other(currentPlayer);
 	}
 
 	/**
@@ -301,6 +302,7 @@ public class Board {
 		if (move instanceof WallMove) {
 			this.removeWall(((WallMove) move).wall());
 		}
+		currentPlayer = players.other(currentPlayer);
 		moveListIndex--;
 	}
 
@@ -327,7 +329,7 @@ public class Board {
 			} catch(Exception e) {
 				return false;
 			}
-		} else if(moveInput.length() == WALL_MOVE && moveInput.substring(2).toLowerCase() == "v" && moveInput.substring(2).toLowerCase() == "h") {
+		} else if(moveInput.length() == WALL_MOVE && (moveInput.substring(2).equalsIgnoreCase("v") || moveInput.substring(2).equalsIgnoreCase("h"))) {
 			try {
 				move = new WallMove(new Wall(moveInput));
 				move.owner = currentPlayer;

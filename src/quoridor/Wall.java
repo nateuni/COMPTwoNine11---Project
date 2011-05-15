@@ -9,7 +9,7 @@ public class Wall {
 	private Boolean vertical;
 	
 	private final int FIRST_CHAR = 0;
-	private final int SECOND_CHAR = 1;
+	private final int THIRD_CHAR = 2;
 	private final int LAST_ROW_OR_COL = 9;
 	private final int WALL_TYPE = 2;
 	private final int VALID_INPUT = 3;
@@ -37,15 +37,15 @@ public class Wall {
 	public Wall(String command) {
 		assert(command.length() == VALID_INPUT);
 		String wallType = command.toLowerCase().substring(WALL_TYPE);
-		if(wallType.equals("h")) {
+		if(wallType.equalsIgnoreCase("h")) {
 			this.vertical = false;
-		} else if (wallType.equals("v")) {
+		} else if (wallType.equalsIgnoreCase("v")) {
 			this.vertical = true;
 		} else {
 			throw new RuntimeException("Invalid Wall");
 		}
 		
-		Space space = new Space(command.substring(FIRST_CHAR,SECOND_CHAR));
+		Space space = new Space(command.substring(FIRST_CHAR,THIRD_CHAR));
 		if(!validWall(space)){
 			throw new RuntimeException("Not a valid Wall");
 		} else {
