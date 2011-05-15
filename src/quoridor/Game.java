@@ -14,7 +14,6 @@ public class Game implements Serializable {
 	private Boolean gameOver = false;
 	private Queue<String> q = null;
 	private boolean validatorGame = false; 
-	private final boolean INVALID_INPUT = false;
 
 	public static void main(String[] args) {
 		Game game = new Game();
@@ -69,15 +68,22 @@ public class Game implements Serializable {
 	 * This function controls the flow of game play.
 	 */
 	public boolean playGame() {
+		boolean movePlayed;
 		while (!gameOver) {
 			System.out.println(board);
-			if(playNextTurn() == INVALID_INPUT){
+			movePlayed = false;
+			while(!movePlayed)
+			try {
+				playNextTurn();
+				movePlayed = true;
+			}
+			catch (RuntimeException e) {
 				if (validatorGame) return false;
-				else System.out.println("Invalid move");
+				else System.out.println("Error: " + e.getMessage());
 			}
 		}
 		// need to make a way to check if game is over, eg check if queue is empty for the validator.
-		return gameOver;
+		return true;
 	}
 
 	/**
@@ -86,16 +92,22 @@ public class Game implements Serializable {
 	 * attempt to play the move on the board
 	 * prompt user again if the move is invalid
 	 */
-	protected boolean playNextTurn() {
-		if(validatorGame){
+	protected void playNextTurn() {
+		if (validatorGame){
 			if(q.size() > 0){
-				return board.makeMoveFromInput(q.remove());
+				board.makeMoveFromInput(q.remove());
 			}
+			else gameOver = true;
 		} else {
-			System.out.println(board.whosTurn()+"'s Turn:");
-			return board.makeMoveFromInput(this.getFromUser());
+			System.out.println(board.whoseTurn()+"'s Turn:");
+			board.makeMoveFromInput(this.getFromUser());
+			if (board.checkWin() != 0) {
+				gameOver = true;
+				System.out.println(board);
+				if (board.checkWin() == 1) System.out.println(board.players._1().getName() + " wins!");
+				else System.out.println(board.players._2().getName() + " wins!");
+			}
 		}
-		return false;
 	}
 
 	/**

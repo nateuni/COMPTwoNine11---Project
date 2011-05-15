@@ -68,17 +68,17 @@ public class Board {
 	 * Tests if game has been won.
 	 * @return true is game is over, false otherwise
 	 */
-	public boolean checkWin() {
+	public int checkWin() {
 		Player player1 = players._1();
 		Player player2 = players._2();
 		if (player1.getSpace().row() == player2Start.row()) {
 			winner = player1;
-			return true;
+			return 1;
 		} else if (player2.getSpace().row() == player1Start.row()) {
 			winner = player2;
-			return true;
+			return 2;
 		}
-		return false;
+		return 0;
 	}
 
 	
@@ -227,7 +227,7 @@ public class Board {
 	 * @param move
 	 */
 	public boolean makeMove(Move move) {
-		if (!moveValid(move)) return false; // Maybe this should throw an exception instead?
+		if (!moveValid(move)) throw new RuntimeException("Invalid move");
 		if (moveList.size() > 0) {
 			assert (moveListIndex >= 0);
 			while (moveList.size() > moveListIndex + 1)
@@ -293,7 +293,7 @@ public class Board {
 	/**
 	 * Undo the last move.	 */
 	public void undo() {
-		if (moveListIndex < 0) return;
+		if (moveListIndex < 0) throw new RuntimeException("No moves to undo");
 		Move move = moveList.get(moveListIndex);
 
 		if (move instanceof MovementMove) {
@@ -310,37 +310,33 @@ public class Board {
 	 * Redo the last undone move.
 	 */
 	public void redo() {
-		if (moveList.size() == 0 || moveListIndex == moveList.size()-1) return;
+		if (moveList.size() == 0 || moveListIndex == moveList.size()-1) throw new RuntimeException("No moves to redo");
 
 		moveListIndex++;
 		applyMove(moveList.get(moveListIndex));
 	}
 	
-	public String whosTurn(){
+	public String whoseTurn(){
 		return this.currentPlayer.toString();
 	}
 	
-	public boolean makeMoveFromInput(String moveInput){
+	public void makeMoveFromInput(String moveInput){
 		Move move;
-		if(moveInput.length() == MOVEMENT_MOVE){
-			try {
+		
+		if (moveInput.equalsIgnoreCase("undo")) undo();
+		else if (moveInput.equalsIgnoreCase("redo")) redo();
+		else {	// Regular move
+			if (moveInput.length() == MOVEMENT_MOVE) {
 				move = new MovementMove(this.currentPlayer.getSpace(), new Space(moveInput));
 				move.owner = currentPlayer;
-			} catch(Exception e) {
-				return false;
 			}
-		} else if(moveInput.length() == WALL_MOVE && (moveInput.substring(2).equalsIgnoreCase("v") || moveInput.substring(2).equalsIgnoreCase("h"))) {
-			try {
+			else if (moveInput.length() == WALL_MOVE) {
 				move = new WallMove(new Wall(moveInput));
 				move.owner = currentPlayer;
-			} catch(Exception e) {
-				return false;
 			}
-			
-		} else {
-			return false;
+			else throw new RuntimeException("Invalid input");
+
+			makeMove(move);
 		}
-		
-		return this.makeMove(move);
 	}
 }

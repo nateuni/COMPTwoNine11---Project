@@ -21,7 +21,7 @@ public class Wall {
 	 * @exception 
 	 */
 	public Wall(Space space, Boolean vertical) {
-		if(!validWall(space)){
+		if(!validWallSpace(space)){
 			throw new RuntimeException("Not a valid Wall");
 		} else {
 			this.space = space;
@@ -42,12 +42,12 @@ public class Wall {
 		} else if (wallType.equalsIgnoreCase("v")) {
 			this.vertical = true;
 		} else {
-			throw new RuntimeException("Invalid Wall");
+			throw new RuntimeException("Invalid wall");
 		}
 		
 		Space space = new Space(command.substring(FIRST_CHAR,THIRD_CHAR));
-		if(!validWall(space)){
-			throw new RuntimeException("Not a valid Wall");
+		if(!validWallSpace(space)){
+			throw new RuntimeException("Invalid wall");
 		} else {
 			this.space = space;
 		}		
@@ -60,7 +60,7 @@ public class Wall {
 		return space;
 	}
 	
-	private boolean validWall(Space space) {
+	private boolean validWallSpace(Space space) {
 		return !(space.col() == LAST_ROW_OR_COL || space.row() == LAST_ROW_OR_COL);
 	}
 	
