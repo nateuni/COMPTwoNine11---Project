@@ -325,6 +325,7 @@ public class Board {
 		
 		if (moveInput.equalsIgnoreCase("undo")) undo();
 		else if (moveInput.equalsIgnoreCase("redo")) redo();
+		else if (moveInput.length() == 7 && moveInput.substring(0, 6).equalsIgnoreCase("style ")) BoardPrinter.setStyle(moveInput.substring(6, 7));
 		else {	// Regular move
 			if (moveInput.length() == MOVEMENT_MOVE) {
 				move = new MovementMove(this.currentPlayer.getSpace(), new Space(moveInput));

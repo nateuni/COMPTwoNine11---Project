@@ -11,9 +11,15 @@ public class BoardPrinter {
 	static final String CORNER_1 = "+";
 	
 	static int style = 0;
-	
+
 	public static void setStyle(int newStyle) {
 		style = newStyle;
+	}
+
+	public static void setStyle(String newStyle) {
+		if (newStyle.equals("1")) style = 0;
+		else if (newStyle.equals("2")) style = 1;
+		else throw new RuntimeException("Invalid style");
 	}
 	
 	private static String getHDivider() {
