@@ -1,8 +1,12 @@
 package quoridor;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -152,5 +156,59 @@ public class Game implements Serializable {
 		for(int i = 0; i < result.length; i++){
 			q.add(result[i]);
 		}
+	}
+	
+	protected boolean save(){
+		System.out.println("Saving game....");
+		try {
+		      FileOutputStream fOut = new FileOutputStream("saveLoadTest.qdr");
+		      ObjectOutputStream objOutput = new ObjectOutputStream(fOut);
+		      objOutput.writeObject(this.board);
+		      objOutput.close();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	protected boolean load(){
+		System.out.println("Loading game....");
+		try {
+			FileInputStream fInput = new FileInputStream("saveLoadTest.qdr");
+			ObjectInputStream objInput = new ObjectInputStream(fInput);
+			this.board = (Board) objInput.readObject();
+			objInput.close();
+		} catch (Exception e) { 
+			e.printStackTrace(); 
+			return false;
+		}
+		return true;
+	}
+	
+	protected void menu(){
+		Game game;
+		int selection = 0;
+		while(selection != 5) {
+			System.out.print("Please select your choice: \n" +
+					"1 - Play Human vs Human Game\n" +
+					"2 - Play Human vs AI Game\n" +
+					"3 - Play AI vs AI Game\n" +
+					"4 - Load previously saved game\n" +
+					"5 - Quit\n");
+			selection = Integer.parseInt(this.getFromUser());
+			switch(selection){
+				case 1: // call factory method; break;
+				case 2: // call factory method; break;
+				case 3: // call factory method; break;
+				case 4: this.load(); break;
+				case 5: System.exit(0); break;
+				default: System.out.println("Invalid Input"); break;
+			}
+			if(selection >= 1 && selection < 4){
+				//game.playGame();
+			}
+		}
+		
 	}
 }
