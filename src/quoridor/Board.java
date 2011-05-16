@@ -251,7 +251,7 @@ public class Board {
 			if (!wallIsHere(mMove.from(), mMove.to()) 
 					&& mMove.from().equals(currentPlayer.getSpace()) 
 					&& !isOccupied(mMove.to()) 
-					&& adjacentSpaces(mMove.from(), mMove.to())){
+					&& (adjacentSpaces(mMove.from(), mMove.to()) || jumpValid(mMove))) {
 				return true;
 			}
 			return false;
@@ -275,6 +275,61 @@ public class Board {
 		return false;
 	}
 					
+	/**
+	 * Checks that a jump move is valid.
+	 * If the move is a regular (adjacent) move, returns true.
+	 * @param move
+	 * @return True if valid jump move
+	 */
+	private boolean jumpValid(MovementMove move) {
+		if (!move.isJump()) return true;
+		Space middleSpace;
+		Space behindSpace;
+		// Horizontal jump move
+		if (move.from().row() == move.to().row()) {
+			assert (Math.abs(move.from().col() - move.to().col()) == 2);
+			middleSpace = new Space(Math.min(move.from().col(), move.to().col()) + 1, move.from().row());
+			if (players.other(move.owner).getSpace().equals(middleSpace)
+					&& !wallIsHere(move.from(), middleSpace)
+					&& !wallIsHere(move.to(), middleSpace)) {
+				return true;
+			}
+			return false;
+		}
+		// Vertical jump move
+		else if (move.from().col() == move.to().col()) {
+			assert (Math.abs(move.from().row() - move.to().row()) == 2);
+			middleSpace = new Space(move.from().col(), Math.min(move.from().row(), move.to().row()) + 1);
+			if (players.other(move.owner).getSpace().equals(middleSpace)
+					&& !wallIsHere(move.from(), middleSpace)
+					&& !wallIsHere(move.to(), middleSpace)) {
+				return true;
+			}
+			return false;
+		}
+		// Diagonal jump move
+		else if (Math.abs(move.from().row()-move.to().row()) + Math.abs(move.from().col()-move.to().col()) == 2) {
+			if (players.other(move.owner).getSpace().row() == move.from().row()
+					&& Math.abs(players.other(move.owner).getSpace().col() - move.from().col()) == 1
+					|| players.other(move.owner).getSpace().col() == move.from().col()
+					&& Math.abs(players.other(move.owner).getSpace().row() - move.from().row()) == 1) {
+				middleSpace = players.other(move.owner).getSpace();
+				if (wallIsHere(middleSpace, move.to())) return false;
+				try {
+					// Try to construct the space behind the opponent
+					behindSpace = new Space(2 * middleSpace.col() - move.from().col(), 2 * middleSpace.row() - move.from().row());
+				}
+				catch (RuntimeException e) {
+					// Behind opponent is the edge of the board - treat as wall
+					return true;
+				}
+				return wallIsHere(middleSpace, behindSpace);
+			}
+			else return false;
+		}
+		return false;
+	}
+
 	/**
 	 * Updates the board state with the move.
 	 * Assumes that the move is valid.
