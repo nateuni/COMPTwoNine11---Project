@@ -72,14 +72,15 @@ public class Game implements Serializable {
 		while (!gameOver) {
 			System.out.println(board);
 			movePlayed = false;
-			while(!movePlayed)
-			try {
-				playNextTurn();
-				movePlayed = true;
-			}
-			catch (RuntimeException e) {
-				if (validatorGame) return false;
-				else System.out.println("Error: " + e.getMessage());
+			while(!movePlayed) {
+				try {
+					playNextTurn();
+					movePlayed = true;
+				}
+				catch (RuntimeException e) {
+					if (validatorGame) return false;
+					else System.out.println("Error: " + e.getMessage());
+				}
 			}
 		}
 		// need to make a way to check if game is over, eg check if queue is empty for the validator.
@@ -95,6 +96,9 @@ public class Game implements Serializable {
 	protected void playNextTurn() {
 		if (validatorGame){
 			if(q.size() > 0){
+				if (board.checkWin() != 0) {
+					throw new RuntimeException("Can't play move after win.");
+				}
 				board.makeMoveFromInput(q.remove());
 			}
 			else gameOver = true;
