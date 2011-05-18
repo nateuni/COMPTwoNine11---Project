@@ -16,9 +16,7 @@ package quoridor;
 		return theFactory;
 	}
 	
-	public Game makeGame() {
-		return new ConsoleGame();
-	}
+	
 
 	public Game makeGame(String presetMoves) {
 		if(presetMoves != null) {
@@ -27,11 +25,7 @@ package quoridor;
 		return null;
 	}
 
-	public Board makeBoard() {
-		Player player1 = new AIPlayer(1);
-		Player player2 = new AIPlayer(2);
-		return new Board(new Two<Player>(player1, player2));
-	}
+
 	/**
 	 * Construct and return a new board with the specified types of players
 	 * @param type - integer representation of the type of game: (human/AI player combinations)

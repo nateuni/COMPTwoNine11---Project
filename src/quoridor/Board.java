@@ -31,16 +31,6 @@ public class Board {
 		currentPlayer = players._1();
 	}
 
-//	/**
-//	 * A constructor with no args - used for testing purposes
-//	 */
-//	public Board() {
-//		Player player1 = new AIPlayer(1);
-//		Player player2 = new AIPlayer(2);
-//		this.players = new Two<Player>(player1, player2);
-//		currentPlayer = players._1();
-//	}
-
 	/**
 	 * Returns the Two players for this particular board instance.
 	 * @return The Two players

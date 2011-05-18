@@ -9,9 +9,7 @@ public class AIPlayer extends Player {
 		super(playerNumber);
 	}
 
-	@Override
 	public Move getMove() {
 	return null;
 	}
-
 }
