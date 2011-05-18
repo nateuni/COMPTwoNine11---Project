@@ -193,4 +193,8 @@ public class BoardGraph {
 			System.out.println();
 		}
 	}
+	
+	public int getDist(Space space) {
+		return node[space.row()][space.col()].distanceToExit;
+	}
 }

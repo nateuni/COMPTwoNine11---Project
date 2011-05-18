@@ -1,5 +1,6 @@
 package quoridor;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -191,8 +192,21 @@ public class Board {
 	 * @return
 	 * TODO: Implementation
 	 */
-	private boolean cutsOffPath(Wall wall) {
-		return false;
+	private boolean cutsOffPath(WallMove move) {
+		boolean blocks = false;
+		int i;
+		addWall(move.wall());
+		ArrayList<Space> exits = new ArrayList<Space>();
+		
+		for (i=1; i<=9; i++) exits.add(new Space (i, player2Start.row()));
+		graph.fillNodeDistances(exits);
+		if (graph.getDist(players._1().getSpace()) == -1) blocks = true;
+
+		for (i=1; i<=9; i++) exits.add(new Space (i, player1Start.row()));
+		graph.fillNodeDistances(exits);
+		if (graph.getDist(players._2().getSpace()) == -1) blocks = true;
+		
+		return blocks;
 	}	
 
 	/**
@@ -268,7 +282,7 @@ public class Board {
 			}
 			else if(!proposedWall.isHorizontal() 
 					&&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getRight())) {
-				if (cutsOffPath(wMove.wall())) return false;
+				if (cutsOffPath((WallMove) move)) return false;
 				return true;
 			}
 		}
@@ -376,7 +390,7 @@ public class Board {
 		return this.currentPlayer.toString();
 	}
 	
-	public void makeMoveFromInput(String moveInput){
+	public void makeMoveFromInput(String moveInput) {
 		Move move;
 		if (moveInput.equalsIgnoreCase("undo")) {
 			undo();

@@ -2,12 +2,17 @@ package quoridor;
 
 public class ConsoleGame extends Game {
 
+	public static void main(String[] args) {
+		ConsoleGame thisGame = new ConsoleGame();
+	}
+	
 	/**
 	 *Constructor
 	 *Will only return once game has been set up and is ready to play 
 	 */
-	ConsoleGame() {
-		System.out.printf("Welcome to Quoridor!");
+	public ConsoleGame() {
+		Factory.make();
+		System.out.println("Welcome to Quoridor!");
 		while (!setUp());
 		playGame();
 	}
@@ -39,10 +44,10 @@ public class ConsoleGame extends Game {
 						"5 - Quit\n");
 				selection = Integer.parseInt(getFromUser());
 				switch(selection){
-					case 1: case 2: case 3: board = Factory.instance().makeBoard(selection);
+					case 1: case 2: case 3: board = Factory.instance().makeBoard(selection); break;
 					case 4: board = this.load(); break;
 					case 5: System.exit(0); break;
-					default: System.out.println("Invalid Input"); 
+					default: System.out.println("Invalid Input");
 				}
 				if(selection >= 1 && selection < 4 && board != null){
 					return true;
