@@ -195,6 +195,6 @@ public class BoardGraph {
 	}
 	
 	public int getDist(Space space) {
-		return node[space.row()][space.col()].distanceToExit;
+		return node[space.row()-1][space.col()-1].distanceToExit;
 	}
 }
