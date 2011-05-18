@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public abstract class Game implements GameInterface {
+	protected int checkWin = 0;
+	protected Player winner = null;
 	protected Board board = null;
 	protected Boolean gameOver = false;
 	protected boolean consoleGame;	//i changed validatorGame to consoleGame only to show we can use the validatorGame class to run all sorts of test
@@ -32,7 +34,7 @@ public abstract class Game implements GameInterface {
 				}
 			}
 		}
-		// need to make a way to check if game is over, eg check if queue is empty for the validator.
+		this.checkWin = board.checkWin();
 		return true;
 	}
 
@@ -113,5 +115,9 @@ public abstract class Game implements GameInterface {
 			return null;
 		}
 		return board;
+	}
+	
+	public int checkWin() {
+		return board.checkWin();
 	}
 }
