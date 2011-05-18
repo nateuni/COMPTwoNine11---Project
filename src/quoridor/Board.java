@@ -196,6 +196,7 @@ public class Board {
 		graph.fillNodeDistances(exits);
 		if (graph.getDist(players._2().getSpace()) == -1) blocks = true;
 		
+		removeWall(move.wall());
 		return blocks;
 	}	
 
