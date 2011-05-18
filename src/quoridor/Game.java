@@ -31,7 +31,7 @@ public abstract class Game implements GameInterface {
 					movePlayed = true;
 				}
 				catch (RuntimeException e) {
-					if (!consoleGame) return false;
+					if (this instanceof ValidatorGame) return false;
 					else System.out.println("Error: " + e.getMessage());
 				}
 			}

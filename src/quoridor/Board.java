@@ -276,12 +276,16 @@ public class Board {
 			}
 			WallMove wMove = (WallMove) move;
 			Wall proposedWall = wMove.wall();
-			if(proposedWall.isHorizontal()
-					&&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getDown())) {
+			if (wallList.contains(new Wall(wMove.wall().getSpace(), !wMove.wall().isVertical()))) return false;
+			if (proposedWall.isHorizontal()
+					&&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getDown())
+					&&!wallIsHere(proposedWall.getSpace().getRight(), proposedWall.getSpace().getDown().getRight())) {
+				if (cutsOffPath((WallMove) move)) return false;
 				return true;
 			}
-			else if(!proposedWall.isHorizontal() 
-					&&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getRight())) {
+			else if (!proposedWall.isHorizontal()
+					&&!wallIsHere(proposedWall.getSpace(), proposedWall.getSpace().getRight())
+					&&!wallIsHere(proposedWall.getSpace().getDown(), proposedWall.getSpace().getRight().getDown())) {
 				if (cutsOffPath((WallMove) move)) return false;
 				return true;
 			}
