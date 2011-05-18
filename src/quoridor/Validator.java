@@ -1,7 +1,7 @@
 package quoridor;
 
 public class Validator {
-	
+
 	Game sampleGame;
 	
 	public Validator() {
@@ -19,7 +19,7 @@ public class Validator {
 	 */
 	
 	public static boolean check(String moves){
-		Game game = new Game(moves);
+		Game game = Factory.instance().makeGame(moves);
 		return game.playGame();
 	}
 }

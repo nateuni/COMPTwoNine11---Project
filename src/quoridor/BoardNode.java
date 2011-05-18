@@ -9,6 +9,7 @@ public class BoardNode {
 	public BoardNode down;
 	public BoardNode left;
 	public ArrayList<BoardNode> path;
+	public int distanceToExit;
 	
 	public BoardNode(Space space) {
 		this.space = space;
@@ -17,5 +18,6 @@ public class BoardNode {
 		down = null;
 		left = null;
 		path = new ArrayList<BoardNode>();
+		distanceToExit = -1;
 	}
 }

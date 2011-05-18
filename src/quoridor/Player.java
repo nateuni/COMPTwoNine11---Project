@@ -22,8 +22,8 @@ public abstract class Player {
 			this.space = new Space("e1");
 		}
 		else if (playerNumber == 2) {
-			token = " O ";
 			name = "Player 2";
+			token = " O ";
 			this.space = new Space("e9");
 		}
 		else throw new RuntimeException("Invalid player number");

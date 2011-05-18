@@ -144,5 +144,53 @@ public class BoardGraph {
 		return thisNode;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void fillNodeDistances(List<Space> exits) {
+		ArrayList<BoardNode> currentNodes = new ArrayList<BoardNode>();
+		ArrayList<BoardNode> nextNodes = new ArrayList<BoardNode>();
+		BoardNode checkNode;
+		int row, col;
+		for (row = 0; row < 9; row++) {
+			for (col = 0; col < 9; col++) {
+				node[row][col].distanceToExit = -1;
+			}
+		}
+		for (Space space : exits) {
+			node[space.row()-1][space.col()-1].distanceToExit = 0;
+			currentNodes.add(node[space.row()-1][space.col()-1]);
+		}
+		
+		while (currentNodes.size() > 0) {
+			nextNodes.clear();
+			for (BoardNode thisNode : currentNodes) {
+				checkNode = tryNode2(thisNode.up, thisNode.distanceToExit);
+				if (checkNode != null && !nextNodes.contains(checkNode)) nextNodes.add(checkNode);
+				checkNode = tryNode2(thisNode.right, thisNode.distanceToExit);
+				if (checkNode != null && !nextNodes.contains(checkNode)) nextNodes.add(checkNode);
+				checkNode = tryNode2(thisNode.down, thisNode.distanceToExit);
+				if (checkNode != null && !nextNodes.contains(checkNode)) nextNodes.add(checkNode);
+				checkNode = tryNode2(thisNode.left, thisNode.distanceToExit);
+				if (checkNode != null && !nextNodes.contains(checkNode)) nextNodes.add(checkNode);
+			}
+			currentNodes = (ArrayList<BoardNode>) nextNodes.clone();
+		}
+	}
+
+	private BoardNode tryNode2(BoardNode thisNode, int distance) {
+		if (thisNode == null) return null;
+		if (thisNode.distanceToExit != -1 && distance + 1 >= thisNode.distanceToExit) return null;
+		thisNode.distanceToExit = distance + 1;
+		return thisNode;
+	}
 	
+	public void printDistanceFills() {
+		int row, col;
+		for (row = 0; row < 9; row++) {
+			System.out.print(" ");
+			for (col = 0; col < 9; col++) {
+				System.out.printf("%4d", node[row][col].distanceToExit);
+			}
+			System.out.println();
+		}
+	}
 }

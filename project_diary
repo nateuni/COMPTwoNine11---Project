@@ -59,9 +59,18 @@ Changed wall class representation
 Decided on user imput syntax 
 
 Points of Discussion:
-Over the course of the week, we had (using guthub to store our project) collaboratively worked on our code and had achieved a working project which allowed players to enter their names, tokens and play a two-player game using the console to enter moves.
-In order to stick with the traditional game rules, we modified our program so that a player enters a move by typing the coordinates of the space they wish to move to (e.g. “e6”), rather than entering the direction (left, right etc.). This allowed us to finish lab 8 very quickly – we simply added a string tokenizer to separate moves and then called the playturn() for each move. We modified the board class to keep track of a current player, and to alternate the current player after each turn is completed.
-Eddie fixed a huge problem we had with our wall representation – we were finding it impossible to neatly print our board with our walls being represented to the space whose left had corner holds the start of the wall. Eddie modified the class to represent a wall by keeping track of the space whose bottom right hand corner relates to the center of the wall – and our print function was greatly simplified.
+Over the course of the week, we had (using guthub to store our project) collaboratively worked on our code and had achieved 
+a working project which allowed players to enter their names, tokens and play a two-player game using the console to enter 
+moves.
+In order to stick with the traditional game rules, we modified our program so that a player enters a move by typing the 
+coordinates of the space they wish to move to (e.g. “e6”), rather than entering the direction (left, right etc.). This 
+allowed us to finish lab 8 very quickly – we simply added a string tokenizer to separate moves and then called the playturn()
+ for each move. We modified the board class to keep track of a current player, and to alternate the current player after 
+each turn is completed.
+Eddie fixed a huge problem we had with our wall representation – we were finding it impossible to neatly print our board 
+with our walls being represented to the space whose left had corner holds the start of the wall. Eddie modified the class 
+to represent a wall by keeping track of the space whose bottom right hand corner relates to the center of the wall – and 
+our print function was greatly simplified.
 
 To Do List:
 (Everyone) Merge any unpushed code on Github so we have one copy of our project.
@@ -70,3 +79,62 @@ To Do List:
 (Nate) work on simple validation functions for user input (particularly valid moves)
 
 Next Meeting: Lab 9 
+
+______________________________________________________________________________________________________
+
+Lab 9
+
+Overview:
+Attempted lab 9 work
+lots of code restructuring
+Plenty of debates over finalisation of classes/interfaces
+
+Points of discussion:
+This week's lab was really frustrating - the validator class was so simple and we knew how we should go about implementing
+it straight away. We soon found the major problem -> We had gotten so far ahead of ourselves that our program really only
+played from the console (i.e. by printing and reading to/from std output). We had all the code sitting there for move
+validation - coded weeks earlier and thoroughly tested - but we couldn't build and run a 'board' without first entering
+players names etc.
+So our work this week focused on restructuring our design to handle two methods of game play -> through the validator, and 
+through the console. We had a few meetings to discuss what methods needed to pay attention to the possibility of input
+coming from the validator rather than the console, and did our best to condense this condition to only needing to be checked
+in one method.
+
+To Do List:
+Eddie - draw up final class diagram on Friday night (to give us time to restructure code as we want)
+Nate  - attempt to get validator up and running 
+Elyse - organise submission for revised design
+Everyone - Play with as many possibly class designs as we want - share the ideas and debate with each other on what works 
+best.
+
+________________________________________________________________________________________________________
+
+Meeting: Fri Week 10             2pm Library
+
+Overview:
+Decided on revised class structure
+Decided on how we were going to implement validator class (and future tests)
+Looked into the possibility of loading/saving
+
+Points of Discussion:
+This meeting was used to finalise our decisions for the revised design - something which we decided to leave
+til last minute because we wanted to get it right - and needed as much time as possible to toy with possibilities
+of implementing tests, undo/redo functions, getting our players to choose moves and being able to play everything
+from the console if we chose this method of gameplay.
+We spent the hour drawing our favourite ideas on the whiteboard and making sure everybody was up to speed on the 
+major problems we were facing. My point of debate was: - we needed to come up with two methods of validation - one which 
+checked for basic human error (i.e. trying to enter 'rr' as a move) and another which checked whether the move could be 
+valid for this particular board. We all agreed that this was defintitely the way to structure our validation methods 
+because it enabled us to pick and choose the sequence of validation for input that was coming from a certain source.
+In other words, we could omit an error checking for human error on an AI player.).
+We then worked on moving our methods into their appropriate classes - and if necessary redesigning the interfaces to suit 
+this new plan of action. It turned out to be incredibly easy - and we suddenly had a board class which could check for 
+valid moves at all different levels - we had arrived at the implementation we required in order to get our validator
+class up and running.
+
+To Do List:
+Same as last entry +
+Elyse - Design revised interfaces
+Eddie - add any missing implementation for entering, playing and validating moves (particularly jump cases).
+Nate - Get validator working correctly and implement it so we can run any future tests through this class.
+_______________________________________________________________________________________________________

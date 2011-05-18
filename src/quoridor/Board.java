@@ -30,15 +30,15 @@ public class Board {
 		currentPlayer = players._1();
 	}
 
-	/**
-	 * A constructor with no args - used for testing purposes
-	 */
-	public Board() {
-		Player player1 = new AIPlayer(1);
-		Player player2 = new AIPlayer(2);
-		this.players = new Two<Player>(player1, player2);
-		currentPlayer = players._1();
-	}
+//	/**
+//	 * A constructor with no args - used for testing purposes
+//	 */
+//	public Board() {
+//		Player player1 = new AIPlayer(1);
+//		Player player2 = new AIPlayer(2);
+//		this.players = new Two<Player>(player1, player2);
+//		currentPlayer = players._1();
+//	}
 
 	/**
 	 * Returns the Two players for this particular board instance.
@@ -66,7 +66,7 @@ public class Board {
 
 	/**
 	 * Tests if game has been won.
-	 * @return true is game is over, false otherwise
+	 * @return 1 is game is won by player 1, 2 if won by player 2, 0 otherwise
 	 */
 	public int checkWin() {
 		Player player1 = players._1();
@@ -221,7 +221,7 @@ public class Board {
 	}
 
 	/**
-	 * Moves are passed into the board here.
+	 * Moves are passed into this function.
 	 * makeMove() will check that the move is valid,
 	 * then add it to moveList.
 	 * @param move
@@ -384,7 +384,10 @@ public class Board {
 			redo();
 		} else if (moveInput.length() == 7 && moveInput.substring(0, 6).equalsIgnoreCase("style ")) {
 			BoardPrinter.setStyle(moveInput.substring(6, 7));
-		} else {	// Regular move
+		} else if (moveInput.equalsIgnoreCase("save")) {
+			//TODO
+		} 
+		else {	// Regular move
 			if (moveInput.length() == MOVEMENT_MOVE) {
 				move = new MovementMove(this.currentPlayer.getSpace(), new Space(moveInput));
 				move.owner = currentPlayer;
