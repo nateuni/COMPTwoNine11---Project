@@ -8,7 +8,7 @@ public class BoardGraphTest {
 
 	public static void main(String[] args) {
 		//Two<Player> players = Two.two(new Player("Alice", 5, 9), new Player("Bob", 5, 1));
-		Board board = new Board();
+		Board board = Factory.instance().makeBoard(1);
 
 		board.addWall(new Wall(new Space(1,1), false));
 	//	System.out.println(board);

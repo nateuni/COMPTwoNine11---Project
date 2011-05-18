@@ -5,7 +5,6 @@ public class Validator {
 	Game sampleGame;
 	
 	public Validator() {
-		sampleGame = new Game();
 	}
 
 	/**

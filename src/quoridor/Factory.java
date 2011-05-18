@@ -30,8 +30,8 @@ package quoridor;
 	     * @return the new board
 	     */
 	    public Board makeBoard(int type) {
-			Player player1;
-	    	Player player2;
+			Player player1 =null;
+	    	Player player2 =null;
 			switch (type){
 			case 1: player1 = new HumanPlayer(1);
 				   player2 = new HumanPlayer(2);
@@ -40,10 +40,14 @@ package quoridor;
 				   player2 = new AIPlayer(2);
 				   break;
 			case 3: case 0: player1 = new AIPlayer(1);
-				   player2 = new AIPlayer(2);
+				   			player2 = new AIPlayer(2);
 				   break;
-			default: return null;
+		//	default: return null;
 	    }
+			if(player1== null || player2 == null) {
+				System.out.println("Could not construct players");
+				return null;
+			}
 			return new Board(new Two<Player>(player1, player2));
 	    }
 }

@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.regex.Pattern;
 
-public class Game implements GameInterface, Serializable {
+public abstract class Game implements GameInterface {
 	protected Board board = null;
 	protected Boolean gameOver = false;
 	protected boolean consoleGame;	//i changed validatorGame to consoleGame only to show we can use the validatorGame class to run all sorts of test
