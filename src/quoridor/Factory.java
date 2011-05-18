@@ -27,10 +27,9 @@ package quoridor;
 	}
 
 	public Board makeBoard() {
-//		Player player1 = new AIPlayer(1);
-//		Player player2 = new AIPlayer(2);
-//		return new Board(new Two<Player>(player1, player2));
-		return makeBoard(3);
+		Player player1 = new AIPlayer(1);
+		Player player2 = new AIPlayer(2);
+		return new Board(new Two<Player>(player1, player2));
 	}
 	/**
 	 * Construct and return a new board with the specified types of players
