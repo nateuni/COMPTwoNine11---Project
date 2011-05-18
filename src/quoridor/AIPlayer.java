@@ -13,5 +13,4 @@ public class AIPlayer extends Player {
 	public Move getMove() {
 	return null;
 	}
-
 }

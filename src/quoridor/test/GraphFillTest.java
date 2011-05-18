@@ -10,8 +10,7 @@ public class GraphFillTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Board board = new Board();
-
+		Board board = Factory.instance().makeBoard();
 		board.addWall(new Wall(new Space(4, 7), false));
 		board.addWall(new Wall(new Space(6, 7), false));
 		board.addWall(new Wall(new Space(8, 7), false));
