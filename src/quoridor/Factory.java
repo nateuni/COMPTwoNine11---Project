@@ -14,17 +14,23 @@ package quoridor;
 	{
 		return theFactory;
 	}
+	
+	public Game makeGame() {
+		return new ConsoleGame();
+	}
 
 	public Game makeGame(String presetMoves) {
 		if(presetMoves != null) {
 			return new ValidatorGame(presetMoves);
 		}
-		else {
-			return new ConsoleGame();
-		}
-
+		return null;
 	}
 
+	public Board makeBoard() {
+		Player player1 = new AIPlayer(1);
+		Player player2 = new AIPlayer(2);
+		return new Board(new Two<Player>(player1, player2));
+	}
 	/**
 	 * Construct and return a new board with the specified types of players
 	 * @param type - integer representation of the type of game: (human/AI player combinations)
@@ -43,11 +49,11 @@ package quoridor;
 		case 2: player1 = new HumanPlayer(1);
 		player2 = new AIPlayer(2);
 		break;
-		case 3: case 0: player1 = new AIPlayer(1);
+		case 3: player1 = new AIPlayer(1);
 		player2 = new AIPlayer(2);
 		break;
 		default: return null;
 		}
 		return new Board(new Two<Player>(player1, player2));
 	}
-	}
+}
