@@ -25,5 +25,4 @@ public class BoardPrinterTest {
 		BoardPrinter.setStyle(1);
 		board.print();
 	}
-
 }
