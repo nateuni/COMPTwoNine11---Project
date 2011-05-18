@@ -11,7 +11,6 @@ public class ConsoleGame extends Game {
 	 *Will only return once game has been set up and is ready to play 
 	 */
 	public ConsoleGame() {
-		Factory.make();
 		System.out.println("Welcome to Quoridor!");
 		while (!setUp());
 		playGame();
