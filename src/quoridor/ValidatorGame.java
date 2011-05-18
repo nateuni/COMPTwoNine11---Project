@@ -9,6 +9,7 @@ public class ValidatorGame extends Game{
 	int gameType = 3;
 	
 	public ValidatorGame(String string) {
+		Factory.make();
 		if(string == null){
 			throw new RuntimeException("String cannot be null");
 		}
