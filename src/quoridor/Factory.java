@@ -5,13 +5,14 @@ package quoridor;
 
 	protected static Factory theFactory;
 	    
-	public static Factory make() {
+	private static Factory make() {
 		theFactory = new Factory();
 		return theFactory;
 	}
 	
 	public static Factory instance ()
 	{
+		if (theFactory == null) make();
 		return theFactory;
 	}
 	
