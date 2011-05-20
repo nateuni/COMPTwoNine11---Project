@@ -87,7 +87,11 @@ public class ConsoleGame extends Game {
 
 	protected void playNextTurn() {
 		System.out.println(board.whoseTurn()+"'s Turn");
-		board.makeMoveFromInput(this.getFromUser());
+		
+		Move move = board.currentPlayer().getMove(board);
+		if (move != null) board.makeMove(move);
+		else board.makeMoveFromInput(this.getFromUser());
+		
 		if (board.checkWin() != 0) {
 			gameOver = true;
 			System.out.println(board);

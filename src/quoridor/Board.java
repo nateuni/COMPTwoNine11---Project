@@ -238,6 +238,7 @@ public class Board {
 			while (moveList.size() > moveListIndex + 1)
 				moveList.removeLast();
 		}
+		move.owner = currentPlayer;
 		moveList.add(move);
 		moveListIndex++;
 		applyMove(move);
@@ -250,7 +251,7 @@ public class Board {
 	 * @return True if the move is valid.
 	 * TODO: Make it throw exceptions for invalid moves.
 	 */
-	public boolean moveValid(Move move) {
+	public boolean moveValid (Move move) {
 		if (move instanceof MovementMove) {
 			MovementMove mMove = (MovementMove) move;
 			if (!wallIsHere(mMove.from(), mMove.to()) 
@@ -399,10 +400,8 @@ public class Board {
 		else {	// Regular move
 			if (moveInput.length() == MOVEMENT_MOVE) {
 				move = new MovementMove(this.currentPlayer.getSpace(), new Space(moveInput));
-				move.owner = currentPlayer;
 			} else if (moveInput.length() == WALL_MOVE) {
 				move = new WallMove(new Wall(moveInput));
-				move.owner = currentPlayer;
 			} else {
 				throw new RuntimeException("Invalid input");
 			}
