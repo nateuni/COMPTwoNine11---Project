@@ -18,25 +18,7 @@ public abstract class Game implements GameInterface {
 	/**
 	 * This function controls the flow of game play.
 	 */
-	public boolean playGame() {
-		boolean movePlayed;
-		while (!gameOver) {
-			System.out.println(board);
-			movePlayed = false;
-			while(!movePlayed) {
-				try {
-					playNextTurn();
-					movePlayed = true;
-				}
-				catch (RuntimeException e) {
-					if (this instanceof ValidatorGame) return false;
-					else System.out.println("Error: " + e.getMessage());
-				}
-			}
-		}
-		this.checkWin = board.checkWin();
-		return true;
-	}
+	public abstract boolean playGame();
 
 	/**
 	 * Play the next turn in the game.
@@ -44,78 +26,7 @@ public abstract class Game implements GameInterface {
 	 * attempt to play the move on the board
 	 * prompt user again if the move is invalid
 	 */
-	protected void playNextTurn() {
-	 
-			System.out.println(board.whoseTurn()+"'s Turn:");
-			board.makeMoveFromInput(this.getFromUser());
-			if (board.checkWin() != 0) {
-				gameOver = true;
-				System.out.println(board);
-				if (board.checkWin() == 1) System.out.println(board.players._1().getName() + " wins!");
-				else System.out.println(board.players._2().getName() + " wins!");
-			}
-		}
-	
-
-	/**
-	 * perform necessary responsibilities for an end of turn:
-	 * check for a win
-	 * alternate the current player
-	 */
-	protected void onTurnOver() {
-		// switch current player
-		board.nextPlayer();
-		// check for win
-	}
-
-	/**
-	 * Read one line from user input
-	 * @return the read line as a String
-	 */
-	protected String getFromUser() {
-		try {
-			while (true) {
-				BufferedReader userReader = new BufferedReader(
-						new InputStreamReader(System.in));
-				String fromUser = userReader.readLine();
-				if (!fromUser.isEmpty()) { // never returns an empty string
-					return fromUser;
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	
-	protected boolean save(){
-		System.out.println("Saving game....");
-		try {
-		      FileOutputStream fOut = new FileOutputStream("saveLoadTest.qdr");
-		      ObjectOutputStream objOutput = new ObjectOutputStream(fOut);
-		      objOutput.writeObject(this.board);
-		      objOutput.close();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-	
-	protected Board load(){
-		System.out.println("Loading game....");
-		try {
-			FileInputStream fInput = new FileInputStream("saveLoadTest.qdr");
-			ObjectInputStream objInput = new ObjectInputStream(fInput);
-			this.board = (Board) objInput.readObject();
-			objInput.close();
-		} catch (Exception e) { 
-			e.printStackTrace(); 
-			return null;
-		}
-		return board;
-	}
+	protected abstract void playNextTurn();
 	
 	public int checkWin() {
 		return board.checkWin();

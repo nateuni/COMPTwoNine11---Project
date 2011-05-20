@@ -8,7 +8,7 @@ import java.util.List;
  * Used for finding shortest paths.
  */
 public class BoardGraph {
-	private BoardNode [][] node;
+	protected BoardNode [][] node;
 	
 	/**
 	 * Constructs a BoardGraph for a new board with no walls.

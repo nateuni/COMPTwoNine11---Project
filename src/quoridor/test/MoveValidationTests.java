@@ -102,8 +102,8 @@ public class MoveValidationTests {
 	public void testInvalidToPlaceTwentyPlusWalls(){
 		String testString = "a2h c2h e2h g2h a3h c3h e3h g3h a4h c4h e4h g4h a5h c5h e5h g5h a6h c6h e6h g6h a7h";
 		Game game = Factory.instance().makeGame(testString);
-		assertTrue(game.playGame());
-		assertFalse(game.checkWin() == 0);
+		assertFalse(game.playGame());
+		assertTrue(game.checkWin() == 0);
 	}
 	
 	@Test
