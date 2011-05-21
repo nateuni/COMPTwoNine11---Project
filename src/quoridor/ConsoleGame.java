@@ -67,7 +67,7 @@ public class ConsoleGame extends Game {
 	 * This function controls the flow of game play.
 	 */
 	public boolean playGame() {
-		boolean movePlayed;
+		boolean movePlayed = false;
 		while (!gameOver) {
 			System.out.println(board);
 			movePlayed = false;
@@ -79,19 +79,19 @@ public class ConsoleGame extends Game {
 				catch (RuntimeException e) {
 					System.out.println("Error: " + e.getMessage());
 				}
-			}
 		}
 		this.checkWin = board.checkWin();
 		return true;
+		}
+		return movePlayed;
 	}
 
 	protected void playNextTurn() {
 		System.out.println(board.whoseTurn()+"'s Turn");
-		
+
 		Move move = board.currentPlayer().getMove(board);
 		if (move != null) board.makeMove(move);
 		else board.makeMoveFromInput(this.getFromUser());
-		
 		if (board.checkWin() != 0) {
 			gameOver = true;
 			System.out.println(board);
@@ -147,5 +147,4 @@ public class ConsoleGame extends Game {
 		}
 		return board;
 	}
-
 }

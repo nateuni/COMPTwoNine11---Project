@@ -7,6 +7,7 @@ import java.util.List;
  * A graph structure representing the spaces on the board.
  * Used for finding shortest paths.
  */
+
 public class BoardGraph {
 	protected BoardNode [][] node;
 	

@@ -1,6 +1,8 @@
 package quoridor;
 
-public class Two <A> extends Pair <A, A>
+import java.io.Serializable;
+
+public class Two <A> extends Pair <A, A> implements Serializable 
 {
     public static <X> Two <X> two (X a1, X a2)
     {

@@ -1,5 +1,6 @@
 package quoridor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -7,8 +8,12 @@ import java.util.LinkedList;
  * A board has Two Players and up to 20 placed walls (10 per player) and tracks each of their coordinates.
  * @author Team Stump
  */
-public class Board {
+public class Board implements Serializable {
 
+	/**
+	 * Default UID for saving board
+	 */
+	private static final long serialVersionUID = 1L;
 	public Two<Player> players;
 	protected Player currentPlayer;
 	protected LinkedList<Wall> wallList = new LinkedList<Wall>();
@@ -394,8 +399,6 @@ public class Board {
 			redo();
 		} else if (moveInput.length() >= 7 && moveInput.substring(0, 6).equalsIgnoreCase("style ")) {
 			BoardPrinter.setStyle(moveInput.substring(6, 7));
-		} else if (moveInput.equalsIgnoreCase("save")) {
-			//TODO
 		} 
 		else {	// Regular move
 			if (moveInput.length() == MOVEMENT_MOVE) {
