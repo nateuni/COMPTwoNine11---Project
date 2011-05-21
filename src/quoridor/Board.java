@@ -15,10 +15,10 @@ public class Board implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	public Two<Player> players;
-	private Player currentPlayer;
-	private LinkedList<Wall> wallList = new LinkedList<Wall>();
-	private LinkedList<Move> moveList = new LinkedList<Move>();
-	private int moveListIndex = -1;
+	protected Player currentPlayer;
+	protected LinkedList<Wall> wallList = new LinkedList<Wall>();
+	protected LinkedList<Move> moveList = new LinkedList<Move>();
+	protected int moveListIndex = -1;
 	static final Space player1Start = new Space("e1");
 	static final Space player2Start = new Space("e9");
 	Player winner = null;
@@ -201,6 +201,7 @@ public class Board implements Serializable {
 		graph.fillNodeDistances(exits);
 		if (graph.getDist(players._2().getSpace()) == -1) blocks = true;
 		
+		removeWall(move.wall());
 		return blocks;
 	}	
 
@@ -242,6 +243,7 @@ public class Board implements Serializable {
 			while (moveList.size() > moveListIndex + 1)
 				moveList.removeLast();
 		}
+		move.owner = currentPlayer;
 		moveList.add(move);
 		moveListIndex++;
 		applyMove(move);
@@ -254,7 +256,7 @@ public class Board implements Serializable {
 	 * @return True if the move is valid.
 	 * TODO: Make it throw exceptions for invalid moves.
 	 */
-	private boolean moveValid(Move move) {
+	public boolean moveValid (Move move) {
 		if (move instanceof MovementMove) {
 			MovementMove mMove = (MovementMove) move;
 			if (!wallIsHere(mMove.from(), mMove.to()) 
@@ -395,20 +397,32 @@ public class Board implements Serializable {
 			undo();
 		} else if(moveInput.equalsIgnoreCase("redo")) {
 			redo();
-		} else if (moveInput.length() == 7 && moveInput.substring(0, 6).equalsIgnoreCase("style ")) {
+		} else if (moveInput.length() >= 7 && moveInput.substring(0, 6).equalsIgnoreCase("style ")) {
 			BoardPrinter.setStyle(moveInput.substring(6, 7));
 		} 
 		else {	// Regular move
 			if (moveInput.length() == MOVEMENT_MOVE) {
 				move = new MovementMove(this.currentPlayer.getSpace(), new Space(moveInput));
-				move.owner = currentPlayer;
 			} else if (moveInput.length() == WALL_MOVE) {
 				move = new WallMove(new Wall(moveInput));
-				move.owner = currentPlayer;
 			} else {
 				throw new RuntimeException("Invalid input");
 			}
 			makeMove(move);
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public Board clone() {
+		Board cloneBoard = new Board(this.players);
+		cloneBoard.wallList = (LinkedList<Wall>) this.wallList.clone();
+		cloneBoard.moveList = (LinkedList<Move>) this.moveList.clone();
+		cloneBoard.moveListIndex = this.moveListIndex;
+		cloneBoard.winner = this.winner;
+		cloneBoard.graph = new BoardGraph();
+		for (Wall wall : wallList) {
+			cloneBoard.graph.addWall(wall);
+		}
+		return cloneBoard;
 	}
 }

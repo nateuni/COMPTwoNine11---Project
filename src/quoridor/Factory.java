@@ -5,13 +5,14 @@ package quoridor;
 
 	protected static Factory theFactory;
 	    
-	public static Factory make() {
+	private static Factory make() {
 		theFactory = new Factory();
 		return theFactory;
 	}
 	
 	public static Factory instance ()
 	{
+		if (theFactory == null) make();
 		return theFactory;
 	}
 	
@@ -41,10 +42,10 @@ package quoridor;
 		player2 = new HumanPlayer(2);
 		break;
 		case 2: player1 = new HumanPlayer(1);
-		player2 = new AIPlayer(2);
+		player2 = new RandomAIPlayer(2);
 		break;
-		case 3: player1 = new AIPlayer(1);
-		player2 = new AIPlayer(2);
+		case 3: player1 = new RandomAIPlayer(1);
+		player2 = new RandomAIPlayer(2);
 		break;
 		default: return null;
 		}

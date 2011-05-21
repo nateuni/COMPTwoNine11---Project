@@ -7,29 +7,30 @@ public class BoardPrinter {
 	static final String V_DIVIDER = ":";
 	static final String H_DIVIDER_0 = "...";
 	static final String H_DIVIDER_1 = "---";
+	static final String H_DIVIDER_2 = " - ";
 	static final String CORNER_0 = " ";
 	static final String CORNER_1 = "+";
 	
 	static int style = 0;
 
 	public static void setStyle(int newStyle) {
-		style = newStyle;
+		if (newStyle >=0 && newStyle <= 2) style = newStyle;
+		else throw new RuntimeException("Invalid style");
 	}
 
 	public static void setStyle(String newStyle) {
-		if (newStyle.equals("1")) style = 0;
-		else if (newStyle.equals("2")) style = 1;
-		else throw new RuntimeException("Invalid style");
+		setStyle(Integer.parseInt(newStyle) - 1);
 	}
 	
 	private static String getHDivider() {
 		if (style == 1) return H_DIVIDER_1;
+		if (style == 2) return H_DIVIDER_2;
 		return H_DIVIDER_0;
 	}
 
 	private static String getCorner() {
-		if (style == 1) return CORNER_1;
-		return CORNER_0;
+		if (style == 0) return CORNER_0;
+		return CORNER_1;
 	}
 
 	public static String buildBoardString(Board board) {
