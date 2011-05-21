@@ -14,14 +14,12 @@ public class BoardPrinter {
 	static int style = 0;
 
 	public static void setStyle(int newStyle) {
-		style = newStyle;
+		if (newStyle >=0 && newStyle <= 2) style = newStyle;
+		else throw new RuntimeException("Invalid style");
 	}
 
 	public static void setStyle(String newStyle) {
-		if (newStyle.equals("1")) style = 0;
-		else if (newStyle.equals("2")) style = 1;
-		else if (newStyle.equals("3")) style = 2;
-		else throw new RuntimeException("Invalid style");
+		setStyle(Integer.parseInt(newStyle) - 1);
 	}
 	
 	private static String getHDivider() {

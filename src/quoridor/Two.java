@@ -7,7 +7,7 @@ public class Two <A> extends Pair <A, A>
         return new Two <X> (a1, a2);
     }
     
-    public Two (A a1, A a2)
+    protected Two (A a1, A a2)
     {
         super (a1, a2);
     }

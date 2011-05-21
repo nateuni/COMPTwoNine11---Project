@@ -96,7 +96,9 @@ public abstract class Player {
 	 * Implementation will differ depending on instance of player object
 	 * @return move to be played
 	 */
-	public abstract Move getMove();
+	public Move getMove(Board board) {
+		return null;
+	}
 
 	public String toString() {
 		return name;

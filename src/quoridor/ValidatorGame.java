@@ -17,15 +17,33 @@ public class ValidatorGame extends Game{
 		board = Factory.instance().makeBoard(gameType);
 	}
 	
-	private void breakUpStringIntoQueue(String string){
+	private void breakUpStringIntoQueue(String string) {
 		q = new LinkedList<String>();
 		Pattern p = Pattern.compile("[\\s]");
 		String[] result = p.split(string);
-		for(int i = 0; i < result.length; i++){
+		for(int i = 0; i < result.length; i++) {
 			q.add(result[i]);
 		}
 	}
-	
+
+	/**
+	 * This function controls the flow of game play.
+	 */
+	public boolean playGame() {
+		boolean movePlayed;
+		while (!gameOver) {
+			movePlayed = false;
+			try {
+				playNextTurn();
+			}
+			catch (RuntimeException e) {
+				return false;
+			}
+		}
+		this.checkWin = board.checkWin();
+		return true;
+	}
+
 	protected void playNextTurn() {
 			if(q.size() > 0){
 				if (board.checkWin() != 0) {
