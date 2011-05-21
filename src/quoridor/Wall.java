@@ -87,4 +87,14 @@ public class Wall {
 		Wall otherWall = (Wall) obj;
 		return (this.getSpace().equals(otherWall.getSpace()) && this.isVertical() == otherWall.isVertical());
 	}
+	
+	public String toOriginalString(){
+		String wallType;
+		if(this.vertical) {
+			wallType = "v";
+		} else {
+			wallType ="h";
+		}
+		return this.getSpace().toOriginalString().concat(wallType);
+	}
 }

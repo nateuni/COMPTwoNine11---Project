@@ -17,12 +17,12 @@ public abstract class Player {
 	 */
 	public Player(int playerNumber) {
 		if (playerNumber == 1) {
-			name = "Player X";
+			name = "X";
 			token = " X ";
 			this.space = new Space("e1");
 		}
 		else if (playerNumber == 2) {
-			name = "Player O";
+			name = "O";
 			token = " O ";
 			this.space = new Space("e9");
 		}

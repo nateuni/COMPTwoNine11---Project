@@ -15,4 +15,9 @@ public class WallMove extends Move {
 	public Wall wall() {
 		return wall;
 	}
+	
+	@Override
+	public String toString(){
+		return this.wall.toOriginalString();
+	}
 }

@@ -4,6 +4,7 @@ public class Space {
 
     private final int col;
     private final int row;
+    private final int ASCII_DIFFERENCE = 96;
 
     /**
      * @param coords
@@ -121,8 +122,15 @@ public class Space {
         return (this.col == otherSpace.col && this.row == otherSpace.row);
     }
     
+    @Override
 	public String toString() {
 		return "[" + col + ", " + row + "]";
+	}
+	
+	public String toOriginalString(){
+		int ascii = col + ASCII_DIFFERENCE;
+		String alpha = Character.toString((char) ascii);	
+		return alpha+row;
 	}
 	
 	 /**

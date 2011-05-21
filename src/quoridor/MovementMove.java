@@ -62,4 +62,10 @@ public class MovementMove extends Move {
 	public boolean isJump() {
 		return isJump;
 	}
+	
+	@Override
+	public String toString(){
+		return this.to.toOriginalString();
+	}
+	
 }

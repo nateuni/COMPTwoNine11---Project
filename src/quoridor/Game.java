@@ -89,35 +89,28 @@ public abstract class Game implements GameInterface {
 	}
 
 	
-	protected boolean save(){
+	public boolean save(){
 		System.out.println("Saving game....");
+		String toSave = this.board.getPlayers()._1.getName() +"\n"+ this.board.getPlayers()._2.getName()+"\n"+this.getCurrentListOfMovesAsString();
+		System.out.print(toSave);
 		try {
-		      FileOutputStream fOut = new FileOutputStream("saveLoadTest.qdr");
-		      ObjectOutputStream objOutput = new ObjectOutputStream(fOut);
-		      objOutput.writeObject(this.board);
-		      objOutput.close();
+
 		} catch (Exception e) { 
-			e.printStackTrace();
 			return false;
 		}
 		return true;
 	}
 	
-	protected Board load(){
-		System.out.println("Loading game....");
-		try {
-			FileInputStream fInput = new FileInputStream("saveLoadTest.qdr");
-			ObjectInputStream objInput = new ObjectInputStream(fInput);
-			this.board = (Board) objInput.readObject();
-			objInput.close();
-		} catch (Exception e) { 
-			e.printStackTrace(); 
-			return null;
-		}
-		return board;
+	public boolean load(){
+		System.out.println(this.board.moveListToString());
+		return true;
 	}
 	
 	public int checkWin() {
 		return board.checkWin();
+	}
+	
+	public String getCurrentListOfMovesAsString(){
+		return this.board.moveListToString();
 	}
 }

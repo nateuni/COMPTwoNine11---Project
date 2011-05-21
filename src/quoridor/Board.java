@@ -409,4 +409,18 @@ public class Board {
 			makeMove(move);
 		}
 	}
+	
+	public String moveListToString(){
+		String moveString = new String();
+		for(Move m : moveList){
+			if(m instanceof MovementMove){
+				m = (MovementMove) m;
+			} else {
+				m = (WallMove) m;
+			}	
+			//moveString.concat(m.toString()+" ");
+			moveString = moveString+" "+m.toString();
+		}
+		return moveString;
+	}
 }
