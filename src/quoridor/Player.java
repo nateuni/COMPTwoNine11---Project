@@ -1,11 +1,13 @@
 package quoridor;
 
+import java.io.Serializable;
+
 /**
  * @author Stump
  * Contains all the information that is relevant to a player. 
  * Thus being - Their name, their token as to be displayed on the board and their current space. 
  */
-public abstract class Player {
+public abstract class Player implements Serializable  {
 	private String name;
 	private String token;
 	private Space space;

@@ -7,12 +7,13 @@ package quoridor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 
 /**
  *
  * @author elysewise
  */
-public class HumanPlayer extends Player {
+public class HumanPlayer extends Player  {
 
     private static final int PLACE_WALL = 1;
     private static final int MOVE_PLAYER = 0;

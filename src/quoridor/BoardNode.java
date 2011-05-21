@@ -1,8 +1,9 @@
 package quoridor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BoardNode {
+public class BoardNode implements Serializable {
 	public Space space;
 	public BoardNode up;
 	public BoardNode right;

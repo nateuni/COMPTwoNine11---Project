@@ -42,10 +42,14 @@ public abstract class Game implements GameInterface {
 	 * attempt to play the move on the board
 	 * prompt user again if the move is invalid
 	 */
-	protected void playNextTurn() {
-	 
+	protected void playNextTurn() {	 
 			System.out.println(board.whoseTurn()+"'s Turn:");
-			board.makeMoveFromInput(this.getFromUser());
+			String userRequest = getFromUser();
+			if(userRequest.equals("save")) {
+				save();
+				quit();
+			}
+			board.makeMoveFromInput(userRequest);
 			if (board.checkWin() != 0) {
 				gameOver = true;
 				System.out.println(board);
@@ -53,7 +57,6 @@ public abstract class Game implements GameInterface {
 				else System.out.println(board.players._2().getName() + " wins!");
 			}
 		}
-	
 
 	/**
 	 * perform necessary responsibilities for an end of turn:
@@ -98,6 +101,7 @@ public abstract class Game implements GameInterface {
 			e.printStackTrace();
 			return false;
 		}
+		System.out.println("Game saved. Shutting down");
 		return true;
 	}
 	
@@ -113,5 +117,9 @@ public abstract class Game implements GameInterface {
 			return null;
 		}
 		return board;
+	}
+	
+	protected void quit() {
+		System.exit(0);
 	}
 }

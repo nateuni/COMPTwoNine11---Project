@@ -1,5 +1,6 @@
 package quoridor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * A graph structure representing the spaces on the board.
  * Used for finding shortest paths.
  */
-public class BoardGraph {
+public class BoardGraph implements Serializable {
 	private BoardNode [][] node;
 	
 	/**

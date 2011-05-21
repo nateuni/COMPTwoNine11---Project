@@ -1,11 +1,13 @@
 
 package quoridor;
 
+import java.io.Serializable;
+
 /**
  * An abstract class for quoridor moves.
  * @author Team Stump
  */
-public abstract class Move {
+public abstract class Move implements Serializable  {
 	public Player owner;
 
 	/**
