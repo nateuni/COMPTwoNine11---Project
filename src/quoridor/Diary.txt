@@ -1,0 +1,26 @@
+Friday 13/05/2011
+
+Meet up at Library for meeting before lecture, discussed jumps and walls. Went to lecture and proceeded to add a queue to validator that could be passed to Game. Went home after 1 hour in lecture, I have the flu.
+
+
+Saturday 14/05/2010
+
+Issues with validator - How should I got about dealing with the passing of the input string from Validator.ckeck()? Yesterdays attempt seemed hacky and I thought that Validator should remain as nieve as possbile.
+
+After some pondering I decided that Game should handle the input string, pull it part and then place it in a queue. Game needed another constructor to handle the job of being passed the raw string from the Validator 
+and then putting it in the queue, flagging that it was a validator game, so I wrote that. 
+
+I edited playNextTurn() to add in the ability to handle the validator boolean flag, and to then pop strings from the queue and to pass them into a method makeMoveFromInput().
+
+There needed to be some code that handled the strings and then changed them into one of the two moves being MovementMove or WallMove before passing them onto Eddie's makeMove method.
+so in Board I wrote makeMoveFromInput(), to handle the strings from the queue.
+
+I added a few setter and getters where they were should have been. The code was buggy and was breaking somewhere around the moveMove() and toConsider() methods. It was late I committed, pushed and email the guys with code snippets to show what I had
+done and where the code was breaking.
+
+Sunday 14/05/2011
+
+Pulled to see if any changes had been made,.. Eddie had made some changes so the code was not breaking, and was playable. So I decided to do some quick testing the players move and walls can be placed from a 
+validator string, but currently there are no constraints on the players ability to move more then 1 square. The code was written but has somehow been overlooked. I edited moveValid() and added in adjacentSpaces().
+
+Tested and it is working correctly. 
