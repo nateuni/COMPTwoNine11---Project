@@ -79,11 +79,10 @@ public class ConsoleGame extends Game {
 				catch (RuntimeException e) {
 					System.out.println("Error: " + e.getMessage());
 				}
+			}
 		}
 		this.checkWin = board.checkWin();
 		return true;
-		}
-		return movePlayed;
 	}
 
 	protected void playNextTurn() {
