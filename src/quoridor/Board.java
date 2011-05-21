@@ -77,6 +77,10 @@ public class Board implements Serializable {
 		return 0;
 	}
 
+	public Player winner() {
+		checkWin();
+		return winner;
+	}
 	
 	/**
 	 * accessor for current player
@@ -232,11 +236,12 @@ public class Board implements Serializable {
 
 	/**
 	 * Moves are passed into this function.
-	 * makeMove() will check that the move is valid,
-	 * then add it to moveList.
+	 * makeMove() will check that the move is valid.
+	 * If it is valid, the move is done and added to moveList.
+	 * Otherwise it throws an exception.
 	 * @param move
 	 */
-	public boolean makeMove(Move move) {
+	public void makeMove(Move move) {
 		if (!moveValid(move)) throw new RuntimeException("Invalid move");
 		if (moveList.size() > 0) {
 			assert (moveListIndex >= 0);
@@ -247,7 +252,6 @@ public class Board implements Serializable {
 		moveList.add(move);
 		moveListIndex++;
 		applyMove(move);
-		return true;
 	}
 
 	/**
@@ -418,6 +422,7 @@ public class Board implements Serializable {
 		cloneBoard.wallList = (LinkedList<Wall>) this.wallList.clone();
 		cloneBoard.moveList = (LinkedList<Move>) this.moveList.clone();
 		cloneBoard.moveListIndex = this.moveListIndex;
+		cloneBoard.currentPlayer = this.currentPlayer;
 		cloneBoard.winner = this.winner;
 		cloneBoard.graph = new BoardGraph();
 		for (Wall wall : wallList) {

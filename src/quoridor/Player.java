@@ -53,6 +53,10 @@ public abstract class Player implements Serializable  {
 	public Boolean hasWallsLeft() {
 		return (wallsLeft > 0); 
 	}
+	
+	public int getWallsLeft() {
+		return wallsLeft;
+	}
 
 	public Boolean decrementWallTally() {
 		if(this.hasWallsLeft()){

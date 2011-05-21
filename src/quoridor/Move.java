@@ -8,6 +8,12 @@ import java.io.Serializable;
  * @author Team Stump
  */
 public abstract class Move implements Serializable  {
+	
+	/**
+	 * How good the move is. (To be used fleetingly by the AI algorithms.)
+	 */
+	public int awesomeness;
+	
 	public Player owner;
 
 	/**

@@ -1,10 +1,13 @@
 package quoridor;
 
+/**
+ * An AI player that picks a random move.
+ * @author Team Stump
+ */
 public class RandomAIPlayer extends AIPlayer {
 
 	public RandomAIPlayer(int playerNumber) {
 		super(playerNumber);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Move getMove(Board board) {
