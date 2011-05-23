@@ -6,6 +6,8 @@ package quoridor;
  */
 public class RandomAIPlayer extends AIPlayer {
 
+	private static final long serialVersionUID = 1L;
+
 	public RandomAIPlayer(int playerNumber) {
 		super(playerNumber);
 	}
@@ -18,10 +20,10 @@ public class RandomAIPlayer extends AIPlayer {
 				if (Math.random() < 0.6) {
 					// Do a movement move
 					double dir = Math.random();
-					if      (dir < 0.25) move = new MovementMove(this.getSpace(), this.getSpace().getUp());
-					else if (dir < 0.5)  move = new MovementMove(this.getSpace(), this.getSpace().getRight());
-					else if (dir < 0.75) move = new MovementMove(this.getSpace(), this.getSpace().getDown());
-					else                 move = new MovementMove(this.getSpace(), this.getSpace().getLeft());
+					if      (dir < 0.25) move = new MovementMove(board.getSpace(this), board.getSpace(this).getUp());
+					else if (dir < 0.5)  move = new MovementMove(board.getSpace(this), board.getSpace(this).getRight());
+					else if (dir < 0.75) move = new MovementMove(board.getSpace(this), board.getSpace(this).getDown());
+					else                 move = new MovementMove(board.getSpace(this), board.getSpace(this).getLeft());
 				}
 				else {
 					// Do a wall move

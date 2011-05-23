@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class BoardNode implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	public Space space;
 	public BoardNode up;
 	public BoardNode right;

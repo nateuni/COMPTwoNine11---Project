@@ -21,6 +21,10 @@ public class Board implements Serializable {
 	protected int moveListIndex = -1;
 	static final Space player1Start = new Space("e1");
 	static final Space player2Start = new Space("e9");
+	protected Space player1Space = new Space("e1");
+	protected Space player2Space = new Space("e9");
+	protected int player1WallsLeft = 10;
+	protected int player2WallsLeft = 10;
 	Player winner = null;
 	public BoardGraph graph = new BoardGraph();
 	private final int MOVEMENT_MOVE = 2;
@@ -67,10 +71,10 @@ public class Board implements Serializable {
 	public int checkWin() {
 		Player player1 = players._1();
 		Player player2 = players._2();
-		if (player1.getSpace().row() == player2Start.row()) {
+		if (getSpace(player1).row() == player2Start.row()) {
 			winner = player1;
 			return 1;
-		} else if (player2.getSpace().row() == player1Start.row()) {
+		} else if (getSpace(player2).row() == player1Start.row()) {
 			winner = player2;
 			return 2;
 		}
@@ -98,8 +102,8 @@ public class Board implements Serializable {
 	 */
 	private boolean isOccupied(Space space) {
 		Player otherPlayer = players.other(currentPlayer);
-		return (otherPlayer.getSpace().equals(space)
-				|| currentPlayer.getSpace().equals(space));
+		return (getSpace(otherPlayer).equals(space)
+				|| getSpace(currentPlayer).equals(space));
 	}
 
 	/**
@@ -180,7 +184,7 @@ public class Board implements Serializable {
 	public void addWall(Wall wall) {
 		wallList.add(wall);
 		graph.addWall(wall);
-		currentPlayer.decrementWallTally();
+		decrementWallTally(currentPlayer);
 	}
 
 
@@ -189,7 +193,6 @@ public class Board implements Serializable {
 	 * Checks whether a placed wall will cut off the path.
 	 * @param wall
 	 * @return
-	 * TODO: Implementation
 	 */
 	private boolean cutsOffPath(WallMove move) {
 		boolean blocks = false;
@@ -199,11 +202,11 @@ public class Board implements Serializable {
 		
 		for (i=1; i<=9; i++) exits.add(new Space (i, player2Start.row()));
 		graph.fillNodeDistances(exits);
-		if (graph.getDist(players._1().getSpace()) == -1) blocks = true;
+		if (graph.getDist(getSpace(players._1())) == -1) blocks = true;
 
 		for (i=1; i<=9; i++) exits.add(new Space (i, player1Start.row()));
 		graph.fillNodeDistances(exits);
-		if (graph.getDist(players._2().getSpace()) == -1) blocks = true;
+		if (graph.getDist(getSpace(players._2())) == -1) blocks = true;
 		
 		removeWall(move.wall());
 		return blocks;
@@ -216,7 +219,7 @@ public class Board implements Serializable {
 	private void removeWall(Wall wall) {
 		wallList.remove(wall);
 		graph.removeWall(wall);
-		currentPlayer.incrementWallTally();
+		incrementWallTally(currentPlayer);
 	}
 
 	/**
@@ -258,13 +261,12 @@ public class Board implements Serializable {
 	 * Check that a move is valid with respect to the current board state.
 	 * @param move
 	 * @return True if the move is valid.
-	 * TODO: Make it throw exceptions for invalid moves.
 	 */
 	public boolean moveValid (Move move) {
 		if (move instanceof MovementMove) {
 			MovementMove mMove = (MovementMove) move;
 			if (!wallIsHere(mMove.from(), mMove.to()) 
-					&& mMove.from().equals(currentPlayer.getSpace()) 
+					&& mMove.from().equals(getSpace(currentPlayer)) 
 					&& !isOccupied(mMove.to()) 
 					&& (adjacentSpaces(mMove.from(), mMove.to()) || jumpValid(mMove))) {
 				return true;
@@ -272,7 +274,7 @@ public class Board implements Serializable {
 			return false;
 		}	
 		if (move instanceof WallMove) {
-			if(!currentPlayer.hasWallsLeft()) {
+			if(!hasWallsLeft(currentPlayer)) {
 				return false;
 			}
 			WallMove wMove = (WallMove) move;
@@ -308,7 +310,7 @@ public class Board implements Serializable {
 		if (move.from().row() == move.to().row()) {
 			assert (Math.abs(move.from().col() - move.to().col()) == 2);
 			middleSpace = new Space(Math.min(move.from().col(), move.to().col()) + 1, move.from().row());
-			if (players.other(move.owner).getSpace().equals(middleSpace)
+			if (getSpace(players.other(move.owner)).equals(middleSpace)
 					&& !wallIsHere(move.from(), middleSpace)
 					&& !wallIsHere(move.to(), middleSpace)) {
 				return true;
@@ -319,7 +321,7 @@ public class Board implements Serializable {
 		else if (move.from().col() == move.to().col()) {
 			assert (Math.abs(move.from().row() - move.to().row()) == 2);
 			middleSpace = new Space(move.from().col(), Math.min(move.from().row(), move.to().row()) + 1);
-			if (players.other(move.owner).getSpace().equals(middleSpace)
+			if (getSpace(players.other(move.owner)).equals(middleSpace)
 					&& !wallIsHere(move.from(), middleSpace)
 					&& !wallIsHere(move.to(), middleSpace)) {
 				return true;
@@ -328,11 +330,11 @@ public class Board implements Serializable {
 		}
 		// Diagonal jump move
 		else if (Math.abs(move.from().row()-move.to().row()) + Math.abs(move.from().col()-move.to().col()) == 2) {
-			if (players.other(move.owner).getSpace().row() == move.from().row()
-					&& Math.abs(players.other(move.owner).getSpace().col() - move.from().col()) == 1
-					|| players.other(move.owner).getSpace().col() == move.from().col()
-					&& Math.abs(players.other(move.owner).getSpace().row() - move.from().row()) == 1) {
-				middleSpace = players.other(move.owner).getSpace();
+			if (getSpace(players.other(move.owner)).row() == move.from().row()
+					&& Math.abs(getSpace(players.other(move.owner)).col() - move.from().col()) == 1
+					|| getSpace(players.other(move.owner)).col() == move.from().col()
+					&& Math.abs(getSpace(players.other(move.owner)).row() - move.from().row()) == 1) {
+				middleSpace = getSpace(players.other(move.owner));
 				if (wallIsHere(middleSpace, move.to())) return false;
 				try {
 					// Try to construct the space behind the opponent
@@ -357,7 +359,7 @@ public class Board implements Serializable {
 	 */
 	private void applyMove(Move move) {
 		if (move instanceof MovementMove) {
-			move.owner.setSpace(((MovementMove) move).to());
+			setSpace(move.owner, ((MovementMove) move).to());
 		}
 		if (move instanceof WallMove) {
 			this.addWall(((WallMove) move).wall());
@@ -372,7 +374,7 @@ public class Board implements Serializable {
 		Move move = moveList.get(moveListIndex);
 
 		if (move instanceof MovementMove) {
-			move.owner.setSpace(((MovementMove) move).from());
+			setSpace(move.owner, ((MovementMove) move).from());
 		}
 		if (move instanceof WallMove) {
 			this.removeWall(((WallMove) move).wall());
@@ -406,7 +408,7 @@ public class Board implements Serializable {
 		} 
 		else {	// Regular move
 			if (moveInput.length() == MOVEMENT_MOVE) {
-				move = new MovementMove(this.currentPlayer.getSpace(), new Space(moveInput));
+				move = new MovementMove(getSpace(currentPlayer), new Space(moveInput));
 			} else if (moveInput.length() == WALL_MOVE) {
 				move = new WallMove(new Wall(moveInput));
 			} else {
@@ -424,6 +426,10 @@ public class Board implements Serializable {
 		cloneBoard.moveListIndex = this.moveListIndex;
 		cloneBoard.currentPlayer = this.currentPlayer;
 		cloneBoard.winner = this.winner;
+		cloneBoard.player1Space = this.player1Space;
+		cloneBoard.player2Space = this.player2Space;
+		cloneBoard.player1WallsLeft = this.player1WallsLeft;
+		cloneBoard.player2WallsLeft = this.player2WallsLeft;
 		cloneBoard.graph = new BoardGraph();
 		for (Wall wall : wallList) {
 			cloneBoard.graph.addWall(wall);
@@ -443,4 +449,45 @@ public class Board implements Serializable {
 		}
 		return moveString;
 	}
+	
+	protected void setSpace(Player player, Space space) {
+		if (player.equals(players._1())) player1Space = space;
+		else if (player.equals(players._2())) player2Space = space;
+		else throw new RuntimeException("Invalid player");
+	}
+	
+	public Space getSpace(Player player) {
+		if (player.equals(players._1())) return player1Space;
+		else if (player.equals(players._2())) return player2Space;
+		else throw new RuntimeException("Invalid player");
+	}
+
+	/**
+	 * Checks if this player has reached their quota of walls
+	 * @return boolean true is player can still place walls
+	 */
+	public Boolean hasWallsLeft(Player player) {
+		if (player.equals(players._1())) return (player1WallsLeft > 0);
+		else if (player.equals(players._2())) return (player2WallsLeft > 0);
+		else throw new RuntimeException("Invalid player");
+	}
+	
+	public int getWallsLeft(Player player) {
+		if (player.equals(players._1())) return player1WallsLeft;
+		else if (player.equals(players._2())) return player2WallsLeft;
+		else throw new RuntimeException("Invalid player");
+	}
+
+	public void decrementWallTally(Player player) {
+		if (player.equals(players._1())) player1WallsLeft--;
+		else if (player.equals(players._2())) player2WallsLeft--;
+		else throw new RuntimeException("Invalid player");
+	}
+
+	public void incrementWallTally(Player player) {
+		if (player.equals(players._1())) player1WallsLeft++;
+		else if (player.equals(players._2())) player2WallsLeft++;
+		else throw new RuntimeException("Invalid player");
+	}
+
 }

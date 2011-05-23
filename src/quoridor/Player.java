@@ -8,9 +8,10 @@ import java.io.Serializable;
  * Thus being - Their name, their token as to be displayed on the board and their current space. 
  */
 public abstract class Player implements Serializable  {
+
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String token;
-	private Space space;
 	private int wallsLeft = 10;
 
 	/**
@@ -21,12 +22,10 @@ public abstract class Player implements Serializable  {
 		if (playerNumber == 1) {
 			name = "Player X";
 			token = " X ";
-			this.space = new Space("e1");
 		}
 		else if (playerNumber == 2) {
 			name = "Player O";
 			token = " O ";
-			this.space = new Space("e9");
 		}
 		else throw new RuntimeException("Invalid player number");
 	}
@@ -47,35 +46,6 @@ public abstract class Player implements Serializable  {
 	}
 
 	/**
-	 * Checks if this player has reached their quota of walls
-	 * @return boolean true is player can still place walls
-	 */
-	public Boolean hasWallsLeft() {
-		return (wallsLeft > 0); 
-	}
-	
-	public int getWallsLeft() {
-		return wallsLeft;
-	}
-
-	public Boolean decrementWallTally() {
-		if(this.hasWallsLeft()){
-			this.wallsLeft--;
-			return true;
-		}
-		return false;
-	}
-
-	//used for undo'ing
-	public boolean incrementWallTally(){
-		if(this.wallsLeft < 20){
-			wallsLeft++;
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * @return The player's name as a String 
 	 */
 	public String getName() {
@@ -86,17 +56,6 @@ public abstract class Player implements Serializable  {
 		this.name = name;
 	}
 
-	/**
-	 * @return The players current Space as a pointer to a Space object. 
-	 */
-	public Space getSpace() {
-		return space;
-	}
-
-	public void setSpace(Space newSpace) {
-		space = newSpace;
-	}
-	
 	/**
 	 * Obtain the next moved to be played by this player.
 	 * Implementation will differ depending on instance of player object

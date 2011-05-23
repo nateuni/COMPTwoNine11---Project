@@ -64,8 +64,8 @@ public class BoardPrinter {
 			for (col = 0; col < 9; col++) {
 				thisSpace = new Space(col+1, row+1);
 				
-				if      (board.getPlayers()._1().getSpace().equals(thisSpace)) boardString.append(board.getPlayers()._1().getToken());
-				else if (board.getPlayers()._2().getSpace().equals(thisSpace)) boardString.append(board.getPlayers()._2().getToken());
+				if      (board.getSpace(board.getPlayers()._1()).equals(thisSpace)) boardString.append(board.getPlayers()._1().getToken());
+				else if (board.getSpace(board.getPlayers()._2()).equals(thisSpace)) boardString.append(board.getPlayers()._2().getToken());
 				else boardString.append("   ");
 				
 				if (col != 8) {

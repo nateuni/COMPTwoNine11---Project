@@ -8,7 +8,9 @@ import java.io.Serializable;
  * @author Team Stump
  */
 public abstract class Move implements Serializable  {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * How good the move is. (To be used fleetingly by the AI algorithms.)
 	 */

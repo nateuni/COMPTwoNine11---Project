@@ -42,10 +42,10 @@ package quoridor;
 					player2 = new HumanPlayer(2);
 					break;
 			case 2: player1 = new HumanPlayer(1);
-					player2 = new RandomAIPlayer(2);
+					player2 = new NoLookAIPlayer(2);
 					break;
-			case 3: player1 = new RandomAIPlayer(1);
-					player2 = new RandomAIPlayer(2);
+			case 3: player1 = new NoLookAIPlayer(1);
+					player2 = new NoLookAIPlayer(2);
 					break;
 			default: return null;
 		}

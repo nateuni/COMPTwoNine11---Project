@@ -2,9 +2,11 @@ package quoridor;
 
 import java.io.Serializable;
 
-public class Two <A> extends Pair <A, A> implements Serializable 
-{
-    public static <X> Two <X> two (X a1, X a2)
+public class Two <A> extends Pair <A, A> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	public static <X> Two <X> two (X a1, X a2)
     {
         return new Two <X> (a1, a2);
     }

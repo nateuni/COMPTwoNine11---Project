@@ -2,6 +2,7 @@ package quoridor;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -9,6 +10,8 @@ import java.util.List;
  * @author Team Stump
  */
 public class NoLookAIPlayer extends AIPlayer {
+
+	private static final long serialVersionUID = 1L;
 	
 	// Weights for the heuristics
 	private final int DISTANCE_WEIGHT = 5;
@@ -26,26 +29,29 @@ public class NoLookAIPlayer extends AIPlayer {
 	public Move getMove(Board board) {
 		Move chosenMove = null;
 		Board newBoard;
-		List<Move> potentialMoves = allMoves();
+		List<Move> potentialMoves = allMoves(board);
+		List<Move> validMoves = new LinkedList<Move>();
 		for (Move move : potentialMoves) {
 			try {
 				newBoard = board.clone();
 				newBoard.makeMove(move);
-				move.awesomeness = awesomeness(board, this) - awesomeness(board, board.players.other(this));
+				move.awesomeness = awesomeness(newBoard, this) - awesomeness(newBoard, newBoard.players.other(this));
+				validMoves.add(move);
 			}
-			catch (Exception e) {
-				potentialMoves.remove(move);
-			}
+			catch (Exception e) {}
 		}
-		Collections.sort(potentialMoves, new MoveComparator());
-		chosenMove = potentialMoves.get(0);
+		Collections.sort(validMoves, new MoveComparator());
+		for (Move move : validMoves) {
+			System.out.println(move + " - " + move.awesomeness);
+		}
+		chosenMove = validMoves.get(0);
 		return chosenMove;
 	}
 	
 	private int awesomeness(Board board, Player player) {
 		int awesomeness = 0;
 		
-		awesomeness += this.getWallsLeft() * WALLSLEFT_WEIGHT;
+		awesomeness += board.getWallsLeft(this) * WALLSLEFT_WEIGHT;
 		
 		Space otherSide;
 		if (player.equals(board.players._1())) otherSide = board.player2Start;
@@ -53,7 +59,7 @@ public class NoLookAIPlayer extends AIPlayer {
 		ArrayList<Space> exits = new ArrayList<Space>();
 		for (int i = 1; i <=9; i++) exits.add(new Space(i, otherSide.row()));
 		board.graph.fillNodeDistances(exits);
-		int distance = board.graph.node[player.getSpace().row()][player.getSpace().col()].distanceToExit;
+		int distance = board.graph.node[board.getSpace(player).row()-1][board.getSpace(player).col()-1].distanceToExit;
 		awesomeness -= distance * DISTANCE_WEIGHT;
 		
 		if (player.equals(board.winner())) awesomeness = Integer.MAX_VALUE/2;

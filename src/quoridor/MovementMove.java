@@ -7,6 +7,8 @@ import java.lang.Math;
  * @author Team Stump
  */
 public class MovementMove extends Move {
+
+	private static final long serialVersionUID = 1L;
 	private Space from;
 	private Space to;
 	private boolean isJump;
@@ -67,5 +69,4 @@ public class MovementMove extends Move {
 	public String toString(){
 		return this.to.toOriginalString();
 	}
-	
 }
