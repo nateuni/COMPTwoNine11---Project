@@ -8,7 +8,6 @@ import java.lang.Math;
  */
 public class MovementMove extends Move {
 
-	private static final long serialVersionUID = 1L;
 	private Space from;
 	private Space to;
 	private boolean isJump;

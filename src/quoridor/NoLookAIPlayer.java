@@ -10,8 +10,6 @@ import java.util.List;
  * @author Team Stump
  */
 public class NoLookAIPlayer extends AIPlayer {
-
-	private static final long serialVersionUID = 1L;
 	
 	// Weights for the heuristics
 	private final int DISTANCE_WEIGHT = 5;

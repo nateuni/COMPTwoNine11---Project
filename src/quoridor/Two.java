@@ -1,10 +1,6 @@
 package quoridor;
 
-import java.io.Serializable;
-
-public class Two <A> extends Pair <A, A> implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Two <A> extends Pair <A, A> {
 
 	public static <X> Two <X> two (X a1, X a2)
     {

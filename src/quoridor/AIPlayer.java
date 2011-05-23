@@ -5,8 +5,6 @@ import java.util.List;
 
 public abstract class AIPlayer extends Player {
 
-	private static final long serialVersionUID = 1L;
-
 	/**Constructor
 	 * @param playerNumber delegates player1 or player2 default construction
 	 */

@@ -56,7 +56,7 @@ public class ConsoleGame extends Game {
 				case 5: System.exit(0); break;
 				default: System.out.println("Invalid Input");
 			}
-			if(selection >= 1 && selection < 4 && board != null){
+			if(selection >= 1 && selection <= 4 && board != null){
 				return true;
 			}
 		}

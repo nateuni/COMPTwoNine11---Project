@@ -15,11 +15,15 @@ import java.io.InputStreamReader;
 
 public class HumanPlayer extends Player {
 
-	private static final long serialVersionUID = 1L;
-
 	public HumanPlayer(int referenceNumber) {
         super(referenceNumber);
         setUpUser();
+    }
+	
+	public HumanPlayer(int referenceNumber, String name, String token) {
+		super(referenceNumber);
+        super.setName(name);
+        super.setToken(token);
     }
 
     /**
