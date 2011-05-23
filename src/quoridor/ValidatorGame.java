@@ -30,9 +30,9 @@ public class ValidatorGame extends Game{
 	 * This function controls the flow of game play.
 	 */
 	public boolean playGame() {
-		boolean movePlayed;
+//		boolean movePlayed;
 		while (!gameOver) {
-			movePlayed = false;
+//			movePlayed = false;
 			try {
 				playNextTurn();
 			}
@@ -45,12 +45,13 @@ public class ValidatorGame extends Game{
 	}
 
 	protected void playNextTurn() {
-			if(q.size() > 0){
-				if (board.checkWin() != 0) {
-					throw new RuntimeException("Can't play move after win.");
-				}
-				board.makeMoveFromInput(q.remove());
+		if(q.size() > 0){
+			if (board.checkWin() != 0) {
+				throw new RuntimeException("Can't play move after win.");
 			}
-			else gameOver = true;
+			board.makeMoveFromInput(q.remove());
 		}
+		else gameOver = true;
+	}
+
 }

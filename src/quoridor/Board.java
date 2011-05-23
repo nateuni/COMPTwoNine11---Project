@@ -430,4 +430,17 @@ public class Board implements Serializable {
 		}
 		return cloneBoard;
 	}
+	
+	public String moveListToString(){
+		String moveString = new String();
+		for(Move m : moveList){
+			if(m instanceof MovementMove){
+				m = (MovementMove) m;
+			} else {
+				m = (WallMove) m;
+			}	
+			moveString = moveString+" "+m.toString();
+		}
+		return moveString;
+	}
 }

@@ -1,4 +1,5 @@
 package quoridor.test;
+import quoridor.*;
 
 
 import static org.junit.Assert.assertTrue;
@@ -127,6 +128,6 @@ public class MoveValidationTests {
 		String testString = "f1 a1h g1 a2h h1 a3h i1 a4h i2 a5h i3";
 		Game game = Factory.instance().makeGame(testString);
 		assertTrue(game.playGame());
-		//game.save();
+		game.save();
 	}
 }

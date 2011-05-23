@@ -19,12 +19,12 @@ public abstract class Player implements Serializable  {
 	 */
 	public Player(int playerNumber) {
 		if (playerNumber == 1) {
-			name = "X";
+			name = "Player X";
 			token = " X ";
 			this.space = new Space("e1");
 		}
 		else if (playerNumber == 2) {
-			name = "O";
+			name = "Player O";
 			token = " O ";
 			this.space = new Space("e9");
 		}

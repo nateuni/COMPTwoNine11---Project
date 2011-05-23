@@ -38,16 +38,16 @@ package quoridor;
 		Player player1;
 		Player player2;
 		switch (type){
-		case 1: player1 = new HumanPlayer(1);
-		player2 = new HumanPlayer(2);
-		break;
-		case 2: player1 = new HumanPlayer(1);
-		player2 = new RandomAIPlayer(2);
-		break;
-		case 3: player1 = new RandomAIPlayer(1);
-		player2 = new RandomAIPlayer(2);
-		break;
-		default: return null;
+			case 1: player1 = new HumanPlayer(1);
+					player2 = new HumanPlayer(2);
+					break;
+			case 2: player1 = new HumanPlayer(1);
+					player2 = new RandomAIPlayer(2);
+					break;
+			case 3: player1 = new RandomAIPlayer(1);
+					player2 = new RandomAIPlayer(2);
+					break;
+			default: return null;
 		}
 		return new Board(new Two<Player>(player1, player2));
 	}

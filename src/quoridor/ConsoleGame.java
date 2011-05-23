@@ -48,13 +48,13 @@ public class ConsoleGame extends Game {
 					"2 - Play Human vs AI Game\n" +
 					"3 - Play AI vs AI Game\n" +
 					"4 - Load previously saved game\n" +
-			"5 - Quit\n");
+					"5 - Quit\n");
 			selection = Integer.parseInt(getFromUser());
 			switch(selection){
-			case 1: case 2: case 3: board = Factory.instance().makeBoard(selection); break;
-			case 4: board = this.load(); break;
-			case 5: System.exit(0); break;
-			default: System.out.println("Invalid Input");
+				case 1: case 2: case 3: board = Factory.instance().makeBoard(selection); break;
+				case 4: board = this.load(); break;
+				case 5: System.exit(0); break;
+				default: System.out.println("Invalid Input");
 			}
 			if(selection >= 1 && selection < 4 && board != null){
 				return true;
@@ -119,7 +119,9 @@ public class ConsoleGame extends Game {
 		}
 	}
 
-	protected boolean save(){
+	/*
+	@Override
+	public boolean save(){
 		System.out.println("Saving game....");
 		try {
 			FileOutputStream fOut = new FileOutputStream("saveLoadTest.qdr");
@@ -132,8 +134,11 @@ public class ConsoleGame extends Game {
 		}
 		return true;
 	}
+	*/
 
-	protected Board load(){
+	/*
+	@Override
+	public Board load(){
 		System.out.println("Loading game....");
 		try {
 			FileInputStream fInput = new FileInputStream("saveLoadTest.qdr");
@@ -146,4 +151,5 @@ public class ConsoleGame extends Game {
 		}
 		return board;
 	}
+	*/
 }
