@@ -204,6 +204,7 @@ public class Board implements Serializable {
 		graph.fillNodeDistances(exits);
 		if (graph.getDist(getSpace(players._1())) == -1) blocks = true;
 
+		exits.clear();
 		for (i=1; i<=9; i++) exits.add(new Space (i, player1Start.row()));
 		graph.fillNodeDistances(exits);
 		if (graph.getDist(getSpace(players._2())) == -1) blocks = true;
