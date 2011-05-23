@@ -12,7 +12,6 @@ public abstract class Player implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private String token;
-	private int wallsLeft = 10;
 
 	/**
 	 * Constructor for a default player

@@ -14,7 +14,7 @@ public abstract class Move implements Serializable  {
 	/**
 	 * How good the move is. (To be used fleetingly by the AI algorithms.)
 	 */
-	public int awesomeness;
+	public double awesomeness;
 	
 	public Player owner;
 

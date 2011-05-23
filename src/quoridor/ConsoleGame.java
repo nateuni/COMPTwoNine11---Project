@@ -1,17 +1,13 @@
 package quoridor;													
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class ConsoleGame extends Game {
 
 	public static void main(String[] args) {
-		ConsoleGame thisGame = new ConsoleGame();
+		new ConsoleGame();
 	}
 
 	/**

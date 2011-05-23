@@ -40,4 +40,14 @@ public class RandomAIPlayer extends AIPlayer {
 		}
 		return move;
 	}
+
+	@Override
+	protected int distanceWeight() {
+		return 0;
+	}
+
+	@Override
+	protected int wallsLeftWeight() {
+		return 0;
+	}
 }
