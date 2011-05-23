@@ -6,8 +6,6 @@ package quoridor;
  */
 public class RandomAIPlayer extends AIPlayer {
 
-	private static final long serialVersionUID = 1L;
-
 	public RandomAIPlayer(int playerNumber) {
 		super(playerNumber);
 	}

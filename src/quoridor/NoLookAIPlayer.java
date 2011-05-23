@@ -9,8 +9,6 @@ import java.util.List;
  * @author Team Stump
  */
 public class NoLookAIPlayer extends AIPlayer {
-
-	private static final long serialVersionUID = 1L;
 	
 	public NoLookAIPlayer(int playerNumber) {
 		super(playerNumber);
