@@ -45,7 +45,7 @@ public class ConsoleGame extends Game {
 					"3 - Play AI vs AI Game\n" +
 					"4 - Load previously saved game\n" +
 					"5 - Quit\n");
-			selection = Integer.parseInt(getFromUser());
+			selection = Integer.parseInt(getFromUser("Enter selection: "));
 			switch(selection){
 				case 1: case 2: case 3: board = Factory.instance().makeBoard(selection); break;
 				case 4: board = this.load(); break;
@@ -86,7 +86,7 @@ public class ConsoleGame extends Game {
 
 		Move move = board.currentPlayer().getMove(board);
 		if (move != null) board.makeMove(move);
-		else board.makeMoveFromInput(this.getFromUser());
+		else board.makeMoveFromInput(this.getFromUser("Enter move: "));
 		if (board.checkWin() != 0) {
 			gameOver = true;
 			System.out.println(board);
@@ -99,11 +99,11 @@ public class ConsoleGame extends Game {
 	 * Read one line from user input
 	 * @return the read line as a String
 	 */
-	protected String getFromUser() {
+	protected String getFromUser(String message) {
 		try {
 			while (true) {
 				BufferedReader userReader = new BufferedReader(new InputStreamReader(System.in));
-				System.out.print("Enter move: ");
+				System.out.print(message);
 				String fromUser = userReader.readLine();
 				if (!fromUser.isEmpty()) { // never returns an empty string
 					return fromUser;
@@ -114,38 +114,4 @@ public class ConsoleGame extends Game {
 			return null;
 		}
 	}
-
-	/*
-	@Override
-	public boolean save(){
-		System.out.println("Saving game....");
-		try {
-			FileOutputStream fOut = new FileOutputStream("saveLoadTest.qdr");
-			ObjectOutputStream objOutput = new ObjectOutputStream(fOut);
-			objOutput.writeObject(this.board);
-			objOutput.close();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-	*/
-
-	/*
-	@Override
-	public Board load(){
-		System.out.println("Loading game....");
-		try {
-			FileInputStream fInput = new FileInputStream("saveLoadTest.qdr");
-			ObjectInputStream objInput = new ObjectInputStream(fInput);
-			this.board = (Board) objInput.readObject();
-			objInput.close();
-		} catch (Exception e) { 
-			e.printStackTrace(); 
-			return null;
-		}
-		return board;
-	}
-	*/
 }

@@ -245,13 +245,13 @@ public class Board {
 	 * @param move
 	 */
 	public void makeMove(Move move) {
+		move.owner = currentPlayer;
 		if (!moveValid(move)) throw new RuntimeException("Invalid move");
 		if (moveList.size() > 0) {
 			assert (moveListIndex >= 0);
 			while (moveList.size() > moveListIndex + 1)
 				moveList.removeLast();
 		}
-		move.owner = currentPlayer;
 		moveList.add(move);
 		moveListIndex++;
 		applyMove(move);

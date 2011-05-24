@@ -45,10 +45,12 @@ public class NoLookAIPlayer extends AIPlayer {
 	}
 	
 	// Weights for the heuristics
+	@Override
 	protected int distanceWeight() {
 		return 5;
 	}
-	
+
+	@Override
 	protected int wallsLeftWeight() {
 		return 3;
 	}

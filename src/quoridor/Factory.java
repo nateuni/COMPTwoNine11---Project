@@ -7,20 +7,13 @@ import java.io.InputStreamReader;
 
 	public class Factory {
 
-	protected static Factory theFactory;
-	    
-	private static Factory make() {
-		theFactory = new Factory();
-		return theFactory;
-	}
-	
+	private static Factory theFactory;
+
 	public static Factory instance ()
 	{
-		if (theFactory == null) make();
+		if (theFactory == null) theFactory = new Factory();
 		return theFactory;
 	}
-	
-	
 
 	public Game makeGame(String presetMoves) {
 		if(presetMoves != null) {
@@ -28,7 +21,6 @@ import java.io.InputStreamReader;
 		}
 		return null;
 	}
-
 
 	/**
 	 * Construct and return a new board with the specified types of players
@@ -58,10 +50,10 @@ import java.io.InputStreamReader;
 	
 	Player makeAIPlayer(int playerNumber) {
 		while(true) {
-		System.out.println("Select diffidulty level for player "+playerNumber+":");
-		System.out.println("1 - easy");
-		System.out.println("2 - medium");
-		System.out.println("3 - hard");
+		System.out.println("Select difficulty level for player " + playerNumber + ":");
+		System.out.println("1 - Easy");
+		System.out.println("2 - Medium");
+		System.out.println("3 - Hard");
 		String input = getFromUser();
 		int difficulty;
 		try {

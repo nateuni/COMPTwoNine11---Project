@@ -18,10 +18,26 @@ public abstract class AIPlayer extends Player {
 	
 	public List<Move> allMoves(Board board) {
 		LinkedList<Move> potentialMoves = new LinkedList<Move>();
-		if (board.getSpace(this).getUp()    != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getUp()));
-		if (board.getSpace(this).getRight() != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getRight()));
-		if (board.getSpace(this).getDown()  != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getDown()));
-		if (board.getSpace(this).getLeft()  != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getLeft()));
+		if (board.getSpace(this).getUp() != null) {
+			potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getUp()));
+			if (board.getSpace(this).getUp().getRight() != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getUp().getRight()));
+			if (board.getSpace(this).getUp().getUp()    != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getUp().getUp()));
+		}
+		if (board.getSpace(this).getRight() != null) {
+			potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getRight()));
+			if (board.getSpace(this).getRight().getDown()  != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getDown()));
+			if (board.getSpace(this).getRight().getRight() != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getRight()));
+		}
+		if (board.getSpace(this).getDown() != null) {
+			if (board.getSpace(this).getDown().getLeft() != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getDown().getLeft()));
+			if (board.getSpace(this).getDown().getDown() != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getDown().getDown()));
+			potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getDown()));
+		}
+		if (board.getSpace(this).getLeft() != null) {
+			if (board.getSpace(this).getLeft().getUp()   != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getLeft().getUp()));
+			if (board.getSpace(this).getLeft().getLeft() != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getLeft().getLeft()));
+			potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getLeft()));
+		}
 		if (board.hasWallsLeft(this)) {
 			for (int col = 1; col <= 8; col++) {
 				for (int row = 1; row <= 8; row++) {
