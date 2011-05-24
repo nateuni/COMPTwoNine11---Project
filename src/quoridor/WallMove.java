@@ -6,7 +6,6 @@ package quoridor;
  */
 public class WallMove extends Move {
 
-	private static final long serialVersionUID = 1L;
 	private Wall wall;
 	
 	public WallMove(Wall wall) {

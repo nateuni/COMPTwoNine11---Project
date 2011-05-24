@@ -1,10 +1,7 @@
 package quoridor;
 
-import java.io.Serializable;
+public class Space {
 
-public class Space implements Serializable {
-
-	private static final long serialVersionUID = 1L;
 	private final int col;
     private final int row;
     private final int ASCII_DIFFERENCE = 96;

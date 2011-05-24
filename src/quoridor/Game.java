@@ -55,6 +55,7 @@ public abstract class Game implements GameInterface {
 	}
 	
 	public Board load(){
+		boolean p1CurrentPlayer;
 		Scanner inputStream = null;
 		int lineCounter = 0;
 		String player1Name = null, player1Token = null, player2Name = null, player2Token = null, moveString = null;
@@ -76,12 +77,24 @@ public abstract class Game implements GameInterface {
 				case 4: moveString = inputStream.nextLine().trim(); lineCounter++; break;
 			}
 		}
-		Game game = new ValidatorGame(moveString);
-		game.board.players._1().setName(player1Name);
-		game.board.players._1().setToken(player1Token);
-		game.board.players._1().setName(player2Name);
-		game.board.players._1().setToken(player2Token);
 		
+		Game game = Factory.instance().makeGame(moveString);
+		game.playGame();
+		
+		if(game.board.players._1().equals(game.board.currentPlayer)){
+			p1CurrentPlayer = true;
+		} else {
+			p1CurrentPlayer = false;
+		}
+		
+		game.board.loadPlayers(player1Name, player1Token, player2Name, player2Token);
+		
+		if(p1CurrentPlayer){
+			game.board.currentPlayer = game.board.players._1();
+		} else {
+			game.board.currentPlayer = game.board.players._2();
+		}
+	 
 		return game.board;
 	}
 }

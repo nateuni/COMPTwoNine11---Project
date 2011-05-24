@@ -1,3 +1,4 @@
+
 package quoridor;
 
 /**
@@ -6,7 +7,6 @@ package quoridor;
  */
 public class RandomAIPlayer extends AIPlayer {
 
-	
 	public RandomAIPlayer(int playerNumber) {
 		super(playerNumber);
 	}
@@ -38,5 +38,15 @@ public class RandomAIPlayer extends AIPlayer {
 			}
 		}
 		return move;
+	}
+
+	@Override
+	protected int distanceWeight() {
+		return 0;
+	}
+
+	@Override
+	protected int wallsLeftWeight() {
+		return 0;
 	}
 }

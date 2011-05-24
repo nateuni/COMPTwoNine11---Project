@@ -1,20 +1,16 @@
 
 package quoridor;
 
-import java.io.Serializable;
-
 /**
  * An abstract class for quoridor moves.
  * @author Team Stump
  */
-public abstract class Move implements Serializable  {
-
-	private static final long serialVersionUID = 1L;
+public abstract class Move {
 
 	/**
 	 * How good the move is. (To be used fleetingly by the AI algorithms.)
 	 */
-	public int awesomeness;
+	public double awesomeness;
 	
 	public Player owner;
 
