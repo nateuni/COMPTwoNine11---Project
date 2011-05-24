@@ -27,7 +27,7 @@ public class NoLookAIPlayer extends AIPlayer {
 			try {
 				newBoard = board.clone();
 				newBoard.makeMove(move);
-				move.awesomeness = Math.pow(4, awesomeness(newBoard, this) - awesomeness(newBoard, newBoard.players.other(this)));
+				move.awesomeness = Math.pow(4, this.minMax() * evaluate(newBoard));
 				awesomeTotal += move.awesomeness;
 				validMoves.add(move);
 			}
