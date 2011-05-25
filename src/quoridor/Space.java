@@ -1,6 +1,6 @@
 package quoridor;
 
-public class Space {
+public class Space implements SpaceInterface{
 
 	private final int col;
     private final int row;

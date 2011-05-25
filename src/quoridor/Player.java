@@ -8,7 +8,7 @@ import java.util.List;
  * Contains all the information that is relevant to a player. 
  * Thus being - Their name, their token as to be displayed on the board and their current space. 
  */
-public abstract class Player  {
+public abstract class Player implements PlayerInterface  {
 
 	private String name;
 	private String token;
@@ -32,7 +32,7 @@ public abstract class Player  {
 		else throw new RuntimeException("Invalid player number");
 	}
 
-	protected void setToken(String t) {
+	public void setToken(String t) {
 		if (t.length() == 0) return;
 		else if (t.length() == 1) token = " " + t + " ";
 		else if (t.length() == 2) token = t + " ";

@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * A board has Two Players and up to 20 placed walls (10 per player) and tracks each of their coordinates.
  * @author Team Stump
  */
-public class Board {
+public class Board implements BoardInterface{
 
 	public Two<Player> players;
 	protected Player currentPlayer;
@@ -494,5 +494,6 @@ public class Board {
 		Two<Player> players = new Two<Player>(new HumanPlayer(1, p1Name, p1Token), new HumanPlayer(2, p2Name, p2Token));
 		this.setPlayers(players);
 	}
+
 
 }

@@ -4,7 +4,7 @@ package quoridor;
  * @author Stump
  * A wall can be either vertical or horizontal as it's location is defined by a space. 
  */
-public class Wall {
+public class Wall implements WallInterface{
 	private Space space;
 	private Boolean vertical;
 	

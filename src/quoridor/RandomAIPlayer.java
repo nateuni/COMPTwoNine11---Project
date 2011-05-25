@@ -49,4 +49,5 @@ public class RandomAIPlayer extends AIPlayer {
 	protected int wallsLeftWeight() {
 		return 0;
 	}
+
 }
