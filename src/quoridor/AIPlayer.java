@@ -1,8 +1,6 @@
 package quoridor;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public abstract class AIPlayer extends Player {
 
