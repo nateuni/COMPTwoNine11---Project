@@ -331,9 +331,9 @@ public class Board implements BoardInterface{
 		// Diagonal jump move
 		else if (Math.abs(move.from().row()-move.to().row()) + Math.abs(move.from().col()-move.to().col()) == 2) {
 			if (getSpace(players.other(move.owner)).row() == move.from().row()
-					&& Math.abs(getSpace(players.other(move.owner)).col() - move.from().col()) == 1
+					&& getSpace(players.other(move.owner)).col() == move.to().col()
 					|| getSpace(players.other(move.owner)).col() == move.from().col()
-					&& Math.abs(getSpace(players.other(move.owner)).row() - move.from().row()) == 1) {
+					&& getSpace(players.other(move.owner)).row() == move.to().row()) {
 				middleSpace = getSpace(players.other(move.owner));
 				if (wallIsHere(middleSpace, move.to())) return false;
 				try {
