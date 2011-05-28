@@ -17,7 +17,7 @@ public class Validator {
 	 * @return validity of the list of moves
 	 */
 	
-	public static boolean check(String moves){
+	public boolean check(String moves){
 		Game game = Factory.instance().makeGame(moves);
 		return game.playGame();
 	}
