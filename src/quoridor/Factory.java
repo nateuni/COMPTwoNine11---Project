@@ -34,6 +34,11 @@ import java.io.InputStreamReader;
 		Player player1;
 		Player player2;
 		switch (type){
+		
+		// 0 for validator games
+			case 0: player1 = new DeadPlayer(1);
+					player2 = new DeadPlayer(2);
+					break;
 			case 1: player1 = new HumanPlayer(1);
 					player2 = new HumanPlayer(2);
 					break;
