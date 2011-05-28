@@ -77,6 +77,7 @@ public class Board implements BoardInterface{
 			winner = player2;
 			return 2;
 		}
+		winner = null;
 		return 0;
 	}
 

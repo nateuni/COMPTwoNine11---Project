@@ -52,6 +52,6 @@ public class NoLookAIPlayer extends AIPlayer {
 
 	@Override
 	protected int wallsLeftWeight() {
-		return 3;
+		return 1;
 	}
 }
