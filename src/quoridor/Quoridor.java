@@ -1,9 +1,9 @@
-package quoridor.test;
+package quoridor;
 import quoridor.*;
 
 
 
-public class consoleTest {
+public class Quoridor {
 
 	/**
 	 * @param args

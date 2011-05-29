@@ -9,6 +9,7 @@ public abstract class Game implements GameInterface {
 	protected Player winner = null;
 	protected Board board = null;
 	protected Boolean gameOver = false;
+	protected int gameType;
 	protected boolean consoleGame;	//i changed validatorGame to consoleGame only to show we can use the validatorGame class to run all sorts of test
 
 	/**
@@ -32,10 +33,10 @@ public abstract class Game implements GameInterface {
 	
 	
 	public boolean save(String fileName){
-		String player1Details = this.board.getPlayers()._1().getName()+"\n"+this.board.getPlayers()._1().getToken()+"\n";
-		String player2Details = this.board.getPlayers()._2().getName()+"\n"+this.board.getPlayers()._2().getToken()+"\n";
+		String player1Details = this.board.getPlayers()._1().getClass().getName()+"\n"+this.board.getPlayers()._1().getName()+"\n"+this.board.getPlayers()._1().getToken()+"\n";
+		String player2Details = this.board.getPlayers()._2().getClass().getName()+"\n"+this.board.getPlayers()._2().getName()+"\n"+this.board.getPlayers()._2().getToken()+"\n";
 		String moveString = this.getCurrentListOfMovesAsString();
-		
+
 		System.out.println("Saving game....");
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(fileName+".qdr"));
@@ -47,50 +48,60 @@ public abstract class Game implements GameInterface {
 		}
 		return true;
 	}
-	
+
 	public Board load(String fileName){
 		boolean p1CurrentPlayer;
 		Scanner inputStream = null;
 		int lineCounter = 0;
-		String player1Name = null, player1Token = null, player2Name = null, player2Token = null, moveString = null;
-		
+		String player1Type = null, player1Name = null, player1Token = null, player2Type = null, player2Name = null, player2Token = null, moveString = null;
+
 		System.out.println("Loading game....");	
-		
+
 		try{
 			inputStream = new Scanner(new File(fileName+".qdr"));
 		} catch(FileNotFoundException e){
 			System.out.println("Exception: Unable to load file, file not found.");
 			return null;
 		}
-		
-		while(inputStream.hasNextLine()){
-			switch(lineCounter){
-				case 0: player1Name = inputStream.nextLine().trim(); lineCounter++; break;
-				case 1: player1Token = inputStream.nextLine().trim(); lineCounter++; break;
-				case 2: player2Name = inputStream.nextLine().trim(); lineCounter++; break;
-				case 3:	player2Token = inputStream.nextLine().trim(); lineCounter++; break;
-				case 4: moveString = inputStream.nextLine().trim(); lineCounter++; break;
-			}
+
+		try {
+			player1Type = inputStream.nextLine().trim();
+			player1Name = inputStream.nextLine().trim();
+			player1Token = inputStream.nextLine().trim();
+			player2Type = inputStream.nextLine().trim();
+			player2Name = inputStream.nextLine().trim();
+			player2Token = inputStream.nextLine().trim();
+			moveString = inputStream.nextLine().trim();
 		}
-		
+		catch (NoSuchElementException e) {
+			System.out.println("Exception: Unable to read save file.");
+			return null;
+		}
+
 		Game game = Factory.instance().makeGame(moveString);
 		game.playGame();
-		
+
 		if(game.board.players._1().equals(game.board.currentPlayer)){
 			p1CurrentPlayer = true;
 		} else {
 			p1CurrentPlayer = false;
 		}
-		
-		game.board.loadPlayers(player1Name, player1Token, player2Name, player2Token);
-		
+
+		game.board.loadPlayers(player1Type, player1Name, player1Token, player2Type, player2Name, player2Token);
+
 		if(p1CurrentPlayer){
 			game.board.currentPlayer = game.board.players._1();
 		} else {
 			game.board.currentPlayer = game.board.players._2();
 		}
-	 
+
 		return game.board;
+	}
+
+	
+	protected void quit() {
+		System.out.println("Whatever man. Bye...");
+		System.exit(0);
 	}
 	
 	protected String getCurrentListOfMovesAsString(){

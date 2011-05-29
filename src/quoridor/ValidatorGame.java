@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 public class ValidatorGame extends Game{
 	protected Queue<String> q = null;
-	int gameType = 0;
 	
 	public ValidatorGame(String string) {
 		if(string == null){
