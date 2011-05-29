@@ -2,6 +2,9 @@ package quoridor;
 
 
 
+/**
+ * The Quoridor class that get the game going
+ */
 public class Quoridor {
 
 	/**
@@ -11,5 +14,4 @@ public class Quoridor {
 		Game game = new ConsoleGame();
 		game.playGame();
 	}
-
 }

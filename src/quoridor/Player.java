@@ -54,6 +54,10 @@ public abstract class Player implements PlayerInterface  {
 		return name;
 	}
 	
+	/**
+	 * Accessor to set the Players name
+	 * @param the players name to be
+	 */
 	public void setName(String name){
 		this.name = name;
 	}
@@ -73,8 +77,8 @@ public abstract class Player implements PlayerInterface  {
 		}
 		if (board.getSpace(this).getRight() != null) {
 			potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getRight()));
-			if (board.getSpace(this).getRight().getDown()  != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getDown()));
-			if (board.getSpace(this).getRight().getRight() != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getRight()));
+			if (board.getSpace(this).getRight().getDown()  != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getRight().getDown()));
+			if (board.getSpace(this).getRight().getRight() != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getRight().getRight()));
 		}
 		if (board.getSpace(this).getDown() != null) {
 			if (board.getSpace(this).getDown().getLeft() != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getDown().getLeft()));
@@ -106,14 +110,24 @@ public abstract class Player implements PlayerInterface  {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		return name;
 	}
 
+	/**
+	 * Returns whether the players is a minimising player or a maximising player.
+	 * @return the value as an int
+	 */
 	public int minMax() {
 		return minMax;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj){
 		if(!(obj instanceof Player)){

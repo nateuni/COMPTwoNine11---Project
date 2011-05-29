@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ *  Handles all the game that are based around console input, as an extension of the Game class. 
+ */
 public class ConsoleGame extends Game {
 
 	public static void main(String[] args) {
@@ -56,7 +59,7 @@ public class ConsoleGame extends Game {
 				case 1: case 2: case 3: board = Factory.instance().makeBoard(selection); break;
 				case 4: {
 					String fileName = getFromUser("Enter name of saved file (no extension): ");
-					board = this.load(fileName); break;
+					this.load(fileName); break;
 				}
 				case 5: quit(); break;
 				default: System.out.println("Invalid Input");
@@ -90,6 +93,9 @@ public class ConsoleGame extends Game {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see quoridor.Game#playNextTurn()
+	 */
 	protected void playNextTurn() {
 		System.out.println(board.whoseTurn()+"'s Turn");
 
@@ -126,8 +132,11 @@ public class ConsoleGame extends Game {
 				BufferedReader userReader = new BufferedReader(new InputStreamReader(System.in));
 				System.out.print(message);
 				String fromUser = userReader.readLine().toLowerCase();
-				if (!fromUser.isEmpty()&&!fromUser.trim().isEmpty()) { // never returns an empty string
-					return fromUser;
+				if (fromUser.trim().length() > 0){
+					return fromUser;	
+				} else {
+					System.out.println("Sorry empty strings are not valid input");
+					System.out.print("Please try again: ");
 				}
 			}
 		} catch (IOException e) {

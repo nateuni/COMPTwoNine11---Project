@@ -52,20 +52,48 @@ public class MovementMove extends Move {
 	}
 	
 
+	/**
+	 * Accessor for the Space that the player is moving from
+	 * @return the space
+	 */
 	public Space from() {
 		return from;
 	}
 	
+	/**
+	 * Accessor for the Space that the player is moving to
+	 * @return the space
+	 */
 	public Space to() {
 		return to;
 	}
 	
+	/**
+	 * Accessor for if the move is a jump
+	 * @return the space
+	 */
 	public boolean isJump() {
 		return isJump;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString(){
 		return this.to.toOriginalString();
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj){
+		if (!(obj instanceof MovementMove)) {
+			return false;
+		}
+		MovementMove other = (MovementMove) obj;
+	
+		return (this.from().equals(other.from()) && this.to().equals(other.to()) && this.isJump() == other.isJump());	
 	}
 }

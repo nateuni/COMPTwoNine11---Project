@@ -4,29 +4,28 @@ import java.util.ArrayList;
 
 import quoridor.*;
 
+/**
+ * Tests printing out of the board and displays shortest paths info
+ */
 public class BoardGraphTest { 
 
 	public static void main(String[] args) {
-		//Two<Player> players = Two.two(new Player("Alice", 5, 9), new Player("Bob", 5, 1));
-		Board board = Factory.instance().makeBoard(1);
+		Board board = Factory.instance().makeBoard(0);
 
-		board.addWall(new Wall(new Space(1,1), false));
-	//	System.out.println(board);
-		board.addWall(new Wall(new Space(2,1), false));
-//		System.out.println(board);
-		board.addWall(new Wall(new Space(2,1), true));
-	//	System.out.println(board);
-		board.addWall(new Wall(new Space(1,1), true));
-		//System.out.println(board);
-		board.addWall(new Wall(new Space(1,2), true));
-//		System.out.println(board);
+		board.addWall(new Wall(new Space(3, 8), true));
+		board.addWall(new Wall(new Space(4, 7), false));
+		board.addWall(new Wall(new Space(6, 7), false));
+		board.addWall(new Wall(new Space(7, 7), true));
+		board.addWall(new Wall(new Space(6, 8), false));
+		board.addWall(new Wall(new Space(1, 3), false));
 
-		BoardPrinter.setStyle(1);
+		BoardPrinter.setStyle(0);
 		board.print();
 		
-		ArrayList<Space> fin = new ArrayList<Space>();
-		for (int i=1; i<=9; i++) fin.add(new Space (i,1));
-		System.out.println(board.graph.findShortestPath(new Space(5, 9), fin));
+		ArrayList<Space> exits = new ArrayList<Space>();
+		for (int i = 1; i <=9; i++) exits.add(new Space(i, 1));
+		board.graph.fillNodeDistances(exits);
+		board.graph.printDistanceFills();
 	}
 
 }

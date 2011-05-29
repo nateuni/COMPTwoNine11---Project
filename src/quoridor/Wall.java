@@ -60,6 +60,11 @@ public class Wall implements WallInterface{
 		return space;
 	}
 	
+	/**
+	 * Checks if it is a valid wall space and returns the result as boolean
+	 * @param space the space that is being checked. 
+	 * @return the result 
+	 */
 	private boolean validWallSpace(Space space) {
 		return !(space.col() == LAST_ROW_OR_COL || space.row() == LAST_ROW_OR_COL);
 	}
@@ -88,6 +93,10 @@ public class Wall implements WallInterface{
 		return (this.getSpace().equals(otherWall.getSpace()) && this.isVertical() == otherWall.isVertical());
 	}
 	
+	/**
+	 * Places the wall information back into its original form. 
+	 * @return
+	 */
 	public String toOriginalString(){
 		String wallType;
 		if(this.vertical) {
