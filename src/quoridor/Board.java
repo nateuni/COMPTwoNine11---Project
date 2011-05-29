@@ -13,6 +13,7 @@ public class Board implements BoardInterface{
 	protected Player currentPlayer;
 	protected LinkedList<Wall> wallList = new LinkedList<Wall>();
 	protected LinkedList<Move> moveList = new LinkedList<Move>();
+	protected int moveListIndexOnLoad = -1;
 	protected int moveListIndex = -1;
 	static final Space player1Start = new Space("e9");
 	static final Space player2Start = new Space("e1");
@@ -372,6 +373,7 @@ public class Board implements BoardInterface{
 	 * Undo the last two moves.	 */
 	public void undo() {
 		if (moveListIndex < 1) throw new RuntimeException("No moves to undo");
+		if (moveListIndex - 2 < moveListIndexOnLoad) throw new RuntimeException("Cannot undo moves loaded from a saved game");
 		undoLastMove();
 		undoLastMove();
 	}

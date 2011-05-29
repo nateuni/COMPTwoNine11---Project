@@ -94,6 +94,7 @@ public abstract class Game implements GameInterface {
 			game.board.currentPlayer = game.board.players._2();
 		}
 
+		game.board.moveListIndexOnLoad = game.board.moveListIndex;
 		return game.board;
 	}
 
