@@ -16,6 +16,13 @@ public class MultipleLookAIPlayer extends AIPlayer {
 	long startTime;
 	protected long timeOut = 5000;
 	
+	/**
+	 * Constructor sets the specifications 
+	 * 
+	 * @param playerNumber the players number
+	 * @param lookAhead how far the AI player will look ahead
+	 * @param timeOut the time out
+	 */
 	public MultipleLookAIPlayer(int playerNumber, int lookAhead, int timeOut) {
 		super(playerNumber);
 		this.maxDepth = lookAhead;
