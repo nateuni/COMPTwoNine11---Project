@@ -4,6 +4,11 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * AI player capable of looking multiple moves ahead using the
+ * negamax algorithm with alpha-beta pruning.
+ * @author Team Stump
+ */
 public class MultipleLookAIPlayer extends AIPlayer {
 
 	int depth = 2;
@@ -15,6 +20,8 @@ public class MultipleLookAIPlayer extends AIPlayer {
 
 	/**
 	 * Looks at the board and figures out what move to make.
+	 * Calls negamax() for each possible move and picks the best one.
+	 * If there are multiple equally best, it picks one of them at random.
 	 * @see quoridor.Player#getMove(quoridor.Board)
 	 */
 	public Move getMove(Board board) {
@@ -49,6 +56,15 @@ public class MultipleLookAIPlayer extends AIPlayer {
 		return bestMoves.get(pick);
 	}
 
+	/**
+	 * Performs a negamax search of the game tree to evaluate a game state.
+	 * Uses alpha-beta pruning to reduce search time.
+	 * @param board The board state under consideration.
+	 * @param alpha Alpha parameter of alpha-beta.
+	 * @param beta Beta parameter of alpha-beta.
+	 * @param depth Depth to search the game tree.
+	 * @return Negamax value.
+	 */
 	private int negamax(Board board, int alpha, int beta, int depth) {
 		i++;
 		if (board.currentPlayer().equals(board.winner())) return Integer.MAX_VALUE;
@@ -58,22 +74,19 @@ public class MultipleLookAIPlayer extends AIPlayer {
 		Board newBoard;
 		List<Move> potentialMoves = board.currentPlayer().allMoves(board);
 		Collections.sort(potentialMoves, new MinimaxComparator(board.getSpace(board.players.other(board.currentPlayer()))));
-		int bestCase = Integer.MIN_VALUE;
 		int evaluation;
 		for (Move move : potentialMoves) {
 			try {
 				newBoard = board.clone();
 				newBoard.makeMove(move);
 				evaluation = -negamax(newBoard, -beta, -alpha, depth - 1);
-				if (evaluation > bestCase) bestCase = evaluation;
-				if (bestCase > alpha) alpha = bestCase;
+				if (evaluation > alpha) alpha = evaluation;
 				if (alpha >= beta) return alpha;
 			}
 			catch (Exception e) {}
 		}
 		
-		// If there are several equal best moves, pick one at random
-		return bestCase;
+		return alpha;
 	}
 	
 	@Override

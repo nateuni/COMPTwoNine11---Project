@@ -2,13 +2,29 @@ package quoridor;
 
 import java.util.Comparator;
 
+/**
+ * A comparator for sorting moves before checking them with minimax.
+ * The moves that are probably better (i.e. movement moves, and wall moves
+ * that are close to the opponent) are placed first to optimise the
+ * alpha-beta pruning algorithm.
+ * @author Team Stump
+ */
 public class MinimaxComparator implements Comparator<Move> {
 
+	/**
+	 * The opponent's current space.
+	 * (Wall moves close to this space are checked first as they are more
+	 * likely to be useful moves.)
+	 */
 	Space enemySpace = new Space(5, 5);
 
 	public MinimaxComparator() {
 	}
 
+	/**
+	 * Constructs the comparator setting the opponent's current space.
+	 * @param enemySpace The opponent's current location.
+	 */
 	public MinimaxComparator(Space enemySpace) {
 		setEnemySpace(enemySpace);
 	}
@@ -29,10 +45,20 @@ public class MinimaxComparator implements Comparator<Move> {
 		return 0;
 	}
 
+	/**
+	 * Used to set the opponent's current space.
+	 * @param enemySpace The opponent's current location.
+	 */
 	public void setEnemySpace(Space enemySpace) {
 		this.enemySpace = enemySpace;
 	}
 	
+	/**
+	 * The distance between the centre of a wall and a space.
+	 * @param space The space.
+	 * @param wall The wall.
+	 * @return The distance as a double.
+	 */
 	private double distance(Space space, Wall wall) {
 		double colDiff = (double) space.col() - (double) wall.getSpace().col() + 0.5;
 		double rowDiff = (double) space.row() - (double) wall.getSpace().row() + 0.5;
