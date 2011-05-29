@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MultipleLookAIPlayer extends AIPlayer {
 
-	int depth = 1;
+	int depth = 2;
 	public static int i = 0;
 	
 	public MultipleLookAIPlayer(int playerNumber) {
@@ -27,7 +27,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 			try {
 				newBoard = board.clone();
 				newBoard.makeMove(move);
-				evaluation = negamax(newBoard, Integer.MIN_VALUE, Integer.MAX_VALUE, depth);
+				evaluation = -negamax(newBoard, Integer.MIN_VALUE, Integer.MAX_VALUE, depth);
 				//evaluation = minimax(newBoard, depth);
 				if (evaluation > bestCase) {
 					bestMoves.clear();
@@ -47,43 +47,13 @@ public class MultipleLookAIPlayer extends AIPlayer {
 		i = 0;
 		return bestMoves.get(pick);
 	}
-	
-	/**
-	 * Evaluates a board to a given depth, and returns the minimax value
-	 * @param board
-	 * @param depth
-	 * @return minimax value
-	 */
-	private int minimax(Board board, int depth) {
-		i++;
-		if (depth == 0) return evaluate(board);
-		if (board.checkWin() == 1) return Integer.MAX_VALUE;
-		else if (board.checkWin() == 2) return Integer.MIN_VALUE;
-		Board newBoard;
-		List<Move> potentialMoves = board.currentPlayer().allMoves(board);
-		int bestCase = Integer.MIN_VALUE;
-		int evaluation;
-		for (Move move : potentialMoves) {
-			try {
-				newBoard = board.clone();
-				newBoard.makeMove(move);
-				evaluation = board.currentPlayer().minMax() * minimax(newBoard, depth - 1);
-				if (evaluation > bestCase) {
-					bestCase = evaluation;
-				}
-			}
-			catch (Exception e) {}
-		}
-		
-		// If there are several equal best moves, pick one at random
-		return board.currentPlayer().minMax() * bestCase;
-	}
 
 	private int negamax(Board board, int alpha, int beta, int depth) {
 		i++;
-		if (depth == 0) return board.currentPlayer().minMax() * evaluate(board);
-		if (board.currentPlayer().equals(board.winner())) return Integer.MIN_VALUE;
-		else if (board.players.other(board.currentPlayer()).equals(board.winner())) return Integer.MAX_VALUE;
+		if (board.currentPlayer().equals(board.winner())) return Integer.MAX_VALUE;
+		else if (board.players.other(board.currentPlayer()).equals(board.winner())) return Integer.MIN_VALUE;
+		else if (depth == 0) return board.currentPlayer().minMax() * evaluate(board);
+		
 		Board newBoard;
 		List<Move> potentialMoves = board.currentPlayer().allMoves(board);
 		int bestCase = Integer.MIN_VALUE;
@@ -92,7 +62,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 			try {
 				newBoard = board.clone();
 				newBoard.makeMove(move);
-				evaluation = negamax(newBoard, -beta, -alpha, depth - 1);
+				evaluation = -negamax(newBoard, -beta, -alpha, depth - 1);
 				if (evaluation > bestCase) bestCase = evaluation;
 				if (bestCase > alpha) alpha = bestCase;
 				if (alpha >= beta) return alpha;
@@ -111,7 +81,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 
 	@Override
 	protected int wallsLeftWeight() {
-		return 1;
+		return 2;
 	}
 
 }
