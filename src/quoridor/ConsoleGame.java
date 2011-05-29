@@ -110,6 +110,9 @@ public class ConsoleGame extends Game {
 			else if (userInput.equals("quit")) {
 				quit();
 			}
+			else if (userInput.equals("moves")) {
+				System.out.println("List of valid moves:\n" + board.currentPlayer().validMoves(board));
+			}
 			else {
 				board.makeMoveFromInput(userInput);
 			}
