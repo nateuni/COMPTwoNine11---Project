@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ConsoleGame extends Game {
@@ -128,8 +129,8 @@ public class ConsoleGame extends Game {
 	}
 	
 	public boolean save(String fileName){
-		String player1Details = this.board.getPlayers()._1().getName()+"\n"+this.board.getPlayers()._1().getToken()+"\n";
-		String player2Details = this.board.getPlayers()._2().getName()+"\n"+this.board.getPlayers()._2().getToken()+"\n";
+		String player1Details = this.board.getPlayers()._1().getClass().getName()+"\n"+this.board.getPlayers()._1().getName()+"\n"+this.board.getPlayers()._1().getToken()+"\n";
+		String player2Details = this.board.getPlayers()._2().getClass().getName()+"\n"+this.board.getPlayers()._2().getName()+"\n"+this.board.getPlayers()._2().getToken()+"\n";
 		String moveString = this.getCurrentListOfMovesAsString();
 		
 		System.out.println("Saving game....");
@@ -148,7 +149,7 @@ public class ConsoleGame extends Game {
 		boolean p1CurrentPlayer;
 		Scanner inputStream = null;
 		int lineCounter = 0;
-		String player1Name = null, player1Token = null, player2Name = null, player2Token = null, moveString = null;
+		String player1Type = null, player1Name = null, player1Token = null, player2Type = null, player2Name = null, player2Token = null, moveString = null;
 		
 		System.out.println("Loading game....");	
 		
@@ -159,14 +160,18 @@ public class ConsoleGame extends Game {
 			return null;
 		}
 		
-		while(inputStream.hasNextLine()){
-			switch(lineCounter){
-				case 0: player1Name = inputStream.nextLine().trim(); lineCounter++; break;
-				case 1: player1Token = inputStream.nextLine().trim(); lineCounter++; break;
-				case 2: player2Name = inputStream.nextLine().trim(); lineCounter++; break;
-				case 3:	player2Token = inputStream.nextLine().trim(); lineCounter++; break;
-				case 4: moveString = inputStream.nextLine().trim(); lineCounter++; break;
-			}
+		try {
+			player1Type = inputStream.nextLine().trim();
+			player1Name = inputStream.nextLine().trim();
+			player1Token = inputStream.nextLine().trim();
+			player2Type = inputStream.nextLine().trim();
+			player2Name = inputStream.nextLine().trim();
+			player2Token = inputStream.nextLine().trim();
+			moveString = inputStream.nextLine().trim();
+		}
+		catch (NoSuchElementException e) {
+			System.out.println("Exception: Unable to read save file.");
+			return null;
 		}
 		
 		Game game = Factory.instance().makeGame(moveString);
@@ -178,7 +183,7 @@ public class ConsoleGame extends Game {
 			p1CurrentPlayer = false;
 		}
 		
-		game.board.loadPlayers(player1Name, player1Token, player2Name, player2Token);
+		game.board.loadPlayers(player1Type, player1Name, player1Token, player2Type, player2Name, player2Token);
 		
 		if(p1CurrentPlayer){
 			game.board.currentPlayer = game.board.players._1();
