@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class MultipleLookAIPlayer extends AIPlayer {
 
-	int depth = 2;
+	int depth = 3;
 	public static int i = 0;
 	
 	public MultipleLookAIPlayer(int playerNumber) {
@@ -36,7 +36,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 			try {
 				newBoard = board.clone();
 				newBoard.makeMove(move);
-				evaluation = -negamax(newBoard, Integer.MIN_VALUE + 1, Integer.MAX_VALUE, depth);
+				evaluation = -negamax(newBoard, Integer.MIN_VALUE + 1, Integer.MAX_VALUE, depth - 1);
 				if (evaluation > bestCase) {
 					bestMoves.clear();
 					bestMoves.add(move);
@@ -69,7 +69,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 		i++;
 		if (board.currentPlayer().equals(board.winner())) return Integer.MAX_VALUE;
 		else if (board.players.other(board.currentPlayer()).equals(board.winner())) return Integer.MIN_VALUE + 1;
-		else if (depth == 0) return board.currentPlayer().minMax() * evaluate(board);
+		else if (depth <= 0) return board.currentPlayer().minMax() * evaluate(board);
 		
 		Board newBoard;
 		List<Move> potentialMoves = board.currentPlayer().allMoves(board);
