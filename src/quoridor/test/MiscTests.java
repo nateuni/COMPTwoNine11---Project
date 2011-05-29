@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import quoridor.Factory;
 import quoridor.Game;
-import quoridor.Player;
 
 public class MiscTests {
 

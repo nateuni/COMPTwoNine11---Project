@@ -27,5 +27,4 @@ public class BoardGraphTest {
 		board.graph.fillNodeDistances(exits);
 		board.graph.printDistanceFills();
 	}
-
 }
