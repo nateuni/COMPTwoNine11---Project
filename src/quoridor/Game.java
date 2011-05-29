@@ -9,6 +9,7 @@ public abstract class Game implements GameInterface {
 	protected Player winner = null;
 	protected Board board = null;
 	protected Boolean gameOver = false;
+	protected int gameType;
 	protected boolean consoleGame;	//i changed validatorGame to consoleGame only to show we can use the validatorGame class to run all sorts of test
 
 	/**
@@ -89,8 +90,12 @@ public abstract class Game implements GameInterface {
 		} else {
 			game.board.currentPlayer = game.board.players._2();
 		}
-	 
 		return game.board;
+	}
+	
+	protected void quit() {
+		System.out.println("Whatever man. Bye...");
+		System.exit(0);
 	}
 	
 	protected String getCurrentListOfMovesAsString(){

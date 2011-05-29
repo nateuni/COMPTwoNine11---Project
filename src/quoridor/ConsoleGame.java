@@ -117,10 +117,6 @@ public class ConsoleGame extends Game {
 		}
 	}
 
-	protected void quit() {
-		System.out.println("Whatever man. Bye...");
-		System.exit(0);
-	}
 
 	
 
