@@ -130,7 +130,7 @@ public class ConsoleGame extends Game {
 				BufferedReader userReader = new BufferedReader(new InputStreamReader(System.in));
 				System.out.print(message);
 				String fromUser = userReader.readLine().toLowerCase();
-				if (!fromUser.isEmpty()) { // never returns an empty string
+				if (!fromUser.isEmpty()&&!fromUser.trim().isEmpty()) { // never returns an empty string
 					return fromUser;
 				}
 			}
