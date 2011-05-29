@@ -49,7 +49,7 @@ public abstract class Game implements GameInterface {
 		return true;
 	}
 
-	public Board load(String fileName){
+	public void load(String fileName){
 		boolean p1CurrentPlayer;
 		Scanner inputStream = null;
 		String player1Type = null, player1Name = null, player1Token = null, player2Type = null, player2Name = null, player2Token = null, moveString = null;
@@ -60,7 +60,7 @@ public abstract class Game implements GameInterface {
 			inputStream = new Scanner(new File(fileName+".qdr"));
 		} catch(FileNotFoundException e){
 			System.out.println("Exception: Unable to load file, file not found.");
-			return null;
+			//return null;
 		}
 
 		try {
@@ -74,7 +74,7 @@ public abstract class Game implements GameInterface {
 		}
 		catch (NoSuchElementException e) {
 			System.out.println("Exception: Unable to read save file.");
-			return null;
+			//return null;
 		}
 
 		Game game = Factory.instance().makeGame(moveString);
@@ -94,7 +94,8 @@ public abstract class Game implements GameInterface {
 			game.board.currentPlayer = game.board.players._2();
 		}
 
-		return game.board;
+		this.board = game.board;
+		//return game.board;
 	}
 
 	protected void quit() {
@@ -112,6 +113,7 @@ public abstract class Game implements GameInterface {
 			return false;
 		}
 		Game other = (Game) obj;
+		
 		return (this.board.equals(other.board) && this.winner == other.winner && this.gameType == other.gameType 
 				&& this.gameOver == other.gameOver && this.consoleGame == other.consoleGame && this.checkWin == other.checkWin);
 	}

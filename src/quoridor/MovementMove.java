@@ -68,4 +68,14 @@ public class MovementMove extends Move {
 	public String toString(){
 		return this.to.toOriginalString();
 	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if (!(obj instanceof MovementMove)) {
+			return false;
+		}
+		MovementMove other = (MovementMove) obj;
+	
+		return (this.from().equals(other.from()) && this.to().equals(other.to()) && this.isJump() == other.isJump());	
+	}
 }

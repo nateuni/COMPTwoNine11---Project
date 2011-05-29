@@ -1,6 +1,5 @@
 package quoridor.test;
 
-
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
@@ -44,8 +43,6 @@ public class MoveValidationTests {
 		assertFalse(game.playGame());
 	}
 	
-	
-	//fixed from here
 	@Test
 	public void NoWinner() {
 		String testString = "e8 e2 e7 e3 d7 e4";
@@ -131,15 +128,4 @@ public class MoveValidationTests {
 		assertTrue(game.playGame());
 		assertTrue(game.checkWin() == 0);
 	}
-	
-	@Test
-	public void saveLoadGame(){
-		String testString = "d9 f1 a1h g1 a2h h1 a3h i1 a4h i2 a5h i3";
-		Game game = Factory.instance().makeGame(testString);
-		assertTrue(game.playGame());
-		game.save("test");
-		Game newGame = Factory.instance().makeGame("g1 a2h");
-		newGame.load("test");
-	}
-	
 }

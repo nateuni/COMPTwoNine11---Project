@@ -46,8 +46,11 @@ public class HumanPlayer extends Player {
                 BufferedReader userReader =
                         new BufferedReader(new InputStreamReader(System.in));
                 String fromUser = userReader.readLine();
-                if (!fromUser.isEmpty()) { //never returns an empty string
+                if (fromUser.trim().length() > 0) { //never returns an empty string
                     return fromUser;
+                } else {
+                	System.out.println("Sorry empty strings are not valid input");
+					System.out.print("Please try again: ");
                 }
             }
         } catch (IOException e) {

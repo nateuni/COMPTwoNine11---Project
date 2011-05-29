@@ -33,26 +33,24 @@ public class Factory {
 		Player player1;
 		Player player2;
 		switch (type){
-
-		// 0 for validator games
-		case 0: player1 = new DeadPlayer(1);
-		player2 = new DeadPlayer(2);
-		break;
-		case 1: player1 = new HumanPlayer(1);
-		player2 = new HumanPlayer(2);
-		break;
-		case 2: player1 = new HumanPlayer(1);
-		player2 = makeAIPlayer(2);
-		break;
-		case 3: player1 = makeAIPlayer(1);
-		player2 = makeAIPlayer(2);
-		break;
-		default: return null;
+			case 0: player1 = new DeadPlayer(1);
+					player2 = new DeadPlayer(2);
+					break;
+			case 1: player1 = new HumanPlayer(1);
+					player2 = new HumanPlayer(2);
+					break;
+			case 2: player1 = new HumanPlayer(1);
+					player2 = makeAIPlayer(2);
+					break;
+			case 3: player1 = makeAIPlayer(1);
+					player2 = makeAIPlayer(2);
+					break;
+			default: return null;
 		}
 		return new Board(new Two<Player>(player1, player2));
 	}
 
-	Player makeAIPlayer(int playerNumber) {
+	public Player makeAIPlayer(int playerNumber) {
 		while(true) {
 			System.out.println("Select difficulty level for player " + playerNumber + ":");
 			System.out.println("1 - Easy");
@@ -68,17 +66,17 @@ public class Factory {
 			}
 			if(difficulty>0) {
 				switch (difficulty){
-				case 1: return new RandomAIPlayer(playerNumber);
-				case 2: return new NoLookAIPlayer(playerNumber);
-				case 3: return new MultipleLookAIPlayer(playerNumber);
-				default:
+					case 1: return new RandomAIPlayer(playerNumber);
+					case 2: return new NoLookAIPlayer(playerNumber);
+					case 3: return new MultipleLookAIPlayer(playerNumber);
+					default:
 				}
 				System.out.println("Invalid input.");
 			}
 		}
 	}
 
-	Player makePlayer(int playerNumber, String playerType, String playerName, String playerToken){
+	public Player makePlayer(int playerNumber, String playerType, String playerName, String playerToken){
 		Player newPlayer;
 		if(playerType.equalsIgnoreCase("quoridor.HumanPlayer")){
 			return new HumanPlayer(playerNumber, playerName, playerToken);
@@ -103,8 +101,11 @@ public class Factory {
 				BufferedReader userReader = new BufferedReader(new InputStreamReader(System.in));
 				System.out.print(">");
 				String fromUser = userReader.readLine();
-				if (!fromUser.isEmpty()) { // never returns an empty string
+				if (fromUser.trim().length() > 0) { // never returns an empty string
 					return fromUser;
+				} else {
+					System.out.println("Sorry empty strings are not valid input");
+					System.out.print("Please try again: ");
 				}
 			}
 		} catch (IOException e) {

@@ -12,5 +12,4 @@ public class Quoridor {
 		Game game = new ConsoleGame();
 		game.playGame();
 	}
-
 }

@@ -20,4 +20,13 @@ public class WallMove extends Move {
 	public String toString(){
 		return this.wall.toOriginalString();
 	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if (!(obj instanceof WallMove)) {
+			return false;
+		}
+		WallMove other = (WallMove) obj;
+		return (this.wall().equals(other.wall()));	
+	}
 }
