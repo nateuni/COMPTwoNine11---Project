@@ -17,7 +17,6 @@ public class ConsoleGame extends Game {
 	public ConsoleGame() {
 		System.out.println("Welcome to Quoridor!");
 		while (!setUp());
-		playGame();
 	}
 
 	/**
@@ -116,10 +115,6 @@ public class ConsoleGame extends Game {
 			else System.out.println(board.players._2().getName() + " wins!");
 		}
 	}
-
-
-	
-
 	
 	/**
 	 * Read one line from user input

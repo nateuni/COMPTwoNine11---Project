@@ -230,6 +230,8 @@ public class Board implements BoardInterface{
 	public String toString() {
 		return BoardPrinter.buildBoardString(this);
 	}
+	
+	
 
 	/**
 	 * Print the board layout to console
