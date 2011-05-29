@@ -506,5 +506,4 @@ public class Board implements BoardInterface{
 		this.setPlayers(players);
 	}
 
-
 }
