@@ -2,6 +2,10 @@ package quoridor;
 
 import java.util.ArrayList;
 
+/**
+ *  A Node is an Space that has been extended to factor in connectivity for shortest path algorithm.
+ *
+ */
 public class BoardNode {
 
 	public Space space;
@@ -12,6 +16,10 @@ public class BoardNode {
 	public ArrayList<BoardNode> path;
 	public int distanceToExit;
 	
+	/**
+	 * Node constructor. 
+	 * @param space The passed space from the board. 
+	 */
 	public BoardNode(Space space) {
 		this.space = space;
 		up = null;

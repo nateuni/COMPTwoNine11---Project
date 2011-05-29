@@ -28,8 +28,7 @@ public class Board implements BoardInterface{
 
 	/**
 	 * A board takes Two players as a pair as defined by the Two Class.
-	 * @param players
-	 * 			The Two players for the this board instance.
+	 * @param players The Two players for this board instance.
 	 */
 	public Board(Two<Player> players) {
 		this.players = players;
@@ -44,6 +43,10 @@ public class Board implements BoardInterface{
 		return this.players;
 	}
 	
+	/**
+	 * Accessor for the Players
+	 * @param players The Two<Players>
+	 */
 	public void setPlayers(Two<Player> players){
 		this.players = players;
 	}
@@ -82,13 +85,17 @@ public class Board implements BoardInterface{
 		return 0;
 	}
 
+	/**
+	 * Returns the winner if there is one, otherwise the variable will still be null. 
+	 * @return the winner
+	 */
 	public Player winner() {
 		checkWin();
 		return winner;
 	}
 	
 	/**
-	 * accessor for current player
+	 * Accessor for current player
 	 * @return currentPlayer
 	 */
 	public Player currentPlayer() {
@@ -166,6 +173,9 @@ public class Board implements BoardInterface{
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see quoridor.BoardInterface#wallOverlaps(quoridor.Wall)
+	 */
 	public boolean wallOverlaps(Wall wall) {
 		Space sideA = wall.getSpace();	//the top left space for this wall
 		Space sideB = null;//the space on opposite side of wall to sideA
@@ -378,6 +388,9 @@ public class Board implements BoardInterface{
 		undoLastMove();
 	}
 	
+	/**
+	 * Does the actual moving back to the previous state. 
+	 */
 	public void undoLastMove() {
 		Move move = moveList.get(moveListIndex);
 
@@ -401,15 +414,27 @@ public class Board implements BoardInterface{
 		redoLastMove();
 	}
 	
+	/**
+	 * Does the actual moving forward to the previous state. 
+	 */
 	private void redoLastMove() {
 		moveListIndex++;
 		applyMove(moveList.get(moveListIndex));
 	}
 	
+
+	/**
+	 * Returnes a string of who's turn it is
+	 * @return The players name as a string
+	 */
 	public String whoseTurn(){
 		return this.currentPlayer.toString();
 	}
 	
+	/**
+	 * Handles in the input string and makes the appropriate move.
+	 * @param moveInput the move input 
+	 */
 	public void makeMoveFromInput(String moveInput) {
 		Move move;
 		if (moveInput.equals("undo")) {
@@ -431,6 +456,9 @@ public class Board implements BoardInterface{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
 	@SuppressWarnings("unchecked")
 	public Board clone() {
 		Board cloneBoard = new Board(this.players);
@@ -450,6 +478,10 @@ public class Board implements BoardInterface{
 		return cloneBoard;
 	}
 	
+	/**
+	 * Returns the moveList as a string, much like a validator string. For use in saving to a textfile. 
+	 * @return the string of sequential moves
+	 */
 	public String moveListToString(){
 		String moveString = new String();
 		for(Move m : moveList){
@@ -463,12 +495,23 @@ public class Board implements BoardInterface{
 		return moveString;
 	}
 	
+	/**
+	 * Sets the passed players space in the board
+	 * @param player the player who's space will be set 
+	 * @param space the new location
+	 */
 	protected void setSpace(Player player, Space space) {
 		if (player.equals(players._1())) player1Space = space;
 		else if (player.equals(players._2())) player2Space = space;
 		else throw new RuntimeException("Invalid player");
 	}
 	
+	
+	/**
+	 * Gets a players location
+	 * @param player the player who in being queried 
+	 * @return the Space of the player
+	 */
 	public Space getSpace(Player player) {
 		if (player.equals(players._1())) return player1Space;
 		else if (player.equals(players._2())) return player2Space;
@@ -485,29 +528,54 @@ public class Board implements BoardInterface{
 		else throw new RuntimeException("Invalid player");
 	}
 	
+	/**
+	 * Returns how many walls a player has left
+	 * @param player the player who is being queried 
+	 * @return the walls left as an int
+	 */
 	public int getWallsLeft(Player player) {
 		if (player.equals(players._1())) return player1WallsLeft;
 		else if (player.equals(players._2())) return player2WallsLeft;
 		else throw new RuntimeException("Invalid player");
 	}
 
+	/**
+	 * Decrements the passed players wall tally. 
+	 * @param player the player to decrement 
+	 */
 	public void decrementWallTally(Player player) {
 		if (player.equals(players._1())) player1WallsLeft--;
 		else if (player.equals(players._2())) player2WallsLeft--;
 		else throw new RuntimeException("Invalid player");
 	}
 
+	/**
+	 * Increments the passed players wall tally. 
+	 * @param player the player to increment 
+	 */
 	public void incrementWallTally(Player player) {
 		if (player.equals(players._1())) player1WallsLeft++;
 		else if (player.equals(players._2())) player2WallsLeft++;
 		else throw new RuntimeException("Invalid player");
 	}
 	
-	public void loadPlayers(String p1Type, String p1Name, String p1Token, String p2Type, String p2Name, String p2Token){
+	/**
+	 * Used to take in players information from a text file, as passed in from Game and set the board with these players
+	 * @param p1Type Player 1's subtype as a string. 
+	 * @param p1Name Player 1's  name as a string.
+	 * @param p1Token Player 1's token as a string.
+	 * @param p2Type Player 2's subtype as a string. 
+	 * @param p2Name Player 2's  name as a string.
+	 * @param p2Token Player 2's token as a string.
+	 */
+	protected void loadPlayers(String p1Type, String p1Name, String p1Token, String p2Type, String p2Name, String p2Token){
 		Two<Player> players = new Two<Player>(Factory.instance().makePlayer(1, p1Type, p1Name, p1Token), Factory.instance().makePlayer(2, p2Type, p2Name, p2Token));
 		this.setPlayers(players);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj){
 		if(!(obj instanceof Board)){
