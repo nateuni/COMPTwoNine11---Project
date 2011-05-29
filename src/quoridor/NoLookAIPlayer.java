@@ -45,11 +45,17 @@ public class NoLookAIPlayer extends AIPlayer {
 		return validMoves.get(0);
 	}
 	
+	/* (non-Javadoc)
+	 * @see quoridor.AIPlayer#distanceWeight()
+	 */
 	@Override
 	protected int distanceWeight() {
 		return 5;
 	}
 
+	/* (non-Javadoc)
+	 * @see quoridor.AIPlayer#wallsLeftWeight()
+	 */
 	@Override
 	protected int wallsLeftWeight() {
 		return 1;

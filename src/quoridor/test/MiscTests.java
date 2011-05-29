@@ -9,6 +9,9 @@ import quoridor.Player;
 
 public class MiscTests {
 
+	/**
+	 * Tests that two different instantiations of the same game as counted as equal 
+	 */
 	@Test
 	public void gamesAreEqual(){
 		Game game1 = Factory.instance().makeGame("d9 f1 a1h");
@@ -18,6 +21,9 @@ public class MiscTests {
 		assertTrue(game1.equals(game2));
 	}
 	
+	/**
+	 *  * Tests that two different instantiations of the different games are NOT counted as equal 
+	 */
 	@Test
 	public void gamesAreNotEqual(){
 		Game game1 = Factory.instance().makeGame("d9 f1 a1h");
@@ -27,6 +33,9 @@ public class MiscTests {
 		assertFalse(game1.equals(game2));
 	}
 	
+	/**
+	 * Tests loading overwrites an old game with the correct information
+	 */
 	@Test
 	public void savedAndLoadedGameAreEqual(){
 		String testString1 = "d9 f1 a1h g1 a2h h1 a3h i1 a4h i2 a5h i3";
@@ -39,12 +48,4 @@ public class MiscTests {
 		newGame.playGame();
 		game.equals(newGame);
 	}
-	
-	@Test
-	public void playersHaveTheSameDetails(){
-		//Player p1 = Factory.instance().makePlayer(1, "quoridor.HumanPlayer", "testPlayer", "tst");
-		//Player p2 = Factory.instance().makePlayer(2, "quoridor.HumanPlayer", "testPlayer", "tst");
-		//Game game = new Game();
-	}
-
 }

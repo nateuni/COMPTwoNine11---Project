@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ *  Handles all the game that are based around console input, as an extension of the Game class. 
+ */
 public class ConsoleGame extends Game {
 
 	public static void main(String[] args) {
@@ -90,6 +93,9 @@ public class ConsoleGame extends Game {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see quoridor.Game#playNextTurn()
+	 */
 	protected void playNextTurn() {
 		System.out.println(board.whoseTurn()+"'s Turn");
 

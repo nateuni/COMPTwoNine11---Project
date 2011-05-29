@@ -4,8 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Handles setting up different instances of various object types, that are needed during the game. 
+ */
 public class Factory {
-
+	
 	private static Factory theFactory;
 
 	public static Factory instance ()
@@ -14,6 +17,11 @@ public class Factory {
 		return theFactory;
 	}
 
+	/**
+	 * Used to make a validator game
+	 * @param presetMoves the preset string of moves
+	 * @return the constructed Validator Game;
+	 */
 	public Game makeGame(String presetMoves) {
 		if(presetMoves != null) {
 			return new ValidatorGame(presetMoves);
@@ -50,6 +58,11 @@ public class Factory {
 		return new Board(new Two<Player>(player1, player2));
 	}
 
+	/**
+	 * Makes an AIPlayer - Also prompts the user for the level of which the AI player will be.
+	 * @param playerNumber Player 1 or 2
+	 * @return the constructed player. 
+	 */
 	public Player makeAIPlayer(int playerNumber) {
 		while(true) {
 			System.out.println("Select difficulty level for player " + playerNumber + ":");
@@ -76,6 +89,14 @@ public class Factory {
 		}
 	}
 
+	/**
+	 * Used but the load method to reinstanciate the type of player that was originally saved 
+	 * @param playerNumber where it is player one or teo
+	 * @param playerType the subtype of player
+	 * @param playerName the players name
+	 * @param playerToken the players token
+	 * @return the constructed player
+	 */
 	public Player makePlayer(int playerNumber, String playerType, String playerName, String playerToken){
 		Player newPlayer;
 		if(playerType.equalsIgnoreCase("quoridor.HumanPlayer")){
@@ -95,6 +116,10 @@ public class Factory {
 	}
 
 
+	/**
+	 * Gets input from user, loops until valid
+	 * @return
+	 */
 	private String getFromUser() {
 		try {
 			while (true) {

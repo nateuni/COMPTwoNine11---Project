@@ -2,6 +2,9 @@ package quoridor;
 
 
 
+/**
+ * The Quoridor class that get the game going
+ */
 public class Quoridor {
 
 	/**

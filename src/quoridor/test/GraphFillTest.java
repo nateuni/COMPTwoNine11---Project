@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import quoridor.*;
 
+/**
+ * Tests heuristics
+ */
 public class GraphFillTest {
 
 	/**

@@ -11,6 +11,9 @@ public class RandomAIPlayer extends AIPlayer {
 		super(playerNumber);
 	}
 
+	/* (non-Javadoc)
+	 * @see quoridor.Player#getMove(quoridor.Board)
+	 */
 	public Move getMove(Board board) {
 		Move move = null;
 		boolean valid = false;
@@ -40,11 +43,17 @@ public class RandomAIPlayer extends AIPlayer {
 		return move;
 	}
 
+	/* (non-Javadoc)
+	 * @see quoridor.AIPlayer#distanceWeight()
+	 */
 	@Override
 	protected int distanceWeight() {
 		return 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see quoridor.AIPlayer#wallsLeftWeight()
+	 */
 	@Override
 	protected int wallsLeftWeight() {
 		return 0;

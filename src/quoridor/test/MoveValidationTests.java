@@ -9,6 +9,9 @@ import org.junit.Test;
 import quoridor.Factory;
 import quoridor.Game;
 
+/**
+ * Tests moves as explained by the method names
+ */
 public class MoveValidationTests {
 	
 	@Before

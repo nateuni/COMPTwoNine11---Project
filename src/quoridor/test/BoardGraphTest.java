@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import quoridor.*;
 
+/**
+ * Tests printing out of the board and displays shortest paths info
+ */
 public class BoardGraphTest { 
 
 	public static void main(String[] args) {
