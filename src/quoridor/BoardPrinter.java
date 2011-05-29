@@ -93,8 +93,16 @@ public class BoardPrinter {
 		}
 		
 		boardString.append("   -----------------------------------\n    a   b   c   d   e   f   g   h   i");
-		
+		boardString.append(wallInfoToString(board));
 		return boardString.toString();
+	}
+	
+	private static String wallInfoToString(Board board) {
+			Player player1 = board.players._1();
+			Player player2 = board.players._2();
+			String wallTally1 = (player1.getName() + " has "+ board.getWallsLeft(player1)+ " walls left" );
+			String wallTally2 = (player2.getName() + " has "+ board.getWallsLeft(player2)+ " walls left" );
+			return ("\n"+wallTally1+"\n"+wallTally2+"\n");
 	}
 	
 }
