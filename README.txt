@@ -201,3 +201,16 @@ To play game from console: run the file "Quoridor.class"
 
 
 ----------------GAME SCORING FUNCTION------------------
+
+	The game scoring function relies on two features:
+	- A player's distance from their target row
+	- The number of walls they have left
+	
+	An evaluation for one player is given by:
+		eval = weight1 * wallsLeft - weight2 * distanceToExit
+	where each type of AI player can define its own weights to determine how
+	it will evaluate the game state. The distance to the exit is determined
+	using a breadth-first search of the board.
+	
+	To find the total game score at a given game state, the evaluation for
+	player 2 is subtracted from the evaluation for player 1.
