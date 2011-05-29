@@ -1,5 +1,8 @@
 package quoridor;
 
+/**
+ * Handles the printing of the current state of the board to the commandline. 
+ */
 public class BoardPrinter {
 
 	static final String V_WALL = "|";

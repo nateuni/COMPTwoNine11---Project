@@ -27,11 +27,20 @@ public abstract class Game implements GameInterface {
 	protected abstract void playNextTurn();
 
 	
+	/**
+	 * Checks for a winner
+	 * @return returns the result as an int
+	 */
 	public int checkWin() {
 		return board.checkWin();
 	}
 	
 	
+	/**
+	 * Saves the game to a text file. One row per each of the individual player's details and one for the string of move in a validator style
+	 * @param fileName the file same from which to save to - appends the name with .qdr file type
+	 * @return returns the result of this action
+	 */
 	public boolean save(String fileName){
 		String player1Details = this.board.getPlayers()._1().getClass().getName()+"\n"+this.board.getPlayers()._1().getName()+"\n"+this.board.getPlayers()._1().getToken()+"\n";
 		String player2Details = this.board.getPlayers()._2().getClass().getName()+"\n"+this.board.getPlayers()._2().getName()+"\n"+this.board.getPlayers()._2().getToken()+"\n";
@@ -49,6 +58,10 @@ public abstract class Game implements GameInterface {
 		return true;
 	}
 
+	/**
+	 * Reads in the individual lines from the user stated text file and places the input into variables from which is passed into the board 
+	 * @param fileName the file name from which to load from.
+	 */
 	public void load(String fileName){
 		boolean p1CurrentPlayer;
 		Scanner inputStream = null;
@@ -70,8 +83,7 @@ public abstract class Game implements GameInterface {
 			player2Name = inputStream.nextLine().trim();
 			player2Token = inputStream.nextLine().trim();
 			moveString = inputStream.nextLine().trim();
-		}
-		catch (NoSuchElementException e) {
+		} catch (NoSuchElementException e) {
 			System.out.println("Exception: Unable to read save file.");
 		}
 
@@ -95,15 +107,25 @@ public abstract class Game implements GameInterface {
 		this.board = game.board;
 	}
 
+	/**
+	 * Displays a text message before exiting the program
+	 */
 	protected void quit() {
 		System.out.println("Whatever man. Bye...");
 		System.exit(0);
 	}
 	
+	/**
+	 * Returns the moveList from board in a validator format
+	 * @return
+	 */
 	protected String getCurrentListOfMovesAsString(){
 		return this.board.moveListToString();
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj){
 		if(!(obj instanceof Game)){

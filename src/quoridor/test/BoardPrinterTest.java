@@ -2,6 +2,9 @@ package quoridor.test;
 
 import quoridor.*;
 
+/**
+ * Prints out the board
+ */
 public class BoardPrinterTest {
 
 	public static void main(String[] args) {

@@ -51,14 +51,25 @@ public class Space implements SpaceInterface{
         }
     }
 
+    /* (non-Javadoc)
+     * @see quoridor.SpaceInterface#col()
+     */
     public int col() {
         return col;
     }
 
+    /* (non-Javadoc)
+     * @see quoridor.SpaceInterface#row()
+     */
     public int row() {
         return row;
     }
 
+    /**
+     * Returns the passed alpha value as an integer 
+     * @param alpha the value from which the board integer equivalent is required. 
+     * @return the int
+     */
     public int alphaToInt(String alpha) {
         char alphaChar = alpha.charAt(0);
         int alphaAsInt = alphaChar - 'a' + 1;
@@ -122,11 +133,18 @@ public class Space implements SpaceInterface{
         return (this.col == otherSpace.col && this.row == otherSpace.row);
     }
     
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
 	public String toString() {
 		return "[" + col + ", " + row + "]";
 	}
 	
+	/**
+	 * Returns the coordinates in its original input form
+	 * @return the space as a alpha numeric value
+	 */
 	public String toOriginalString(){
 		int ascii = col + ASCII_DIFFERENCE;
 		String alpha = Character.toString((char) ascii);	

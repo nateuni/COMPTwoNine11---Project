@@ -4,6 +4,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.regex.Pattern;
 
+/**
+ * Designed for validator games
+ *
+ */
 public class ValidatorGame extends Game{
 	protected Queue<String> q = null;
 	
@@ -16,6 +20,10 @@ public class ValidatorGame extends Game{
 		board = Factory.instance().makeBoard(gameType);
 	}
 	
+	/**
+	 * Places the validator string into a queue
+	 * @param string the original validator string
+	 */
 	private void breakUpStringIntoQueue(String string) {
 		q = new LinkedList<String>();
 		Pattern p = Pattern.compile("[\\s]");
@@ -43,6 +51,9 @@ public class ValidatorGame extends Game{
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see quoridor.Game#playNextTurn()
+	 */
 	protected void playNextTurn() {
 		if(q.size() > 0){
 			if (board.checkWin() != 0) {
