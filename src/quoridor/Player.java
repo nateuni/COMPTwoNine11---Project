@@ -113,4 +113,13 @@ public abstract class Player implements PlayerInterface  {
 	public int minMax() {
 		return minMax;
 	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if(!(obj instanceof Player)){
+			return false;
+		}
+		Player other = (Player) obj;
+		return (this.getName().equals(other.getName()) && this.getToken().equals(other.getToken()) && this.minMax == other.minMax);
+	}
 }

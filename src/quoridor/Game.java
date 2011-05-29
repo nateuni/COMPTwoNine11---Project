@@ -52,7 +52,6 @@ public abstract class Game implements GameInterface {
 	public Board load(String fileName){
 		boolean p1CurrentPlayer;
 		Scanner inputStream = null;
-		int lineCounter = 0;
 		String player1Type = null, player1Name = null, player1Token = null, player2Type = null, player2Name = null, player2Token = null, moveString = null;
 
 		System.out.println("Loading game....");	
@@ -98,7 +97,6 @@ public abstract class Game implements GameInterface {
 		return game.board;
 	}
 
-	
 	protected void quit() {
 		System.out.println("Whatever man. Bye...");
 		System.exit(0);
@@ -106,6 +104,16 @@ public abstract class Game implements GameInterface {
 	
 	protected String getCurrentListOfMovesAsString(){
 		return this.board.moveListToString();
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		if(!(obj instanceof Game)){
+			return false;
+		}
+		Game other = (Game) obj;
+		return (this.board.equals(other.board) && this.winner == other.winner && this.gameType == other.gameType 
+				&& this.gameOver == other.gameOver && this.consoleGame == other.consoleGame && this.checkWin == other.checkWin);
 	}
 	
 }

@@ -506,5 +506,15 @@ public class Board implements BoardInterface{
 		this.setPlayers(players);
 	}
 
+	@Override
+	public boolean equals(Object obj){
+		if(!(obj instanceof Board)){
+			return false;
+		}
+		Board other = (Board) obj;
+		return (this.currentPlayer.equals(other.currentPlayer) && this.moveList.equals(other.moveList)  && this.wallList.equals(other.wallList)
+			&& this.player1Space.equals(other.player1Space) && this.player2Space.equals(other.player2Space) && this.players._1().equals(other.players._1()) 
+			&& this.players._2().equals(other.players._2()) && this.player1WallsLeft == other.player1WallsLeft && this.player2WallsLeft == other.player2WallsLeft);
+	}
 
 }

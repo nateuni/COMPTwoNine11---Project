@@ -11,9 +11,6 @@ public class Quoridor {
 	public static void main(String[] args) {
 		Game game = new ConsoleGame();
 		game.playGame();
-
-		
-
 	}
 
 }
