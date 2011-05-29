@@ -20,6 +20,8 @@ public class MultipleLookAIPlayer extends AIPlayer {
 
 	/**
 	 * Looks at the board and figures out what move to make.
+	 * Calls negamax() for each possible move and picks the best one.
+	 * If there are multiple equally best, it picks one of them at random.
 	 * @see quoridor.Player#getMove(quoridor.Board)
 	 */
 	public Move getMove(Board board) {
@@ -54,6 +56,15 @@ public class MultipleLookAIPlayer extends AIPlayer {
 		return bestMoves.get(pick);
 	}
 
+	/**
+	 * Performs a negamax search of the game tree to evaluate a game state.
+	 * Uses alpha-beta pruning to reduce search time.
+	 * @param board The board state under consideration.
+	 * @param alpha Alpha parameter of alpha-beta.
+	 * @param beta Beta parameter of alpha-beta.
+	 * @param depth Depth to search the game tree.
+	 * @return Negamax value.
+	 */
 	private int negamax(Board board, int alpha, int beta, int depth) {
 		i++;
 		if (board.currentPlayer().equals(board.winner())) return Integer.MAX_VALUE;

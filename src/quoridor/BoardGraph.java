@@ -5,7 +5,8 @@ import java.util.List;
 
 /**
  * A graph structure representing the spaces on the board.
- * Used for finding shortest paths.
+ * Used for finding distances to the exits and checking if a wall move
+ * would completely block a player's path.
  */
 
 public class BoardGraph {
@@ -37,7 +38,7 @@ public class BoardGraph {
 	}
 	
 	/**
-	 * Removes edges between nodes that have been separated by a wall.
+	 * Removes edges between nodes that have been separated by a new wall.
 	 * @param wall The wall that has been added.
 	 */
 	public void addWall(Wall wall) {
@@ -59,7 +60,7 @@ public class BoardGraph {
 	}
 	
 	/**
-	 * Restores edges between nodes when a wall is removed (with undo).
+	 * Restores edges between nodes when a wall is removed (e.g. with undo).
 	 * @param wall The removed wall.
 	 */
 	public void removeWall(Wall wall) {
@@ -80,6 +81,14 @@ public class BoardGraph {
 		}
 	}
 	
+	/**
+	 * Performs a breadth-first search across the graph, filling in each node's
+	 * distanceToExit attribute with its shortest distance to one of the exit nodes.
+	 * This is a player's least possible distance to get to its exit row, not considering
+	 * jump moves or additional wall placements.
+	 * This must be done for a single player before examining individual spaces with getDist().
+	 * @param exits A list of target spaces which make up the player's exit row
+	 */
 	@SuppressWarnings("unchecked")
 	public void fillNodeDistances(List<Space> exits) {
 		ArrayList<BoardNode> currentNodes = new ArrayList<BoardNode>();
@@ -112,6 +121,13 @@ public class BoardGraph {
 		}
 	}
 
+	/**
+	 * Checks whether the search so far has found a shorter path to a node
+	 * than a previously found path.
+	 * @param thisNode The node to be checked.
+	 * @param distance The distance travelled in the new path.
+	 * @return The node if a new path was found, otherwise null
+	 */
 	private BoardNode tryNode(BoardNode thisNode, int distance) {
 		if (thisNode == null) return null;
 		if (thisNode.distanceToExit != -1 && distance + 1 >= thisNode.distanceToExit) return null;
@@ -119,6 +135,11 @@ public class BoardGraph {
 		return thisNode;
 	}
 	
+	/**
+	 * Prints a grid of the distances found from the most recent call
+	 * to fillNodeDistances().
+	 * Only used for testing.
+	 */
 	public void printDistanceFills() {
 		int row, col;
 		for (row = 0; row < 9; row++) {
@@ -130,6 +151,12 @@ public class BoardGraph {
 		}
 	}
 	
+	/**
+	 * Gets the distanceToExit value for a particular space, as found from
+	 * the most recent call to fillNodeDistances().
+	 * @param space
+	 * @return
+	 */
 	public int getDist(Space space) {
 		return node[space.row()-1][space.col()-1].distanceToExit;
 	}
