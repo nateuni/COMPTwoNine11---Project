@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * An AI player that picks a good move without looking ahead
+ * An AI player that picks a good move without looking ahead.
  * @author Team Stump
  */
 public class NoLookAIPlayer extends AIPlayer {
@@ -16,6 +16,8 @@ public class NoLookAIPlayer extends AIPlayer {
 
 	/**
 	 * Looks at the board and figures out what move to make.
+	 * Strongly favours advantageous moves, but with some randomness
+	 * to make it less predictable.
 	 * @see quoridor.Player#getMove(quoridor.Board)
 	 */
 	public Move getMove(Board board) {
@@ -34,7 +36,6 @@ public class NoLookAIPlayer extends AIPlayer {
 			catch (Exception e) {}
 		}
 		double choice = awesomeTotal * Math.random();
-		Collections.sort(validMoves, new MoveComparator());
 		for (Move move : validMoves) {
 			if (choice < move.awesomeness) return move;
 			else choice -= move.awesomeness;
@@ -44,7 +45,6 @@ public class NoLookAIPlayer extends AIPlayer {
 		return validMoves.get(0);
 	}
 	
-	// Weights for the heuristics
 	@Override
 	protected int distanceWeight() {
 		return 5;
