@@ -79,7 +79,7 @@ public class Factory {
 	}
 
 	Player makePlayer(int playerNumber, String playerType, String playerName, String playerToken){
-		Player newPlayer = null;
+		Player newPlayer;
 		if(playerType.equalsIgnoreCase("quoridor.HumanPlayer")){
 			return new HumanPlayer(playerNumber, playerName, playerToken);
 		} else if(playerType.equalsIgnoreCase("quoridor.RandomAIPlayer")){
@@ -88,6 +88,8 @@ public class Factory {
 			newPlayer = new NoLookAIPlayer(playerNumber);
 		} else if(playerType.equalsIgnoreCase("quoridor.MultipleLookAIPlayer")){
 			newPlayer = new MultipleLookAIPlayer(playerNumber);
+		} else {
+			newPlayer = new DeadPlayer(playerNumber);
 		}
 		newPlayer.setName(playerName);
 		newPlayer.setToken(playerToken);
