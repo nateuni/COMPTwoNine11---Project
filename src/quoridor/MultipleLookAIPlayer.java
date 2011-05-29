@@ -36,7 +36,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 			try {
 				newBoard = board.clone();
 				newBoard.makeMove(move);
-				evaluation = -negamax(newBoard, Integer.MIN_VALUE, Integer.MAX_VALUE, depth);
+				evaluation = -negamax(newBoard, Integer.MIN_VALUE + 1, Integer.MAX_VALUE, depth);
 				if (evaluation > bestCase) {
 					bestMoves.clear();
 					bestMoves.add(move);
@@ -51,7 +51,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 		
 		// If there are several equal best moves, pick one at random
 		int pick = (int) Math.floor(bestMoves.size() * Math.random());
-		System.out.println(i);
+		//System.out.println(i);
 		i = 0;
 		return bestMoves.get(pick);
 	}
