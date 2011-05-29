@@ -40,13 +40,13 @@ public class ProvidedTests
         testMoves.add (goodMove);
         
         validator = new Validator (); // initialise quoridor
-        assertTrue ("Valid: " + testMoves, validator.check ("a6"));
-        
+        assertTrue ("Valid: " + testMoves, validator.check(testMoves));
+   
         testMoves.remove (n);
         testMoves.add (badMove);
         
         validator = new Validator (); // re-initialise quoridor
-        assertFalse ("Invalid: " + testMoves, validator.check ("a6"));
+        assertFalse ("Invalid: " + testMoves, validator.check(testMoves));
     }
     
     List <String> moves;   // assumed valid list of moves from start of game

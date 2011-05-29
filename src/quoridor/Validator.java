@@ -1,10 +1,26 @@
 package quoridor;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 public class Validator {
 
 	Game sampleGame;
 	
 	public Validator() {
+	}
+	
+	public boolean check(java.util.List<String> testMoves) {
+		
+		String movesString = testMoves.get(0)+" ";
+		
+		for(int i=1; i< testMoves.size(); i++) {
+			movesString += testMoves.get(i);
+			movesString += " ";
+		}
+		movesString = movesString.substring(0, movesString.length()-1);
+		System.out.println("testing moves: "+movesString);
+		return check(movesString);
 	}
 
 	/**
@@ -16,7 +32,6 @@ public class Validator {
 	 * @param moves a list of successive moves
 	 * @return validity of the list of moves
 	 */
-	
 	public boolean check(String moves){
 		Game game = Factory.instance().makeGame(moves);
 		return game.playGame();

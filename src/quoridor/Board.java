@@ -14,10 +14,10 @@ public class Board implements BoardInterface{
 	protected LinkedList<Wall> wallList = new LinkedList<Wall>();
 	protected LinkedList<Move> moveList = new LinkedList<Move>();
 	protected int moveListIndex = -1;
-	static final Space player1Start = new Space("e1");
-	static final Space player2Start = new Space("e9");
-	protected Space player1Space = new Space("e1");
-	protected Space player2Space = new Space("e9");
+	static final Space player1Start = new Space("e9");
+	static final Space player2Start = new Space("e1");
+	protected Space player1Space = new Space("e9");
+	protected Space player2Space = new Space("e1");
 	protected int player1WallsLeft = 10;
 	protected int player2WallsLeft = 10;
 	Player winner = null;
