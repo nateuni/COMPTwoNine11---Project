@@ -13,26 +13,48 @@ public class BoardPrinter {
 	
 	static int style = 0;
 
+	/**
+	 * Sets the particular board printer style
+	 * @param newStyle as set by an int
+	 */
 	public static void setStyle(int newStyle) {
 		if (newStyle >=0 && newStyle <= 2) style = newStyle;
 		else throw new RuntimeException("Invalid style");
 	}
 
+	/**
+	 * Sets the particular board printer style
+	 * @param newStyle as set by a string
+	 */
 	public static void setStyle(String newStyle) {
 		setStyle(Integer.parseInt(newStyle) - 1);
 	}
 	
+	/**
+	 * Returns the appropriate Horizontal divider, as set by the style
+	 * @return the divider as a string.
+	 */
 	private static String getHDivider() {
 		if (style == 1) return H_DIVIDER_1;
 		if (style == 2) return H_DIVIDER_2;
 		return H_DIVIDER_0;
 	}
 
+	/**
+	 * Returns the appropriate corner, as set by the style
+	 * @return the corner as a string.
+	 */
 	private static String getCorner() {
 		if (style == 0) return CORNER_0;
 		return CORNER_1;
 	}
 
+	
+	/**
+	 * Builds the board layout as one large string
+	 * @param board to be printer
+	 * @return the string representation of the board
+	 */
 	public static String buildBoardString(Board board) {
 		StringBuilder boardString = new StringBuilder("   -----------------------------------\n");
 		Space thisSpace;
@@ -97,6 +119,11 @@ public class BoardPrinter {
 		return boardString.toString();
 	}
 	
+	/**
+	 * Prints out the players remaining wall information 
+	 * @param board the board who information is to be printed.
+	 * @return the player wall information 
+	 */
 	private static String wallInfoToString(Board board) {
 			Player player1 = board.players._1();
 			Player player2 = board.players._2();
