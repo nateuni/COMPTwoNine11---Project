@@ -31,7 +31,8 @@ To play game from console: run the file "Quoridor.class"
 		2 - Play Human vs AI Game
 		3 - Play AI vs AI Game
 		4 - Load previously saved game
-		5 - Quit
+		5 - Advanced options
+		6 - Quit
 		Enter selection:
 
 	Enter the number which corresponds to your choice.
@@ -75,7 +76,18 @@ To play game from console: run the file "Quoridor.class"
 	game play will resume.
 
 
-	- 5 - QUIT
+	- 5 - ADVANCED OPTIONS:
+
+	This option opens a sub-menu which lets you set options
+	relating to the hard (multiple look-ahead) AI. e.g.
+	
+		Advanced options
+		1 - Set AI look-ahead depth
+		2 - Set AI timeout
+		3 - Return to main menu
+
+
+	- 6 - QUIT
 
 	If selected, you will receive a message indicating that the 
 	game is shutting down and the game will exit. 
@@ -94,25 +106,32 @@ To play game from console: run the file "Quoridor.class"
 	and the player will be prompted again.
 	
 	To move to a new space: enter the coordinates of the space you 
-	wish to move to ( eg. e4). The input is not case sensitive.
+	wish to move to (e.g. e4). The input is not case sensitive.
 	
 	To place a wall: 
-	Enter the coordinates of the wall (eg. e5H ) where coordinates 
+	Enter the coordinates of the wall (eg. e5h ) where coordinates 
 	correspond to the top-left space which will be affected by 
-	this wall, and V and H stand for vertical and horizontal 
+	this wall, and v and h stand for vertical and horizontal 
 	orientation, respectively.
 	
+	To view possible moves:
+	Type "moves". You will be shown a list of all possible moves
+	you can make.
+	
 	To save the current game: 
-	type "save" . You will be prompted to enter a filename for 
+	Type "save". You will be prompted to enter a filename for 
 	your game.
 	
-	To quit the current game: type "quit" . Any unsaved changes 
+	To quit the current game:
+	Type "quit". Any unsaved changes 
 	will be lost.
 	
-	To unde a move: type "undo" . The last two moves that where 
+	To undo a move:
+	Type "undo". The last two moves that were 
 	played will be undone.
 	
-	To redo a move: type "redo" . The last two moves that where 
+	To redo a move:
+	Type "redo". The last two moves that where 
 	undone will be played again.
 	undo/redo can be applied multiple times - provided there are 
 	moves to undo/redo.
@@ -135,7 +154,7 @@ To play game from console: run the file "Quoridor.class"
 
 	We implemented the following player classes (to represent 
 	different levels of difficulty in AI play). All of these 
-	classes extend the abstrac Player class.
+	classes extend the abstract Player class.
 
 	- RandomAIPlayer - which plays random (valid) moves - 
 	  used for implementation of easy AI player.
@@ -146,7 +165,7 @@ To play game from console: run the file "Quoridor.class"
 
 	- MultipleLookAIPlayer - which evaluates the optimal move to 
           play with multiple looks ahead - used for implementation 
-          of har AI Player.
+          of hard AI Player.
 
 --DEAD PLAYER CLASSES--
 
@@ -161,7 +180,7 @@ To play game from console: run the file "Quoridor.class"
 
 	We implemented a factory class which implements the following methods:
 	
-	- makeGame(String presetMoves)which constructs a ValidatorGame 
+	- makeGame(String presetMoves) which constructs a ValidatorGame 
 	  if preset moves are not null, and a console game if preset moves are
  	  null. This method ensures that the game implementation used will suit
           the requirements of retrieving and playing moves (i.e. either from 
@@ -182,3 +201,16 @@ To play game from console: run the file "Quoridor.class"
 
 
 ----------------GAME SCORING FUNCTION------------------
+
+	The game scoring function relies on two features:
+	- A player's distance from their target row
+	- The number of walls they have left
+	
+	An evaluation for one player is given by:
+		eval = weight1 * wallsLeft - weight2 * distanceToExit
+	where each type of AI player can define its own weights to determine how
+	it will evaluate the game state. The distance to the exit is determined
+	using a breadth-first search of the board.
+	
+	To find the total game score at a given game state, the evaluation for
+	player 2 is subtracted from the evaluation for player 1.

@@ -11,12 +11,16 @@ import java.util.List;
  */
 public class MultipleLookAIPlayer extends AIPlayer {
 
-	int depth = 2;
+	protected int maxDepth = 3;
 	public static int i = 0;
+	long startTime;
+	protected long timeOut = 5000;
 	
-	public MultipleLookAIPlayer(int playerNumber) {
+	public MultipleLookAIPlayer(int playerNumber, int lookAhead, int timeOut) {
 		super(playerNumber);
-		}
+		this.maxDepth = lookAhead;
+		this.timeOut = timeOut;
+	}
 
 	/**
 	 * Looks at the board and figures out what move to make.
@@ -27,26 +31,32 @@ public class MultipleLookAIPlayer extends AIPlayer {
 	public Move getMove(Board board) {
 		assert(this.equals(board.currentPlayer()));
 		Board newBoard;
-		List<Move> potentialMoves = allMoves(board);
+		List<Move> potentialMoves = validMoves(board);
 		List<Move> bestMoves = new LinkedList<Move>();
 		Collections.sort(potentialMoves, new MinimaxComparator(board.getSpace(board.players.other(this))));
 		int bestCase = Integer.MIN_VALUE;
 		int evaluation;
-		for (Move move : potentialMoves) {
-			try {
-				newBoard = board.clone();
-				newBoard.makeMove(move);
-				evaluation = -negamax(newBoard, Integer.MIN_VALUE, Integer.MAX_VALUE, depth);
-				if (evaluation > bestCase) {
-					bestMoves.clear();
-					bestMoves.add(move);
-					bestCase = evaluation;
+		int depth;
+		startTime = System.currentTimeMillis();
+		for (depth = 1; depth <= maxDepth && System.currentTimeMillis() - startTime < timeOut; depth++) {
+			for (Move move : potentialMoves) {
+				try {
+					newBoard = board.clone();
+					newBoard.makeMove(move);
+					evaluation = -negamax(newBoard, Integer.MIN_VALUE + 1, Integer.MAX_VALUE, depth - 1);
+					move.awesomeness = evaluation;
+					if (evaluation > bestCase) {
+						bestMoves.clear();
+						bestMoves.add(move);
+						bestCase = evaluation;
+					}
+					else if (evaluation == bestCase) {
+						bestMoves.add(move);
+					}
 				}
-				else if (evaluation == bestCase) {
-					bestMoves.add(move);
-				}
+				catch (Exception e) {}
 			}
-			catch (Exception e) {}
+			Collections.sort(potentialMoves, new MoveComparator());
 		}
 		
 		// If there are several equal best moves, pick one at random
@@ -69,7 +79,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 		i++;
 		if (board.currentPlayer().equals(board.winner())) return Integer.MAX_VALUE;
 		else if (board.players.other(board.currentPlayer()).equals(board.winner())) return Integer.MIN_VALUE + 1;
-		else if (depth == 0) return board.currentPlayer().minMax() * evaluate(board);
+		else if (depth <= 0 || System.currentTimeMillis() - startTime > timeOut) return board.currentPlayer().minMax() * evaluate(board);
 		
 		Board newBoard;
 		List<Move> potentialMoves = board.currentPlayer().allMoves(board);
@@ -102,7 +112,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 	 */
 	@Override
 	protected int wallsLeftWeight() {
-		return 3;
+		return 2;
 	}
 
 }

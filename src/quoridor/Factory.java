@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 public class Factory {
 	
 	private static Factory theFactory;
+	public int lookAhead = 3;
+	public int timeOut = 5000;
 
 	public static Factory instance ()
 	{
@@ -81,7 +83,7 @@ public class Factory {
 				switch (difficulty){
 					case 1: return new RandomAIPlayer(playerNumber);
 					case 2: return new NoLookAIPlayer(playerNumber);
-					case 3: return new MultipleLookAIPlayer(playerNumber);
+					case 3: return new MultipleLookAIPlayer(playerNumber, lookAhead, timeOut);
 					default:
 				}
 				System.out.println("Invalid input.");
@@ -106,7 +108,7 @@ public class Factory {
 		} else if(playerType.equalsIgnoreCase("quoridor.NoLookAIPlayer")) {
 			newPlayer = new NoLookAIPlayer(playerNumber);
 		} else if(playerType.equalsIgnoreCase("quoridor.MultipleLookAIPlayer")){
-			newPlayer = new MultipleLookAIPlayer(playerNumber);
+			newPlayer = new MultipleLookAIPlayer(playerNumber, lookAhead, timeOut);
 		} else {
 			newPlayer = new DeadPlayer(playerNumber);
 		}

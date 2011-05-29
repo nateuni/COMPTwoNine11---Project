@@ -19,7 +19,7 @@ public class RandomAIPlayer extends AIPlayer {
 		boolean valid = false;
 		while (!valid) {
 			try {
-				if (Math.random() < 0.6) {
+				if (Math.random() < 0.7) {
 					// Do a movement move
 					double dir = Math.random();
 					if      (dir < 0.25) move = new MovementMove(board.getSpace(this), board.getSpace(this).getUp());

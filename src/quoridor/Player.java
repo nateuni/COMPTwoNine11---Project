@@ -66,7 +66,7 @@ public abstract class Player implements PlayerInterface  {
 	 * Returns a list of all potentially valid moves.
 	 * i.e. guaranteed to be in-range, but not necessarily valid given the board state.
 	 * @param board
-	 * @return
+	 * @return List of moves
 	 */
 	public List<Move> allMoves(Board board) {
 		LinkedList<Move> potentialMoves = new LinkedList<Move>();
@@ -99,6 +99,26 @@ public abstract class Player implements PlayerInterface  {
 			}
 		}
 		return potentialMoves;
+	}
+
+	/**
+	 * Returns a list of moves that are valid within the current game state.
+	 * @param board
+	 * @return
+	 */
+	public List<Move> validMoves(Board board) {
+		Board newBoard;
+		List<Move> potentialMoves = allMoves(board);
+		List<Move> validMoves = new LinkedList<Move>();
+		for (Move move : potentialMoves) {
+			try {
+				newBoard = board.clone();
+				newBoard.makeMove(move);
+				validMoves.add(move);
+			}
+			catch (Exception e) {}
+		}
+		return validMoves;
 	}
 	
 	/**

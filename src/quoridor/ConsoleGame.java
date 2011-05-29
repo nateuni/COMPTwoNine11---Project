@@ -40,14 +40,15 @@ public class ConsoleGame extends Game {
 	 */
 	protected boolean menu() {
 		int selection = 0;
-		while(selection != 5) {
+		while(selection != 6) {
 			System.out.println();
-			System.out.print("Please select your choice: \n" +
+			System.out.print("Please select your choice:\n" +
 					"1 - Play Human vs Human Game\n" +
 					"2 - Play Human vs AI Game\n" +
 					"3 - Play AI vs AI Game\n" +
 					"4 - Load previously saved game\n" +
-					"5 - Quit\n");
+					"5 - Advanced options\n" +
+					"6 - Quit\n");
 			try {
 				selection = Integer.parseInt(getFromUser("Enter selection: "));
 			}
@@ -61,7 +62,8 @@ public class ConsoleGame extends Game {
 					String fileName = getFromUser("Enter name of saved file (no extension): ");
 					this.load(fileName); break;
 				}
-				case 5: quit(); break;
+				case 5: setUpAdvanced(); break;
+				case 6: quit(); break;
 				default: System.out.println("Invalid Input");
 			}
 			if(selection >= 1 && selection <= 4 && board != null){
@@ -71,6 +73,55 @@ public class ConsoleGame extends Game {
 		return false;
 	}
 
+	/**
+	 * Provides a menu for the user to set AI parameters.
+	 */
+	private void setUpAdvanced() {
+		int selection = 0;
+		int lookAhead;
+		int timeOut;
+		while(selection != 6) {
+			System.out.println();
+			System.out.print("Advanced options\n" +
+					"1 - Set AI look-ahead depth\n" +
+					"2 - Set AI timeout\n" +
+					"3 - Return to main menu\n");
+			try {
+				selection = Integer.parseInt(getFromUser("Enter selection: "));
+			}
+			catch (Exception e) {
+				System.out.println("Invalid Input - type the number corresponding to your selection");
+				continue;
+			}
+			switch(selection){
+				case 1:
+					try {
+						lookAhead = Integer.parseInt(getFromUser("Enter look-ahead depth: "));
+					}
+					catch (Exception e) {
+						System.out.println("Invalid Input");
+						break;
+					}
+					if (lookAhead < 1) System.out.println("Error: Look-ahead depth must be at least 1");
+					else Factory.instance().lookAhead = lookAhead;
+					break;
+				case 2:
+					try {
+						timeOut = Integer.parseInt(getFromUser("Enter AI timeout (in milliseconds): "));
+					}
+					catch (Exception e) {
+						System.out.println("Invalid Input");
+						break;
+					}
+					if (timeOut < 100) System.out.println("Error: Timeout must be at least 100 milliseconds");
+					else Factory.instance().timeOut = timeOut;
+					break;
+				case 3: return;
+				default: System.out.println("Invalid Input");
+			}
+		}
+	}
+	
 	/**
 	 * This function controls the flow of game play.
 	 */
@@ -109,6 +160,9 @@ public class ConsoleGame extends Game {
 			}
 			else if (userInput.equals("quit")) {
 				quit();
+			}
+			else if (userInput.equals("moves")) {
+				System.out.println("List of valid moves:\n" + board.currentPlayer().validMoves(board));
 			}
 			else {
 				board.makeMoveFromInput(userInput);
