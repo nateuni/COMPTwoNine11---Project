@@ -89,11 +89,17 @@ public class MultipleLookAIPlayer extends AIPlayer {
 		return alpha;
 	}
 	
+	/* (non-Javadoc)
+	 * @see quoridor.AIPlayer#distanceWeight()
+	 */
 	@Override
 	protected int distanceWeight() {
 		return 5;
 	}
 
+	/* (non-Javadoc)
+	 * @see quoridor.AIPlayer#wallsLeftWeight()
+	 */
 	@Override
 	protected int wallsLeftWeight() {
 		return 3;
