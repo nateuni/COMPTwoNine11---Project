@@ -1,8 +1,13 @@
 package quoridor;													
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 
 public class ConsoleGame extends Game {
 
@@ -36,20 +41,30 @@ public class ConsoleGame extends Game {
 	 * 
 	 * @return true if a valid board was constructed, false otherwise
 	 */
-	protected boolean menu(){
+	protected boolean menu() {
 		int selection = 0;
 		while(selection != 5) {
+			System.out.println();
 			System.out.print("Please select your choice: \n" +
 					"1 - Play Human vs Human Game\n" +
 					"2 - Play Human vs AI Game\n" +
 					"3 - Play AI vs AI Game\n" +
 					"4 - Load previously saved game\n" +
 					"5 - Quit\n");
-			selection = Integer.parseInt(getFromUser("Enter selection: "));
+			try {
+				selection = Integer.parseInt(getFromUser("Enter selection: "));
+			}
+			catch (Exception e) {
+				System.out.println("Invalid Input - type the number corresponding to your selection");
+				return false;
+			}
 			switch(selection){
 				case 1: case 2: case 3: board = Factory.instance().makeBoard(selection); break;
-				case 4: board = this.load(); break;
-				case 5: System.exit(0); break;
+				case 4: {
+					String fileName = getFromUser("Enter name of saved file (no extension): ");
+					board = this.load(fileName); break;
+				}
+				case 5: quit(); break;
 				default: System.out.println("Invalid Input");
 			}
 			if(selection >= 1 && selection <= 4 && board != null){
@@ -86,7 +101,19 @@ public class ConsoleGame extends Game {
 
 		Move move = board.currentPlayer().getMove(board);
 		if (move != null) board.makeMove(move);
-		else board.makeMoveFromInput(this.getFromUser("Enter move: "));
+		else {
+			String userInput= getFromUser("Enter Move: ");
+			if(userInput.equals("save")) {
+					String filename = getFromUser("what should I call this game? : ");
+					save(filename);
+			}
+			else if (userInput.equals("quit")) {
+				quit();
+			}
+			else {
+				board.makeMoveFromInput(userInput);
+			}
+		}
 		if (board.checkWin() != 0) {
 			gameOver = true;
 			System.out.println(board);
@@ -95,6 +122,78 @@ public class ConsoleGame extends Game {
 		}
 	}
 
+	protected void quit() {
+		System.out.println("Whatever man. Bye...");
+		System.exit(0);
+	}
+	
+	public boolean save(String fileName){
+		String player1Details = this.board.getPlayers()._1().getName()+"\n"+this.board.getPlayers()._1().getToken()+"\n";
+		String player2Details = this.board.getPlayers()._2().getName()+"\n"+this.board.getPlayers()._2().getToken()+"\n";
+		String moveString = this.getCurrentListOfMovesAsString();
+		
+		System.out.println("Saving game....");
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter(fileName+".qdr"));
+			out.write(player1Details+player2Details+moveString);
+			out.close();
+		} catch (IOException e) { 
+			System.out.println("Exception: Unable to save file");
+			return false;
+		}
+		return true;
+	}
+	
+	public Board load(String fileName){
+		boolean p1CurrentPlayer;
+		Scanner inputStream = null;
+		int lineCounter = 0;
+		String player1Name = null, player1Token = null, player2Name = null, player2Token = null, moveString = null;
+		
+		System.out.println("Loading game....");	
+		
+		try{
+			inputStream = new Scanner(new File(fileName+".qdr"));
+		} catch(FileNotFoundException e){
+			System.out.println("Exception: Unable to load file, file not found.");
+			return null;
+		}
+		
+		while(inputStream.hasNextLine()){
+			switch(lineCounter){
+				case 0: player1Name = inputStream.nextLine().trim(); lineCounter++; break;
+				case 1: player1Token = inputStream.nextLine().trim(); lineCounter++; break;
+				case 2: player2Name = inputStream.nextLine().trim(); lineCounter++; break;
+				case 3:	player2Token = inputStream.nextLine().trim(); lineCounter++; break;
+				case 4: moveString = inputStream.nextLine().trim(); lineCounter++; break;
+			}
+		}
+		
+		Game game = Factory.instance().makeGame(moveString);
+		game.playGame();
+		
+		if(game.board.players._1().equals(game.board.currentPlayer)){
+			p1CurrentPlayer = true;
+		} else {
+			p1CurrentPlayer = false;
+		}
+		
+		game.board.loadPlayers(player1Name, player1Token, player2Name, player2Token);
+		
+		if(p1CurrentPlayer){
+			game.board.currentPlayer = game.board.players._1();
+		} else {
+			game.board.currentPlayer = game.board.players._2();
+		}
+	 
+		return game.board;
+	}
+	
+	protected String getCurrentListOfMovesAsString(){
+		return this.board.moveListToString();
+	}
+	
+	
 	/**
 	 * Read one line from user input
 	 * @return the read line as a String
@@ -104,7 +203,7 @@ public class ConsoleGame extends Game {
 			while (true) {
 				BufferedReader userReader = new BufferedReader(new InputStreamReader(System.in));
 				System.out.print(message);
-				String fromUser = userReader.readLine();
+				String fromUser = userReader.readLine().toLowerCase();
 				if (!fromUser.isEmpty()) { // never returns an empty string
 					return fromUser;
 				}
