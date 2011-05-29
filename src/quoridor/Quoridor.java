@@ -1,5 +1,4 @@
 package quoridor;
-import quoridor.*;
 
 
 

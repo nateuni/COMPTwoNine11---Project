@@ -60,7 +60,6 @@ public abstract class Game implements GameInterface {
 			inputStream = new Scanner(new File(fileName+".qdr"));
 		} catch(FileNotFoundException e){
 			System.out.println("Exception: Unable to load file, file not found.");
-			//return null;
 		}
 
 		try {
@@ -74,7 +73,6 @@ public abstract class Game implements GameInterface {
 		}
 		catch (NoSuchElementException e) {
 			System.out.println("Exception: Unable to read save file.");
-			//return null;
 		}
 
 		Game game = Factory.instance().makeGame(moveString);
@@ -95,7 +93,6 @@ public abstract class Game implements GameInterface {
 		}
 
 		this.board = game.board;
-		//return game.board;
 	}
 
 	protected void quit() {

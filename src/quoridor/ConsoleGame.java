@@ -17,7 +17,6 @@ public class ConsoleGame extends Game {
 	public ConsoleGame() {
 		System.out.println("Welcome to Quoridor!");
 		while (!setUp());
-		playGame();
 	}
 
 	/**
