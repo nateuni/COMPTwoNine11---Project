@@ -369,15 +369,20 @@ public class Board implements BoardInterface{
 	}
 
 	/**
-	 * Undo the last move.	 */
+	 * Undo the last two moves.	 */
 	public void undo() {
-		if (moveListIndex < 0) throw new RuntimeException("No moves to undo");
+		if (moveListIndex < 1) throw new RuntimeException("No moves to undo");
+		undoLastMove();
+		undoLastMove();
+	}
+	
+	public void undoLastMove() {
 		Move move = moveList.get(moveListIndex);
 
 		if (move instanceof MovementMove) {
 			setSpace(move.owner, ((MovementMove) move).from());
 		}
-		if (move instanceof WallMove) {
+		else if (move instanceof WallMove) {
 			this.removeWall(((WallMove) move).wall());
 		}
 		currentPlayer = players.other(currentPlayer);
@@ -388,8 +393,13 @@ public class Board implements BoardInterface{
 	 * Redo the last undone move.
 	 */
 	public void redo() {
-		if (moveList.size() == 0 || moveListIndex == moveList.size()-1) throw new RuntimeException("No moves to redo");
+		if (moveList.size() == 0 || moveListIndex > moveList.size()-2) throw new RuntimeException("No moves to redo");
 
+		redoLastMove();
+		redoLastMove();
+	}
+	
+	private void redoLastMove() {
 		moveListIndex++;
 		applyMove(moveList.get(moveListIndex));
 	}
@@ -400,9 +410,9 @@ public class Board implements BoardInterface{
 	
 	public void makeMoveFromInput(String moveInput) {
 		Move move;
-		if (moveInput.equalsIgnoreCase("undo")) {
+		if (moveInput.equals("undo")) {
 			undo();
-		} else if(moveInput.equalsIgnoreCase("redo")) {
+		} else if(moveInput.equals("redo")) {
 			redo();
 		} else if (moveInput.length() >= 7 && moveInput.substring(0, 6).equalsIgnoreCase("style ")) {
 			BoardPrinter.setStyle(moveInput.substring(6, 7));
