@@ -1,5 +1,6 @@
 package quoridor;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 		Board newBoard;
 		List<Move> potentialMoves = allMoves(board);
 		List<Move> bestMoves = new LinkedList<Move>();
+		Collections.sort(potentialMoves, new MinimaxComparator(board.getSpace(board.players.other(this))));
 		int bestCase = Integer.MIN_VALUE;
 		int evaluation;
 		for (Move move : potentialMoves) {
@@ -28,7 +30,6 @@ public class MultipleLookAIPlayer extends AIPlayer {
 				newBoard = board.clone();
 				newBoard.makeMove(move);
 				evaluation = -negamax(newBoard, Integer.MIN_VALUE, Integer.MAX_VALUE, depth);
-				//evaluation = minimax(newBoard, depth);
 				if (evaluation > bestCase) {
 					bestMoves.clear();
 					bestMoves.add(move);
@@ -56,6 +57,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 		
 		Board newBoard;
 		List<Move> potentialMoves = board.currentPlayer().allMoves(board);
+		Collections.sort(potentialMoves, new MinimaxComparator(board.getSpace(board.players.other(board.currentPlayer()))));
 		int bestCase = Integer.MIN_VALUE;
 		int evaluation;
 		for (Move move : potentialMoves) {
