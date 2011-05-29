@@ -73,8 +73,8 @@ public abstract class Player implements PlayerInterface  {
 		}
 		if (board.getSpace(this).getRight() != null) {
 			potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getRight()));
-			if (board.getSpace(this).getRight().getDown()  != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getDown()));
-			if (board.getSpace(this).getRight().getRight() != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getRight()));
+			if (board.getSpace(this).getRight().getDown()  != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getRight().getDown()));
+			if (board.getSpace(this).getRight().getRight() != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getRight().getRight()));
 		}
 		if (board.getSpace(this).getDown() != null) {
 			if (board.getSpace(this).getDown().getLeft() != null) potentialMoves.add(new MovementMove(board.getSpace(this), board.getSpace(this).getDown().getLeft()));
