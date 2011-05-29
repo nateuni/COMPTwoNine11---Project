@@ -51,7 +51,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 	private int negamax(Board board, int alpha, int beta, int depth) {
 		i++;
 		if (board.currentPlayer().equals(board.winner())) return Integer.MAX_VALUE;
-		else if (board.players.other(board.currentPlayer()).equals(board.winner())) return Integer.MIN_VALUE;
+		else if (board.players.other(board.currentPlayer()).equals(board.winner())) return Integer.MIN_VALUE + 1;
 		else if (depth == 0) return board.currentPlayer().minMax() * evaluate(board);
 		
 		Board newBoard;
@@ -81,7 +81,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 
 	@Override
 	protected int wallsLeftWeight() {
-		return 2;
+		return 3;
 	}
 
 }
