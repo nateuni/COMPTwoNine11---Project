@@ -501,8 +501,8 @@ public class Board implements BoardInterface{
 		else throw new RuntimeException("Invalid player");
 	}
 	
-	public void loadPlayers(String p1Name, String p1Token, String p2Name, String p2Token){
-		Two<Player> players = new Two<Player>(new HumanPlayer(1, p1Name, p1Token), new HumanPlayer(2, p2Name, p2Token));
+	public void loadPlayers(String p1Type, String p1Name, String p1Token, String p2Type, String p2Name, String p2Token){
+		Two<Player> players = new Two<Player>(Factory.instance().makePlayer(1, p1Type, p1Name, p1Token), Factory.instance().makePlayer(2, p2Type, p2Name, p2Token));
 		this.setPlayers(players);
 	}
 
