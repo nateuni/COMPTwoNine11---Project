@@ -349,6 +349,7 @@ public class Board implements BoardInterface{
 					|| getSpace(players.other(move.owner)).col() == move.from().col()
 					&& getSpace(players.other(move.owner)).row() == move.to().row()) {
 				middleSpace = getSpace(players.other(move.owner));
+				if (wallIsHere(middleSpace, move.from())) return false;
 				if (wallIsHere(middleSpace, move.to())) return false;
 				try {
 					// Try to construct the space behind the opponent
