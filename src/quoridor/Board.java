@@ -397,13 +397,13 @@ public class Board implements BoardInterface{
 	public void undoLastMove() {
 		Move move = moveList.get(moveListIndex);
 
+		currentPlayer = players.other(currentPlayer);
 		if (move instanceof MovementMove) {
 			setSpace(move.owner, ((MovementMove) move).from());
 		}
 		else if (move instanceof WallMove) {
 			this.removeWall(((WallMove) move).wall());
 		}
-		currentPlayer = players.other(currentPlayer);
 		moveListIndex--;
 	}
 
