@@ -63,7 +63,7 @@ public class MultipleLookAIPlayer extends AIPlayer {
 				}
 				catch (Exception e) {}
 			}
-			Collections.sort(potentialMoves, new MinimaxComparator());
+			Collections.sort(potentialMoves, new MoveComparator());
 		}
 		
 		// If there are several equal best moves, pick one at random
